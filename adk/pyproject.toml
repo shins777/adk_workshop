@@ -1,0 +1,26 @@
+[project]
+name = "adk"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "anyio>=4.9.0",
+    "google-adk[vertexai]==1.2.1",
+    "google-cloud-aiplatform[adk,agent-engines]>=1.93.0",
+    "google-genai>=1.15.0",
+    "langchain>=0.3.25",
+    "langchain-community>=0.3.24",
+    "litellm>=1.70.4",
+    "llama-index>=0.12.39",
+    "mcp>=1.9.0",
+    "npx>=0.1.6",
+    "ollama>=0.4.9",
+    "pandas>=2.2.3",
+    "pytest>=8.3.5",
+    "pytest-asyncio>=1.0.0",
+    "python-a2a>=0.5.6",
+    "python-dotenv>=1.1.0",
+    "scikit-learn>=1.6.1",
+    "tavily-python>=0.7.2",
+]
