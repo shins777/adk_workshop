@@ -1,26 +1,26 @@
-# Unit Test Examples (ADK)
+# 유닛 테스트 예제 (ADK)
 
-## Example Overview
-This folder contains unit test examples for ADK agents and components, including asynchronous and REST-based tests.
+## 예제 개요
+이 폴더는 ADK 에이전트 및 컴포넌트의 유닛 테스트 예제를 포함하고 있습니다. 비동기 및 REST 기반 테스트 예제가 포함되어 있습니다.
 
-- `async.py`: Demonstrates async task execution and result gathering in Python.
-- `stock_REST.py`: (If present) Example of REST API-based testing for agent logic.
+- `async.py`: 파이썬에서 비동기 작업 실행 및 결과 수집 예제
+- `stock_REST.py`: (존재할 경우) 에이전트 로직의 REST API 기반 테스트 예제
 
-## Environment Setting
-Set any required environment variables in your `.env` file. Refer to the main project `.env` for examples.
+## 환경 설정
+필요한 환경 변수는 `.env` 파일에 설정하세요. 메인 프로젝트의 `.env` 파일을 참고하세요.
 
-## How to Run
-Run a test file using:
+## 실행 방법
+테스트 파일 실행:
 
 ```bash
 uv run python async.py
 ```
 
-Or use pytest for all tests:
+또는 모든 테스트를 실행하려면:
 
 ```bash
 uv run pytest
 ```
 
-## License
-This project is licensed under the Apache License 2.0. See the [LICENSE](../LICENSE) file for details.
+## 라이선스
+이 프로젝트는 Apache License 2.0을 따릅니다. 자세한 내용은 [LICENSE](../LICENSE) 파일을 참고하세요.

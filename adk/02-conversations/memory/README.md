@@ -1,32 +1,31 @@
-# ADK Memory Conversation Agent - Memory
+# ADK 메모리 대화 에이전트 - Memory
 
-This folder demonstrates how to build and operate a conversational AI agent with memory capabilities using the ADK (Agent Development Kit) framework. The agent can answer user queries by performing a Google search and can also recall information from previous sessions using a memory service.
+이 폴더는 ADK(Agent Development Kit) 프레임워크를 활용해 메모리 기능을 갖춘 대화형 AI 에이전트를 구축하고 운영하는 방법을 보여줍니다. 이 에이전트는 Google 검색을 통해 사용자 질문에 답변할 수 있으며, 메모리 서비스를 통해 이전 세션의 정보를 기억하고 불러올 수 있습니다.
 
-The Memory Conversation Agent is designed to:
-- Answer user questions using both real-time Google Search and memory recall
-- Store completed sessions in memory for later retrieval
-- Support both in-memory and Vertex AI RAG corpus memory backends
-- Demonstrate a multi-step workflow: search, store, recall
+메모리 대화 에이전트의 주요 특징:
+- 실시간 Google 검색과 메모리 리콜을 활용해 사용자 질문에 답변
+- 완료된 세션을 메모리에 저장하고 이후에 불러오기 가능
+- 인메모리 및 Vertex AI RAG 코퍼스 메모리 백엔드 지원
+- 검색, 저장, 리콜의 다단계 워크플로우 시연
 
-## .env Example
+## .env 예시
 
-Note : This file should be located in the **parent upper folder**.
+`.env` 파일은 **상위 폴더**에 위치해야 합니다.
 
 ```
 GOOGLE_GENAI_USE_VERTEXAI=FALSE
-GOOGLE_API_KEY=AIzerD6uPZRFklK--------WYZVM2uZh6Bd8 <-- you should use your key.
+GOOGLE_API_KEY=AIzerD6uPZRFklK--------WYZVM2uZh6Bd8 <-- 본인 키로 변경
 
 PROJECT_ID = "ai-forus"
 PROJECT_NUMBER = "9215---43942"
 LOCATION = "us-central1"
 MODEL = "gemini-2.0-flash"
 
-# For memory store in RAG Engine
-CORPUS_ID = "55253532324830177280" <-- you should use your RAG Engine corpus ID.
-
+# RAG 엔진 메모리 저장용
+CORPUS_ID = "55253532324830177280" <-- 본인 RAG Engine 코퍼스 ID로 변경
 ```
 
-## Folder Structure
+## 폴더 구조
 
 ```
 adk/02-conversations/memory/
@@ -38,74 +37,72 @@ adk/02-conversations/memory/
 ```
 
 - `agent.py`  
-  Defines two agents:
-  - `search_agent`: Answers questions using Google Search.
-  - `recall_agent`: Answers questions by retrieving information from memory.
-- `runner.py`  
-  Provides asynchronous functions to orchestrate a workflow where the search agent is run first, its session is stored in memory, and then the recall agent retrieves information from memory in a new session.
+  에이전트 정의, 지시문 템플릿 및 Google 검색/메모리 연동 포함
 - `main.py`  
-  Entry point for running the workflow. Allows selection of memory type (in-memory or Vertex AI RAG corpus) and manages session/memory service setup.
+  메인 실행 파일
+- `runner.py`  
+  에이전트 실행 및 메모리 관리 스크립트
 - `__init__.py`  
-  Marks the folder as a Python package.
+  파이썬 패키지로 폴더 지정
+- `README.md`  
+  문서 파일(본 파일)
 
-## Agent Details (`agent.py`)
+## 에이전트 세부사항 (`agent.py`)
 
 - **`search_agent`**
-  - Uses the `google_search` tool
-  - Follows a structured response format (question, source information, answer)
+  - `google_search` 도구 사용
+  - 구조화된 응답 형식 준수 (질문, 출처 정보, 답변)
 - **`recall_agent`**
-  - Uses the `load_memory` tool to retrieve information from memory
-  - Answers based on previously stored sessions
+  - 메모리에서 정보 검색을 위해 `load_memory` 도구 사용
+  - 이전에 저장된 세션을 기반으로 답변
 
 ---
 
-## Runner Script (`runner.py`)
+## 실행기 스크립트 (`runner.py`)
 
-- Orchestrates the workflow:
-  1. Runs the search agent in a dedicated session and stores the session in memory
-  2. Runs the recall agent in a new session to retrieve information from memory
-- Handles user input for both search and recall steps
-- Prints agent responses and event details
+- 워크플로우 조정:
+  1. 전용 세션에서 검색 에이전트를 실행하고 세션을 메모리에 저장
+  2. 새 세션에서 리콜 에이전트를 실행하여 메모리에서 정보 검색
+- 검색 및 리콜 단계 모두에 대한 사용자 입력 처리
+- 에이전트 응답 및 이벤트 세부정보 출력
 
 ---
 
-## Main Script (`main.py`)
+## 메인 스크립트 (`main.py`)
 
-- Entry point for running the workflow
-- Allows selection of memory type via `--memory_type` argument (`in_memory` or `rag_corpus`)
-- Sets up session and memory services
-- Runs the orchestrated workflow with user-specified app name and user ID
+- 워크플로우 실행을 위한 진입점
+- `--memory_type` 인수를 통해 메모리 유형 선택 (`in_memory` 또는 `rag_corpus`)
+- 세션 및 메모리 서비스 설정
+- 사용자 지정 앱 이름 및 사용자 ID로 조정된 워크플로우 실행
 
-### Example Usage
+### 사용 예시
 
-#### 1. Command line.
+#### 1. 명령줄에서 실행
 ```
 uv run memory.main --memory_type [in_memory|rag_corpus] --app_name <app_name> --user_id <user_id>")
 ```
 
-####  2. Use memory_type = `in_memory`
+####  2. 메모리 유형으로 `in_memory` 사용
 ```
 uv run -m memory.main --memory_type in_memory --app_name search_assistant --user_id forusone
 ```
 
-####  3. Use memory_type = `rag_corpus`
+####  3. 메모리 유형으로 `rag_corpus` 사용
 
-First, you have to set up the RAG Engine in Vertex AI.
+먼저, Vertex AI에서 RAG 엔진을 설정해야 합니다.
 ```
 CORPUS_ID = "552535334330177280"
 ```
-Then, login to GCP to access to the RAG Engine. use the following command.
+그런 다음, GCP에 로그인하여 RAG 엔진에 접근합니다. 다음 명령어를 사용하세요.
 ```
 gcloud auth application-default login
 ```
-After login-in, run the followig command. 
+로그인 후, 다음 명령어를 실행합니다. 
 ```
 uv run -m memory.main --memory_type rag_corpus --app_name search_assistant --user_id forusone
 ```
-if you don't have an access to the RAG engine. you could see the following error message.
+RAG 엔진에 접근할 수 없는 경우, 다음과 같은 오류 메시지가 표시될 수 있습니다.
 ```
 RuntimeError: ('Failed in indexing the RagFile due to: ', {'code': 403, 'message': "Permission 'aiplatform.ragFiles.upload' denied on resource '//aiplatform.googleapis.com/projects/ai-forus/locations/us-central1/ragCorpora/552535232177280' (or it may not exist)."
 ```
-
----
 

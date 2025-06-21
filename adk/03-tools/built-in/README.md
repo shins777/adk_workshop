@@ -1,15 +1,9 @@
-# Built-in Tools Example (ADK)
+# 내장 툴 예제 (ADK)
 
-## Example Overview
-This folder demonstrates how to use built-in tools with ADK agents, including code execution, Google search, RAG, and VertexAI search. Each subfolder provides a specific example.
+이 폴더는 ADK(Agent Development Kit)에서 제공하는 내장 툴을 활용하는 방법을 보여줍니다.
 
-- `code_execution/`: Math/code execution agent.
-- `google_search/`: Google search agent.
-- `rag_engine/`: Vertex AI RAG corpus retrieval agent.
-- `vertexai_search/`: Vertex AI Search data store agent.
-
-## Environment Setting
-Set the following keys in your `.env` file (located in the parent folder):
+## 환경 설정
+상위 폴더의 `.env` 파일에 필요한 키를 설정하세요.
 
 ```
 GOOGLE_GENAI_USE_VERTEXAI=TRUE
@@ -20,12 +14,12 @@ LOCATION=your_location
 MODEL=your_model_name
 ```
 
-## How to Run the Source Code
-See each subfolder for agent code and instructions. Example:
+## 실행 방법
+각 하위 폴더의 예제와 안내를 참고하세요. 예시:
 
 ```bash
 built-in/adk web
 ```
 
-## License Information
-This project is licensed under the Apache License 2.0. See the [LICENSE](../../LICENSE) file for details.
+## 라이센스 정보
+이 프로젝트는 Apache License 2.0에 따라 라이센스가 부여됩니다. 자세한 내용은 [LICENSE](../../LICENSE) 파일을 참조하세요.

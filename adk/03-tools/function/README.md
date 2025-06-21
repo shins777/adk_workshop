@@ -1,13 +1,13 @@
-# Function Tools Example (ADK)
+# 함수형 툴 예제 (ADK)
 
-## Example Overview
-This folder demonstrates how to use function tools with ADK agents for calling external APIs. Examples include single and multiple function tool calls.
+## 예제 개요
+이 폴더는 ADK 에이전트에서 함수형 툴을 활용해 외부 API를 호출하는 방법을 보여줍니다. 단일 및 다중 함수형 툴 호출 예제가 포함되어 있습니다.
 
-- `single_call/`: Single function tool (e.g., exchange rates).
-- `multiple_call/`: Multiple function tools (e.g., exchange rates, stock prices).
+- `single_call/`: 단일 함수형 툴(예: 환율)
+- `multiple_call/`: 다중 함수형 툴(예: 환율, 주가)
 
-## Environment Setting
-Set the following keys in your `.env` file (located in the parent folder):
+## 환경 설정
+상위 폴더의 `.env` 파일에 아래와 같이 키를 설정하세요.
 
 ```
 GOOGLE_GENAI_USE_VERTEXAI=TRUE
@@ -19,12 +19,12 @@ MODEL=your_model_name
 STOCK_API_KEY=your_stock_api_key
 ```
 
-## How to Run the Source Code
-See each subfolder for agent code and instructions. Example:
+## 소스코드 실행 방법
+각 하위 폴더의 에이전트 코드와 안내를 참고하세요. 예시:
 
 ```bash
 function/single_call/adk web
 ```
 
-## License Information
-This project is licensed under the Apache License 2.0. See the [LICENSE](../../LICENSE) file for details.
+## 라이선스 정보
+이 프로젝트는 Apache License 2.0을 따릅니다. 자세한 내용은 [LICENSE](../../LICENSE) 파일을 참고하세요.

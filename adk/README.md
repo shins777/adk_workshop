@@ -1,59 +1,58 @@
-# AI Agent on ADK(Agent Development Kit)
+# ADK(Agent Development Kit) 기반 AI 에이전트
 
-The source codes in this repository were developed using VS Code, but it's IDE-agnostic.  
-You can install VS Code from the following url.  Note : https://code.visualstudio.com/
+이 저장소의 소스 코드는 VS Code에서 개발되었으나, IDE에 종속적이지 않습니다.  
+VS Code는 다음 URL에서 설치할 수 있습니다: https://code.visualstudio.com/
 
-## git clone
+## git 클론
 ```
 git clone https://github.com/ForusOne/adk_agent.git
 ```
 
-## Install uv package manager.
-### 1. uv install
+## uv 패키지 매니저 설치
+### 1. uv 설치
 
-This project uses uv for python package manager.    
-An extremely fast Python package and project manager, written in Rust.
-Note : https://github.com/astral-sh/uv
+이 프로젝트는 Python 패키지 매니저로 uv를 사용합니다.  
+uv는 Rust로 작성된 매우 빠른 Python 패키지 및 프로젝트 매니저입니다.  
+참고: https://github.com/astral-sh/uv
 
 ```
 curl -LsSf https://astral.sh/uv/install.sh | sh
 ```
-or 
+또는
 ```
 pip install uv
 ```
 
-## 2. uv inititalizaton and set virtual env. 
+## 2. uv 초기화 및 가상환경 설정
 
-Initialize venv with **pyproject.toml** file which should be located in **the same directory**.  
-You have to have **pyproject.toml** in the **/adk_agent/adk** directory.
+**pyproject.toml** 파일이 **같은 디렉토리**에 있어야 합니다.  
+**/adk_agent/adk** 디렉토리에 **pyproject.toml** 파일이 존재해야 합니다.
 
 ```
 /adk_agent/adk$ uv venv --python 3.12
 ```
 
-Activate the virtual environment
+가상환경 활성화:
 ```
 /adk_agent/adk$ source .venv/bin/activate
 (adk) adk_agent/adk$
 ```
 
-After finishing the test, you can deactivate the virtual environment.
+테스트가 끝난 후에는 가상환경을 비활성화할 수 있습니다.
 ```
 /adk_agent/adk$ deactivate
 ```
 
-###  3. Unit test for a simple ADK agent. 
+### 3. 간단한 ADK 에이전트 유닛 테스트
 
-To check the runtime virtual environment is properly configured, let's run a simple ADK agent in code. 
+런타임 가상환경이 제대로 설정되었는지 확인하려면, 간단한 ADK 에이전트를 실행해보세요.
 
-adk package install.
-
+adk 패키지 설치:
 ```
 (adk) /adk_agent/adk/01-agent$ uv add google-adk[vertexai]==1.1.1
 ```
 
-Create .env file in **adk_agent/adk/01-agent/***
+**adk_agent/adk/01-agent/** 디렉토리에 .env 파일을 생성하세요.
 
 ```
 (adk) /adk_agent/adk/01-agent$ ls -al
@@ -68,9 +67,9 @@ drwxr-xr-x   7 forus  pgroup   224 Jun  2 08:26 search
 (adk) /adk_agent/adk/01-agent$
 ```
 
-Here is sample .env file, change the information with your GCP project information and API key. 
+아래는 .env 파일 예시입니다. 본인의 GCP 프로젝트 정보와 API 키로 변경하세요.
 
-Note: https://ai.google.dev/gemini-api/docs/api-key
+참고: https://ai.google.dev/gemini-api/docs/api-key
 
 ```
 GOOGLE_GENAI_USE_VERTEXAI=FALSE
@@ -82,12 +81,12 @@ LOCATION = "us-central1"
 MODEL = "gemini-2.0-flash"
 ```
 
-Run the unit test
+유닛 테스트 실행:
 ```
 (adk) /adk_agent/adk/01-agent$ adk web
 ```
 
-Type in the chat : What is Generative AI ?
+채팅창에 "What is Generative AI ?"를 입력해보세요.
 
-If your test is ok, you can see the following output.
+테스트가 정상적으로 동작하면 아래와 같은 화면을 볼 수 있습니다.  
 ![adk_web](https://github.com/ForusOne/adk_agent/blob/main/images/adk_web.png?raw=true)

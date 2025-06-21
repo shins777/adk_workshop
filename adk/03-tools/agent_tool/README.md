@@ -1,30 +1,9 @@
-# Agent Tool Integration Example (ADK)
+# 에이전트 툴 예제 (ADK)
 
-## Example Overview
-This folder demonstrates how to integrate agent-to-agent tools within ADK agents. It shows how one agent can call another as a tool, enabling modular and composable agent workflows.
+이 폴더는 ADK(Agent Development Kit)에서 커스텀 에이전트 툴을 구현하고 연동하는 방법을 보여줍니다.
 
-- `sub_agent_tool/`: Contains examples of sub-agents used as tools.
+## 환경 설정
+상위 폴더의 `.env` 파일에 필요한 키를 설정하세요.
 
-## Environment Setting
-Set the following keys in your `.env` file (located in the parent folder):
-
-```
-GOOGLE_GENAI_USE_VERTEXAI=TRUE
-GOOGLE_API_KEY=your_google_api_key
-PROJECT_ID=your_project_id
-PROJECT_NUMBER=your_project_number
-LOCATION=your_location
-MODEL=your_model_name
-```
-
-## How to Run the Source Code
-Run the agent example with:
-
-```bash
-uv run python agent_tool/agent.py
-```
-
-Refer to the `sub_agent_tool/` folder for additional sub-agent tool examples.
-
-## License Information
-This project is licensed under the Apache License 2.0. See the [LICENSE](../../LICENSE) file for details.
+## 실행 방법
+각 하위 폴더의 예제와 안내를 참고하세요.

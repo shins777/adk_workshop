@@ -1,10 +1,10 @@
-# State Conversation Example (ADK)
+# 상태 기반 대화 예제 (ADK)
 
-## Example Overview
-This folder demonstrates how to use the ADK framework to build agents that manage stateful conversations, allowing for advanced context and flow control.
+## 예제 개요
+이 폴더는 ADK 프레임워크를 활용해 상태 기반 대화형 에이전트를 구축하는 방법을 보여줍니다. 이를 통해 고급 컨텍스트 및 흐름 제어가 가능합니다.
 
-## Environment Setting
-Set the following keys in your `.env` file (located in the parent folder):
+## 환경 설정
+상위 폴더의 `.env` 파일에 아래와 같이 키를 설정하세요.
 
 ```
 GOOGLE_GENAI_USE_VERTEXAI=FALSE
@@ -15,15 +15,14 @@ LOCATION=your_location
 MODEL=your_model_name
 ```
 
-## How to Run the Source Code
-Run the state conversation agent with:
+## 소스코드 실행 방법
+상태 기반 대화 에이전트 실행:
 
 ```bash
 uv run -m state.output_key --app_name <app_name> --user_id <user_id> --session_id <session_id>
 
 python main.py --app_name <app_name> --user_id <user_id> --session_id <session_id>
-
 ```
 
-## License Information
-This project is licensed under the Apache License 2.0. See the [LICENSE](../../../LICENSE) file for details.
+## 라이선스 정보
+이 프로젝트는 Apache License 2.0을 따릅니다. 자세한 내용은 [LICENSE](../../../LICENSE) 파일을 참고하세요.

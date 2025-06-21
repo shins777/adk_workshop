@@ -1,18 +1,18 @@
-# ADK Session Conversation Agent - Session
+# ADK 세션 대화 에이전트 - Session
 
-This folder demonstrates how to build and operate a session-aware conversational AI agent using the ADK (Agent Development Kit) framework. The agent is designed to answer user queries by performing a Google search and maintaining session state across interactions, supporting multiple session backends.
+이 폴더는 ADK(Agent Development Kit) 프레임워크를 활용해 세션 인식 대화형 AI 에이전트를 구축하고 운영하는 방법을 보여줍니다. 이 에이전트는 Google 검색을 통해 사용자 질문에 답변하며, 여러 세션 백엔드를 지원하면서 상호작용 내내 세션 상태를 유지합니다.
 
-The Session Conversation Agent is designed to:
-- Answer user questions using both its own knowledge and real-time Google Search results
-- Maintain session state and history across multiple user interactions
-- Support in-memory, SQLite database, and Vertex AI session backends
-- Print detailed session properties and events after each turn
+세션 대화 에이전트의 주요 특징:
+- 자체 지식과 실시간 Google 검색 결과를 활용해 사용자 질문에 답변
+- 여러 번의 사용자 상호작용 동안 세션 상태와 기록 유지
+- 인메모리, SQLite 데이터베이스, Vertex AI 세션 백엔드 지원
+- 각 턴 이후 상세 세션 속성과 이벤트 출력
 
 ---
 
-## .env Example
+## .env 예시
 
-Place your `.env` file in the parent folder (e.g., `adk/02-conversations/`). Example:
+`.env` 파일을 상위 폴더(예: `adk/02-conversations/`)에 위치시키세요. 예시:
 
 ```
 GOOGLE_GENAI_USE_VERTEXAI=FALSE
@@ -21,10 +21,10 @@ PROJECT_ID=your-project-id
 PROJECT_NUMBER=your-project-number
 LOCATION=us-central1
 MODEL=gemini-2.0-flash
-AGENT_ENGINE_ID=your-agent-engine-id  # Only needed for vertexai session type
+AGENT_ENGINE_ID=your-agent-engine-id  # vertexai 세션 타입에서만 필요
 ```
 
-## Folder Structure
+## 폴더 구조
 
 ```
 adk/02-conversations/session/
@@ -36,75 +36,77 @@ adk/02-conversations/session/
 ```
 
 - `agent.py`  
-  Defines the agent, including its instruction template and integration with the Google Search tool.
+  에이전트 정의, 지시문 템플릿 및 Google 검색 툴 연동 포함
 - `runner.py`  
-  Provides an asynchronous script to run the agent in a session-aware conversational loop, printing session state and event details after each interaction.
+  에이전트 실행 및 세션 관리 스크립트
 - `main.py`  
-  Entry point for running the agent, allowing selection of session backend (in-memory, database, or Vertex AI) and managing session service setup.
+  메인 실행 파일
 - `__init__.py`  
-  Marks the folder as a Python package.
+  파이썬 패키지로 폴더 지정
+- `README.md`  
+  문서 파일(본 파일)
 
 ---
 
-## Runner Script (`runner.py`)
+## 실행 스크립트 (`runner.py`)
 
-- Asynchronously runs the agent in a session-aware conversational loop
-- Checks for existing sessions and continues or creates new ones as needed
-- Prompts the user for input, sends it to the agent, and prints the agent's response
-- Prints session properties and events after each turn
+- 에이전트를 비동기적으로 실행하여 세션 인식 대화 루프를 수행
+- 기존 세션 확인 후 계속하거나 새로 생성
+- 사용자 입력을 프롬프트하고, 에이전트에 전송하며, 에이전트의 응답 출력
+- 각 턴 이후 세션 속성과 이벤트 출력
 
 ---
 
-## Main Script (`main.py`)
+## 메인 스크립트 (`main.py`)
 
-- Entry point for running the agent
-- Allows selection of session backend via `--type` argument (`in_memory`, `database`, or `vertexai`)
-- Sets up the appropriate session service
-- Runs the session-aware conversational loop with user-specified app name, user ID, and session ID
+- 에이전트 실행을 위한 진입점
+- `--type` 인수를 통해 세션 백엔드 선택 (`in_memory`, `database`, `vertexai`)
+- 적절한 세션 서비스 설정
+- 사용자 지정 앱 이름, 사용자 ID 및 세션 ID로 세션 인식 대화 루프 실행
 
 ```
 uv run -m session.main --type <session_type> --app_name <app_name> --user_id <user_id> --session_id <session_id>
 ```
-Usage : session type : in_memory, database, vertexai
+사용 가능한 세션 타입 : in_memory, database, vertexai
 
-### Example Usage
+### 사용 예시
 
-#### 1. type = in_memory
+#### 1. 타입이 in_memory인 경우
 
 ```
 uv run -m session.main --type in_memory --app_name Search_Assistant --user_id forusone --session_id session_id_01
 ```
-#### 2. type = database
+#### 2. 타입이 database인 경우
 ```
 uv run -m session.main --type database --app_name Search_Assistant --user_id forusone --session_id session_id_01
 ```
 
-But this is the bug now : https://github.com/google/adk-python/issues/885  
-It should be resializable, the fix shoul be in next week as of June 1 2025.
+현재 버그가 있습니다 : https://github.com/google/adk-python/issues/885  
+향후 수정될 예정입니다. (2025년 6월 1일 기준)
 
 ```
 sqlalchemy.exc.StatementError: (builtins.TypeError) Object of type GroundingMetadata is not JSON serializable
 ```
 
-#### 3. type = vertexai
-To store session in Agent Engine, you have to configure the Agent engine and add the id into .env file first.
+#### 3. 타입이 vertexai인 경우
+에이전트 엔진에 세션을 저장하려면 먼저 에이전트 엔진을 구성하고 ID를 .env 파일에 추가해야 합니다.
 ```
 AGENT_ENGINE_ID = "17699933548393804800"
 ```
 
-Then, login to GCP to access to the RAG Engine. use the following command.
+그런 다음, GCP에 로그인하여 RAG 엔진에 접근합니다. 다음 명령어를 사용하세요.
 ```
 gcloud auth application-default login
 ```
-After login-in, run the followig command. 
+로그인 후, 다음 명령어를 실행합니다. 
 
 ```
 uv run -m session.main --type vertexai --app_name Search_Assistant --user_id forusone --session_id session_id_01
 ```
 ---
 
-## License
+## 라이센스
 
-This project is licensed under the Apache License 2.0.
+이 프로젝트는 Apache License 2.0에 따라 라이센스가 부여됩니다.
 
 

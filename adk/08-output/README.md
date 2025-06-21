@@ -1,13 +1,13 @@
-# Output Schema Example (ADK)
+# 출력 스키마 예제 (ADK)
 
-## Example Overview
-This folder demonstrates how to use output schemas with the ADK framework. If `output_schema` is set, tools must be empty.
+## 예제 개요
+이 폴더는 ADK 프레임워크에서 출력 스키마를 사용하는 방법을 보여줍니다. `output_schema`가 설정된 경우, tools는 비워두어야 합니다.
 
-## Environment Setting
-Set any required environment variables in your `.env` file. Refer to the main project `.env` for examples.
+## 환경 설정
+필요한 환경 변수는 `.env` 파일에 설정하세요. 메인 프로젝트의 `.env` 파일을 참고하세요.
 
-## How to Run
-Refer to the schema subfolder for specific usage examples.
+## 실행 방법
+구체적인 사용 예시는 schema 하위 폴더를 참고하세요.
 
-## License
-This project is licensed under the Apache License 2.0. See the [LICENSE](../LICENSE) file for details.
+## 라이선스
+이 프로젝트는 Apache License 2.0을 따릅니다. 자세한 내용은 [LICENSE](../LICENSE) 파일을 참고하세요.

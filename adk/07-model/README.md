@@ -1,13 +1,13 @@
-# Model Integration Examples (ADK)
+# 모델 연동 예제 (ADK)
 
-## Example Overview
-This folder demonstrates how to integrate external LLM providers with the ADK framework. It includes examples for LiteLLM (OpenAI, Anthropic) and Ollama-based models.
+## 예제 개요
+이 폴더는 외부 LLM 제공자를 ADK 프레임워크와 연동하는 방법을 보여줍니다. LiteLLM(OpenAI, Anthropic) 및 Ollama 기반 모델 예제가 포함되어 있습니다.
 
-- `litellm/`: Shows how to use OpenAI GPT-4o and Anthropic Claude with ADK agents via LiteLLM.
-- `ollama_agent/`: Shows how to use local Ollama models (Llama 3, Gemma) with ADK agents.
+- `litellm/`: LiteLLM을 통해 OpenAI GPT-4o, Anthropic Claude를 ADK 에이전트와 연동하는 예제
+- `ollama_agent/`: 로컬 Ollama 모델(Llama 3, Gemma 등)을 ADK 에이전트와 연동하는 예제
 
-## Environment Setting
-Copy `.env` to your working directory and set the following keys as needed:
+## 환경 설정
+`.env` 파일을 작업 디렉토리에 복사하고 아래와 같이 키를 설정하세요.
 
 ```
 GOOGLE_GENAI_USE_VERTEXAI=FALSE
@@ -21,18 +21,18 @@ MODEL=...
 OLLAMA_API_BASE=...
 ```
 
-Refer to each subfolder for specific requirements.
+각 하위 폴더별 요구사항은 해당 폴더를 참고하세요.
 
-## How to Run
-- See each subfolder (`litellm/`, `ollama_agent/`) for agent code and instructions.
-- Example (for `litellm`):
+## 실행 방법
+- 각 하위 폴더(`litellm/`, `ollama_agent/`)의 에이전트 코드와 안내를 참고하세요.
+- 예시 (`litellm`):
   ```bash
   uv run python litellm/llm.py
   ```
-- Example (for `ollama_agent`):
+- 예시 (`ollama_agent`):
   ```bash
   uv run python ollama_agent/agent.py
   ```
 
-## License
-This project is licensed under the Apache License 2.0. See the [LICENSE](../LICENSE) file for details.
+## 라이선스
+이 프로젝트는 Apache License 2.0을 따릅니다. 자세한 내용은 [LICENSE](../LICENSE) 파일을 참고하세요.

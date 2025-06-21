@@ -1,10 +1,10 @@
-# ADK Model Callback Example
+# ADK 모델 콜백 예제
 
-## 1. Example Overview
-This folder demonstrates how to build and operate an ADK (Agent Development Kit) agent with pre- and post-processing callbacks at the model (LLM) level. The agent can intercept and modify the flow before and after the LLM model is called, allowing for advanced control, keyword filtering, and state-based logic.
+## 1. 예제 개요
+이 폴더는 ADK(Agent Development Kit) 에이전트에서 모델(LLM) 레벨의 전/후처리 콜백을 구현하는 방법을 보여줍니다. LLM 호출 전후에 흐름을 가로채고 수정할 수 있어 고급 제어, 키워드 필터링, 상태 기반 로직 구현이 가능합니다.
 
-## 2. Environment Setting
-Create a `.env` file in the parent folder (`adk/05-callback/`) with the following content (adjust values as needed):
+## 2. 환경 설정
+상위 폴더(`adk/05-callback/`)에 아래와 같이 `.env` 파일을 생성하세요. (값은 필요에 따라 수정)
 
 ```
 GOOGLE_GENAI_USE_VERTEXAI=FALSE
@@ -15,18 +15,18 @@ LOCATION=us-central1
 MODEL=gemini-2.0-flash
 ```
 
-## 3. How to Run the Source Code
-1. Install dependencies as specified in the `pyproject.toml` or `requirements.txt`.
-2. Navigate to the `adk/05-callback/` directory in your terminal.
-3. Run the agent using the ADK runner or a provided script. For example:
+## 3. 소스코드 실행 방법
+1. `pyproject.toml` 또는 `requirements.txt`에 명시된 의존성 설치
+2. 터미널에서 `adk/05-callback/` 디렉토리로 이동
+3. ADK 러너 또는 제공된 스크립트로 에이전트 실행. 예시:
    ```bash
    adk web
    ```
-   or, if a runner script is provided:
+   또는 러너 스크립트가 제공된 경우:
    ```bash
    uv run -m model_callback.runner
    ```
-4. Interact with the agent via the web interface or terminal prompt.
+4. 웹 인터페이스 또는 터미널 프롬프트로 에이전트와 상호작용
 
-## 4. License Information
-This project is licensed under the Apache License 2.0.
+## 4. 라이선스 정보
+이 프로젝트는 Apache License 2.0을 따릅니다.

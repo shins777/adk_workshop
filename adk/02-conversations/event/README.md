@@ -1,10 +1,10 @@
-# ADK Event Conversation Agent - Event
+# ADK 이벤트 대화 에이전트 - Event
 
-This folder demonstrates how to build and operate an event-driven conversational AI agent using the ADK (Agent Development Kit) framework. The agent is designed to answer user queries by performing a Google search and providing structured responses, while the runner script showcases detailed event streaming and introspection.
+이 폴더는 ADK(Agent Development Kit) 프레임워크를 활용해 이벤트 기반 대화형 AI 에이전트를 구축하고 운영하는 방법을 보여줍니다. 이 에이전트는 Google 검색을 통해 사용자 질문에 답변하고, 러너 스크립트는 각 단계별 상세 이벤트 스트리밍과 내부 동작을 시연합니다.
 
-## .env Example
+## .env 예시
 
-Place your `.env` file in the parent folder (e.g., `adk/02-conversations/`). Example:
+`.env` 파일을 상위 폴더(예: `adk/02-conversations/`)에 위치시키세요. 예시:
 
 ```
 GOOGLE_GENAI_USE_VERTEXAI=FALSE
@@ -17,7 +17,7 @@ MODEL=gemini-2.0-flash
 
 ---
 
-## Folder Structure
+## 폴더 구조
 
 ```
 adk/02-conversations/event/
@@ -28,20 +28,20 @@ adk/02-conversations/event/
 ```
 
 - `agent.py`  
-  Defines the agent, including its instruction template and integration with the Google Search tool.
+  에이전트 정의, 지시문 템플릿 및 Google 검색 툴 연동 포함
 - `runner.py`  
-  Provides an asynchronous script to run the agent, stream events, and print detailed event information for each step of the conversation.
+  에이전트 실행 및 이벤트 스트리밍, 각 단계별 상세 이벤트 정보 출력
 - `__init__.py`  
-  Marks the folder as a Python package.
+  파이썬 패키지로 폴더 지정
 
 ---
 
-## Example Usage
-Note : Execute the following command on **01-conversations** folder. 
+## 예제 실행
+**01-conversations** 폴더에서 아래 명령어를 실행하세요.
 
 ```
 ai_agent/adk/02-conversations$ uv run -m event.runner
 ```
 
-## License Information
-This project is licensed under the Apache License 2.0. See the [LICENSE](../../../LICENSE) file for details.
+## 라이센스 정보
+이 프로젝트는 Apache License 2.0에 따라 라이센스가 부여됩니다. 자세한 내용은 [LICENSE](../../../LICENSE) 파일을 참조하세요.

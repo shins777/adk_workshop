@@ -1,10 +1,10 @@
-# ADK Tools Overview
+# ADK 툴 개요
 
-## Example Overview
-This directory contains a comprehensive set of examples for integrating various types of tools into ADK (Agent Development Kit) agents. Each subfolder demonstrates a different approach to tool integration, including built-in tools, function tools, LangChain tools, and Model Context Protocol (MCP) tools. Use these examples to learn how to extend agent capabilities with real-world data, web search, code execution, and external system integration.
+## 예제 개요
+이 디렉토리는 ADK(Agent Development Kit) 에이전트에 다양한 종류의 툴을 통합하는 예제를 포함하고 있습니다. 각 하위 폴더는 내장 툴, 함수형 툴, LangChain 툴, MCP 툴 등 다양한 통합 방식을 보여줍니다. 실제 데이터, 웹 검색, 코드 실행, 외부 시스템 연동 등 에이전트의 기능 확장에 참고하세요.
 
-## Environment Setting
-Set the following keys in your `.env` file (located in this folder):
+## 환경 설정
+이 폴더의 `.env` 파일에 아래와 같이 키를 설정하세요.
 
 ```
 GOOGLE_GENAI_USE_VERTEXAI=TRUE
@@ -21,26 +21,26 @@ STOCK_API_KEY=your_stock_api_key
 TAVILY_API_KEY=your_tavily_api_key
 ```
 
-Refer to each subfolder for additional requirements.
+각 하위 폴더별 추가 요구사항은 해당 폴더를 참고하세요.
 
-## How to Run the Source Code
-- See each subfolder for agent code and instructions.
-- Example (for a built-in tool):
+## 소스코드 실행 방법
+- 각 하위 폴더의 에이전트 코드와 안내를 참고하세요.
+- 예시 (내장 툴):
   ```bash
   uv run python built-in/code_execution/agent.py
   ```
-- Example (for a function tool):
+- 예시 (함수형 툴):
   ```bash
   uv run python function/single_call/agent.py
   ```
-- Example (for a LangChain tool):
+- 예시 (LangChain 툴):
   ```bash
   uv run python langchain/tavily_search/agent.py
   ```
-- Example (for an MCP tool):
+- 예시 (MCP 툴):
   ```bash
   uv run python mcp/client_file_browser/agent.py
   ```
 
-## License Information
-This project is licensed under the Apache License 2.0. See the [LICENSE](../LICENSE) file for details.
+## 라이센스 정보
+이 프로젝트는 Apache License 2.0에 따라 라이센스가 부여됩니다. 자세한 내용은 [LICENSE](../LICENSE) 파일을 참조하세요.
