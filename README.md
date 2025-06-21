@@ -1,63 +1,63 @@
-# ADK_agent: Multi-Agent, A2A, and AI Agent Development Kit Examples
+# ADK_agent: 멀티 에이전트, A2A, AI 에이전트 개발 키트 예제 모음
 
-This repository provides a comprehensive set of examples and reference implementations for building, deploying, and evaluating AI agents using the Agent Development Kit (ADK), A2A (Agent-to-Agent) protocol, and related tools. The project is organized into modular folders, each demonstrating a specific concept, agent type, tool integration, workflow, deployment, or evaluation scenario.
+이 저장소는 Agent Development Kit(ADK), A2A(Agent-to-Agent) 프로토콜, 그리고 관련 도구를 활용해 AI 에이전트를 구축, 배포, 평가하는 다양한 예제와 참고 구현을 제공합니다. 각 폴더는 특정 개념, 에이전트 유형, 툴 연동, 워크플로우, 배포, 평가 시나리오를 독립적으로 다루고 있습니다.
 
 ---
 
-## Repository Structure
+## 저장소 구조
 
 ### a2a/
-- **adk/simple/**: Minimal ADK agent exposed via A2A protocol, with Google Search tool integration, conversion utilities, and both server/client implementations.
-- **concept/basic/**: Basic A2A protocol example with an echo agent, A2A-compliant server, and Python client.
+- **adk/simple/**: Google Search 툴 연동 및 변환 유틸리티, 서버/클라이언트 구현이 포함된 최소 ADK 에이전트의 A2A 프로토콜 예제
+- **concept/basic/**: 에코 에이전트, A2A 호환 서버, 파이썬 클라이언트가 포함된 기본 A2A 프로토콜 예제
 
 ### adk/
-- **01-agent/**: Core agent implementations, including basic, runtime, and search agents. Each subfolder contains agent code, instructions, and runners.
-- **02-conversations/**: Conversation management examples (event, memory, session, state), each with agent/session logic and runners.
-- **03-tools/**: Tool integration examples, including built-in tools (code execution, search, RAG, VertexAI), function tools, LangChain tools, and MCP tools. Each tool type is organized in its own subfolder.
-- **04-workflow/**: Workflow orchestration examples (custom, general, loop, parallel, sequential), each with agent and workflow logic.
-- **05-callback/**: Callback mechanism examples (agent, model, tool), showing how to intercept and modify agent/model/tool execution.
-- **06-deploy/**: Deployment and session management for agents, including agent engine and session pipelines, GCP/Vertex AI integration, and update scripts.
-- **07-model/**: Model integration examples, including LiteLLM and Ollama agent implementations.
-- **08-output/**: Output schema enforcement using Pydantic, with agents that return structured responses.
-- **09-evaluate/**: Agent evaluation and benchmarking tools.
-- **10-unittest/**: Unit test scripts for async and REST-based agent logic.
+- **01-agent/**: 기본, 런타임, 검색 에이전트 등 핵심 에이전트 구현 예제. 각 하위 폴더에 에이전트 코드, 설명, 실행 스크립트 포함
+- **02-conversations/**: 이벤트, 메모리, 세션, 상태 등 대화 관리 예제. 각 폴더에 에이전트/세션 로직과 실행 스크립트 포함
+- **03-tools/**: 내장 툴(코드 실행, 검색, RAG, VertexAI), 함수형 툴, LangChain 툴, MCP 툴 등 다양한 툴 연동 예제. 툴 유형별로 하위 폴더 구성
+- **04-workflow/**: 커스텀, 일반, 루프, 병렬, 순차 등 다양한 워크플로우 오케스트레이션 예제. 각 폴더에 에이전트 및 워크플로우 로직 포함
+- **05-callback/**: 에이전트, 모델, 툴의 콜백 메커니즘 예제. 실행 흐름을 가로채고 수정하는 방법 시연
+- **06-deploy/**: 에이전트 엔진 및 세션 파이프라인, GCP/Vertex AI 연동, 업데이트 스크립트 등 배포 및 세션 관리 예제
+- **07-model/**: LiteLLM, Ollama 등 다양한 모델 연동 예제
+- **08-output/**: Pydantic을 활용한 출력 스키마 적용 및 구조화된 응답 반환 예제
+- **09-evaluate/**: 에이전트 평가 및 벤치마킹 도구
+- **10-unittest/**: 비동기 및 REST 기반 에이전트 로직 유닛 테스트 스크립트
 
 ### mcp/
-- **concept/**: Demonstrates parent/child process communication for MCP (Model Context Protocol).
+- **concept/**: MCP(Model Context Protocol)에서 부모/자식 프로세스 통신 예제
 
 ### notebooks/
-- **01-adk/**: Jupyter notebooks for ADK tutorials, agent/callback/session/tools/workflow demos.
-- **02-agent_engine/**: Notebooks for agent engine management and LangChain/Graph integration.
-- **03-rag_engine/**: RAG engine management and demonstration notebooks.
-- **04-mcp/**: MCP protocol and agent integration notebooks.
-- **05-a2a/**: A2A protocol and ADK integration notebooks.
-- **agentspace/**: AgentSpace deployment and integration notebooks.
-- **common/**: Common ADK, agent engine, and LangChain reference notebooks.
+- **01-adk/**: ADK 튜토리얼, 에이전트/콜백/세션/툴/워크플로우 데모용 주피터 노트북
+- **02-agent_engine/**: 에이전트 엔진 관리, LangChain/Graph 연동 노트북
+- **03-rag_engine/**: RAG 엔진 관리 및 데모 노트북
+- **04-mcp/**: MCP 프로토콜 및 에이전트 연동 노트북
+- **05-a2a/**: A2A 프로토콜 및 ADK 연동 노트북
+- **agentspace/**: AgentSpace 배포 및 연동 노트북
+- **common/**: 공통 ADK, 에이전트 엔진, LangChain 참고 노트북
 
 ---
 
-## Getting Started
+## 시작하기
 
-1. **Install dependencies**: See `pyproject.toml` or `requirements.txt` in each module for required packages.
-2. **Set up environment variables**: Many examples require a `.env` file with model, API, and GCP credentials.
-3. **Run examples**: Navigate to the desired folder and follow the instructions in the local `README.md` or run the provided scripts/notebooks.
-
----
-
-## Key Features
-- Modular agent and tool design for easy extension
-- A2A protocol support for agent-to-agent communication
-- Built-in, function, and external tool integration
-- Workflow orchestration (sequential, parallel, loop, custom)
-- Callback hooks for agent/model/tool execution
-- Deployment to Vertex AI Agent Engine and session management
-- Output schema enforcement and evaluation utilities
-- Jupyter notebooks for interactive exploration and tutorials
+1. **의존성 설치**: 각 모듈의 `pyproject.toml` 또는 `requirements.txt`에서 필요한 패키지 확인 및 설치
+2. **환경 변수 설정**: 많은 예제에서 모델, API, GCP 인증 정보가 담긴 `.env` 파일 필요
+3. **예제 실행**: 원하는 폴더로 이동해 해당 `README.md`의 안내 또는 제공된 스크립트/노트북을 참고해 실행
 
 ---
 
-## License
+## 주요 특징
+- 모듈형 에이전트 및 툴 설계로 손쉬운 확장성
+- A2A 프로토콜 기반 에이전트 간 통신 지원
+- 내장, 함수형, 외부 툴 연동
+- 순차, 병렬, 루프, 커스텀 등 다양한 워크플로우 오케스트레이션
+- 에이전트/모델/툴 실행 콜백 훅 제공
+- Vertex AI Agent Engine 배포 및 세션 관리
+- 출력 스키마 적용 및 평가 유틸리티
+- 주피터 노트북 기반 튜토리얼 및 인터랙티브 실습 지원
 
-This project is licensed under the Apache License 2.0.  
-  
-All code and content is copyrighted by **shins777@gmail.com**.
+---
+
+## 라이선스
+
+이 프로젝트는 Apache License 2.0을 따릅니다.
+
+모든 코드와 콘텐츠의 저작권은 **shins777@gmail.com**에 있습니다.
