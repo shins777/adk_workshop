@@ -1,6 +1,6 @@
-# ADK(Agent Development Kit) 과 A2A(Agent to Agent) 프로토콜에 대한 예제.
+# ADK(Agent Development Kit 과 A2A(Agent to Agent) 대한 예제.
 
-이 저장소는 Agent Development Kit(ADK), A2A(Agent-to-Agent) 프로토콜, 그리고 구글이 제공하는 Tool 연계 및 MCP를 활용한 Tool 연계를 통해서 AI 에이전트를 구축, 배포, 평가하는 다양한 예제와 참고 구현을 제공합니다. 각 폴더는 특정 개념, 에이전트 유형, 툴 연동, 워크플로우, 배포, 평가 시나리오를 독립적으로 다루고 있습니다.
+이 저장소는 Agent Development Kit(ADK), A2A(Agent-to-Agent) 프로토콜, 그리고 구글이 제공하는 Tool 연계 및 MCP를 활용한 Tool 연계를 통해서 AI 에이전트를 구축, 배포, 평가하는 다양한 예제와 참고 구현을 제공합니다. 각 폴더는 AI 에이전트를 만들기 위한 개념, 에이전트 유형, 툴 연동, 워크플로우, 배포, 평가 시나리오를 독립적으로 다루고 있습니다.
 
 ## 저장소 구조
 
