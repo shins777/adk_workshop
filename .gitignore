@@ -193,5 +193,7 @@ cython_debug/
 .cursorignore
 .cursorindexingignore
 
+# working in progress directories
 
 adk/02-conversations/_memory/
+adk/03-tools/built-in/_code_exec/
