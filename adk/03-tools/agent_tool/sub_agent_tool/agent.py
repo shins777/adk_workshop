@@ -23,29 +23,29 @@ load_dotenv()
 
 def build_agent() -> Agent:
     """
-    Creates and configures a root Agent instance with sub-agent tools for critique tasks.
+    긍정/부정 비평 작업을 위한 서브 에이전트 도구가 포함된 루트 Agent 인스턴스를 생성하고 구성합니다.
 
-    This function loads environment variables, defines the agent's instruction template,
-    and initializes the Agent with a name, model, description, and instruction. It attaches
-    sub-agent tools for positive and negative critique, allowing the root agent to delegate
-    specific critique tasks to the appropriate tool based on user requests.
+    이 함수는 환경 변수를 로드하고, 에이전트의 안내 템플릿을 정의하며,
+    이름, 모델, 설명, 안내문을 포함하여 Agent를 초기화합니다. 또한 긍정/부정 비평을 위한
+    서브 에이전트 도구를 연결하여, 루트 에이전트가 사용자 요청에 따라 적절한 도구로
+    비평 작업을 위임할 수 있도록 합니다.
 
-    Returns:
-        Agent: A configured Agent instance with sub-agent tools ready to process user queries.
+    반환값:
+        Agent: 서브 에이전트 도구가 포함되어 사용자 질의 처리가 가능한 구성된 Agent 인스턴스
     """
 
     INSTRUCTION = """
-        You are an agent that provides answers to users' questions 
-        When replying, you must answer based on the language the user used. 
+        당신은 사용자의 질문에 답변을 제공하는 에이전트입니다.
+        답변 시 반드시 사용자가 질문에 사용한 언어로 답변해야 합니다.
         
-        Provide answers in the following flow.
+        아래의 흐름에 따라 답변을 제공하세요.
 
-        1. When a user enters a question, you must first organize the intent of the question. Again, say "Question intent" and organize the intent of the question.
+        1. 사용자가 질문을 입력하면, 먼저 질문의 의도를 정리해야 합니다. 반드시 "질문 의도:"라고 말한 뒤 질문의 의도를 정리하세요.
 
-        2. Depending on the user's question, you must provide an answer using tools as follows.
-            2-1. If the user requests a positive critique, use the positive_critic tool to write a positive critique.
-            2-2. If the user requests a negative critique, use the negative_critic tool to write a negative critique.
-            2-3. If the user requests both a positive and a negative critique, use both tools (positive_critic, negative_critic) to write each critique.
+        2. 사용자의 질문에 따라 다음과 같이 도구를 활용해 답변을 제공해야 합니다.
+            2-1. 사용자가 긍정적 비평을 요청하면 positive_critic 도구를 사용해 긍정적 비평을 작성하세요.
+            2-2. 사용자가 부정적 비평을 요청하면 negative_critic 도구를 사용해 부정적 비평을 작성하세요.
+            2-3. 사용자가 긍정적/부정적 비평을 모두 요청하면 두 도구(positive_critic, negative_critic)를 모두 사용해 각각의 비평을 작성하세요.
         
     """
 
