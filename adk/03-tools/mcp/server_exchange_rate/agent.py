@@ -1,4 +1,4 @@
-# Copyright 2025 Forusone(forusone777@gmail.com)
+# Copyright 2025 Forusone(shins777@gmail.com)
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -21,14 +21,13 @@ load_dotenv()
 
 def mcp_toolset():
     """
-    Creates and configures an MCPToolset for exchange rate operations via Model Context Protocol (MCP).
+    Model Context Protocol(MCP)를 통해 환율 작업을 위한 MCPToolset을 생성하고 구성합니다.
 
-    This function sets up an MCPToolset instance that connects to a custom exchange rate server
-    using the specified command and arguments. The toolset enables the agent to interact with
-    the exchange rate server for retrieving exchange rate information.
+    이 함수는 지정된 명령어와 인자를 사용해 커스텀 환율 서버에 연결하는 MCPToolset 인스턴스를 설정합니다.
+    이를 통해 에이전트가 환율 정보를 조회할 수 있습니다.
 
-    Returns:
-        MCPToolset: A configured MCPToolset instance for exchange rate tasks.
+    반환값:
+        MCPToolset: 환율 작업을 위한 구성된 MCPToolset 인스턴스
     """
 
     mcp_toolset = MCPToolset(
@@ -46,23 +45,21 @@ def mcp_toolset():
 
 def build_agent() -> LlmAgent:
     """
-    Creates and configures an LlmAgent instance with an MCPToolset for exchange rate retrieval.
+    환율 정보 조회를 위한 MCPToolset이 포함된 LlmAgent 인스턴스를 생성하고 구성합니다.
 
-    This function defines the agent's instruction template and initializes the LlmAgent with a name,
-    model, description, instruction, and a tool for retrieving exchange rate information via MCP.
-    The agent is designed to answer user questions and use the 'exchange_rate_tool' to provide up-to-date information.
+    이 함수는 에이전트의 안내 템플릿을 정의하고, 이름, 모델, 설명, 안내문,
+    MCP를 통한 환율 정보 조회 도구를 포함하여 LlmAgent를 초기화합니다.
+    이 에이전트는 사용자의 질문에 답변하고, 'exchange_rate_tool'을 활용해 최신 환율 정보를 제공합니다.
 
-    Returns:
-        LlmAgent: A configured LlmAgent instance ready to process exchange rate queries using MCPToolset.
+    반환값:
+        LlmAgent: MCPToolset을 활용해 환율 질의를 처리할 수 있는 구성된 LlmAgent 인스턴스
     """
-    # ...existing code...
 
     INSTRUCTION = """
-        You are an agent who provides answers to users' questions.
-        When a user enters a question, you should perform a 'exchange_rate_tool' for that question and provide an answer based on the results.
+        당신은 사용자의 질문에 답변을 제공하는 에이전트입니다.
+        사용자가 질문을 입력하면, 해당 질문에 대해 'exchange_rate_tool'을 사용해 결과를 바탕으로 답변을 제공해야 합니다.
 
-        Note: When answering, Must be sure to use the same language the user used when asking the question. 
-                
+        참고: 답변 시 반드시 사용자가 질문에 사용한 언어와 동일한 언어로 답변해야 합니다.
     """
 
     exchange_rate_tool = mcp_toolset()

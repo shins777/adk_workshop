@@ -21,17 +21,18 @@ load_dotenv()
 
 def mcp_toolset(target_folder_path: str):
     """
-    Creates and configures an MCPToolset for file system operations via Model Context Protocol (MCP).
+    Model Context Protocol(MCP)를 통해 파일 시스템 작업을 위한 MCPToolset을 생성하고 구성합니다.
 
-    This function sets up an MCPToolset instance using the provided target folder path, allowing
-    the agent to interact with the file system through the MCP server. The toolset is configured
-    to connect to the server using npx and the @modelcontextprotocol/server-filesystem package.
+    이 함수는 주어진 대상 폴더 경로를 사용하여 MCPToolset 인스턴스를 설정하며,
+    에이전트가 MCP 서버를 통해 파일 시스템과 상호작용할 수 있도록 합니다.
+    
+    npx와 @modelcontextprotocol/server-filesystem 패키지를 사용해 서버에 연결하도록 구성됩니다.
 
-    Args:
-        target_folder_path (str): The absolute path to the target folder for file system operations.
+    인자:
+        target_folder_path (str): 파일 시스템 작업을 위한 대상 폴더의 절대 경로
 
-    Returns:
-        MCPToolset: A configured MCPToolset instance for file management tasks.
+    반환값:
+        MCPToolset: 파일 관리 작업을 위한 구성된 MCPToolset 인스턴스
     """
 
     file_system_toolset = MCPToolset(
@@ -55,21 +56,21 @@ def mcp_toolset(target_folder_path: str):
 
 def build_agent() -> LlmAgent:
     """
-    Creates and configures an LlmAgent instance with an MCPToolset for file system management.
+    파일 시스템 관리를 위한 MCPToolset이 포함된 LlmAgent 인스턴스를 생성하고 구성합니다.
 
-    This function defines the agent's instruction template and initializes the LlmAgent with a name,
-    model, description, instruction, and a tool for managing files in a specified folder via MCP.
-    The agent is designed to help users manage their files and answer questions using the file system toolset.
+    이 함수는 에이전트의 안내 템플릿을 정의하고, 이름, 모델, 설명, 안내문,
+    MCP를 통한 지정 폴더 파일 관리 도구를 포함하여 LlmAgent를 초기화합니다.
+    이 에이전트는 사용자가 파일을 관리하고 파일 시스템 도구셋을 활용해 질문에 답변할 수 있도록 설계되었습니다.
 
-    Returns:
-        LlmAgent: A configured LlmAgent instance ready to process file management queries using MCPToolset.
+    반환값:
+        LlmAgent: MCPToolset을 활용해 파일 관리 질의를 처리할 수 있는 구성된 LlmAgent 인스턴스
     """
 
     INSTRUCTION = """
-        You are an agent who help the user manage their files in the given folder.
-        When a user enters a question, you should perform a 'file_system_toolset' for that question and provide an answer based on the results.
+        당신은 주어진 폴더 내 파일 관리를 도와주는 에이전트입니다.
+        사용자가 질문을 입력하면, 해당 질문에 대해 'file_system_toolset'을 사용해 결과를 바탕으로 답변을 제공해야 합니다.
 
-        Note: When answering, Must be sure to use the same language the user used when asking the question.       
+        참고: 답변 시 반드시 사용자가 질문에 사용한 언어와 동일한 언어로 답변해야 합니다.
     """
 
     target_folder_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "/")

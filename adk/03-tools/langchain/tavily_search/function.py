@@ -1,4 +1,4 @@
-# Copyright 2025 Forusone(forusone777@gmail.com)
+# Copyright 2025 Forusone(shins777@gmail.com)
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -16,24 +16,21 @@ def get_exchange_rate(
     currency_from: str = "USD",
     currency_to: str = "KRW",
     currency_date: str = "latest", )->dict:
-    """Retrieves the exchange rate between two currencies on a specified date.
+    """
+    지정한 날짜에 두 통화 간의 환율을 조회합니다.
 
-    Uses the Frankfurter API (https://api.frankfurter.app/) to obtain
-    exchange rate data.
+    Frankfurter API(https://api.frankfurter.app/)를 사용하여
+    환율 데이터를 가져옵니다.
 
-    Args:
-        currency_from: The base currency (3-letter currency code).
-            Defaults to "USD" (US Dollar).
-        currency_to: The target currency (3-letter currency code).
-            Defaults to "KRW" (KRW).
-        currency_date: The date for which to retrieve the exchange rate.
-            Defaults to "latest" for the most recent exchange rate data.
-            Can be specified in YYYY-MM-DD format for historical rates.
+    인자:
+        currency_from: 기준 통화(3자리 통화 코드). 기본값은 "USD"(미국 달러).
+        currency_to: 대상 통화(3자리 통화 코드). 기본값은 "KRW"(원화).
+        currency_date: 환율을 조회할 날짜. 기본값은 "latest"로 최신 환율 데이터를 의미합니다.
+            과거 환율은 YYYY-MM-DD 형식으로 지정할 수 있습니다.
 
-    Returns:
-        dict: A dictionary containing the exchange rate information.
-            Example: {"amount": 1.0, "base": "USD", "date": "2023-11-24",
-                "rates": {"EUR": 0.95534}}
+    반환값:
+        dict: 환율 정보가 담긴 딕셔너리.
+            예시: {"amount": 1.0, "base": "USD", "date": "2023-11-24", "rates": {"EUR": 0.95534}}
     """
     import requests
     response = requests.get(

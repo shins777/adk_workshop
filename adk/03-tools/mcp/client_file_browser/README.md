@@ -1,43 +1,13 @@
-# ADK MCP Tools Overview
+# MCP 클라이언트 파일 브라우저 에이전트 예제 (ADK)
 
-This directory contains examples of ADK (Agent Development Kit) agents that use the Model Context Protocol (MCP) to interact with external systems such as file systems and custom servers. Each subfolder demonstrates a different approach to using MCP-powered tools within ADK agents.
+이 폴더는 ADK(Agent Development Kit)에서 Model Context Protocol(MCP)을 활용하여 파일 시스템을 탐색하고 관리할 수 있는 에이전트 예제를 제공합니다.
 
----
+## 주요 파일 안내
+- `agent.py` : MCPToolset을 활용해 지정 폴더 내 파일을 관리하는 LlmAgent의 메인 코드입니다.
+- `__init__.py` : 에이전트 모듈을 임포트합니다.
 
-## Subfolders Overview
-
-### 1. `client_file_browser/` — MCP Client File Browser Agent
-- Helps users manage and browse files in a specified folder using MCP.
-- Connects to a file system server via `@modelcontextprotocol/server-filesystem`.
-- See [`client_file_browser/README.md`](./client_file_browser/README.md) for details.
-
-### 2. `server_exchange_rate/` — MCP Server Exchange Rate Agent
-- Retrieves exchange rate information by connecting to a custom Python MCP server exposing the `get_exchange_rate` tool.
-- Integrates a Python-based MCP server for up-to-date financial data.
-- See [`server_exchange_rate/README.md`](./server_exchange_rate/README.md) for details.
-
-
----
-
-## Getting Started
-
-1. Choose a subfolder (`client_file_browser` or `server_exchange_rate`) based on your needs.
-2. Review the subfolder's README for specific setup and usage instructions.
-3. Place your `.env` file in the parent folder as described above.
-4. Run the agent using the recommended command for that example.
-
----
-
-# MCP Tools Example (ADK)
-
-## Example Overview
-This folder demonstrates how to use Model Context Protocol (MCP) tools with ADK agents for file system and custom server integration.
-
-- `client_file_browser/`: File browser agent via MCP.
-- `server_exchange_rate/`: Exchange rate agent via custom MCP server.
-
-## Environment Setting
-Set the following keys in your `.env` file (located in the parent folder):
+## 환경 설정
+상위 폴더의 `.env` 파일에 다음과 같은 키를 설정하세요.
 
 ```
 GOOGLE_GENAI_USE_VERTEXAI=TRUE
@@ -48,12 +18,18 @@ LOCATION=your_location
 MODEL=your_model_name
 ```
 
-## How to Run the Source Code
-See each subfolder for agent code and instructions. Example:
+## 실행 방법
+아래 명령어로 예제를 실행할 수 있습니다.
 
-```bash
-mcp/adk web
 ```
+adk web
+```
+테스트 할때는 질문은 "현재 폴더내의 정보를 검색해주세요." 라고해주세요. 
 
-## License Information
-This project is licensed under the Apache License 2.0. See the [LICENSE](../../LICENSE) file for details.
+## 예제 기능
+- 지정한 폴더 내 파일 목록 조회, 파일 읽기 등 파일 시스템 관리 작업을 MCP 서버와 연동하여 수행할 수 있습니다.
+- npx와 @modelcontextprotocol/server-filesystem을 활용해 MCP 서버에 연결합니다.
+
+## 라이센스
+
+이 프로젝트는 Apache License 2.0을 따르며, 모든 코드와 콘텐츠의 저작권은 **ForusOne**(shins777@gmail.com)에 있습니다.
