@@ -9,8 +9,7 @@ from state import agent
 #--------------------------------[run_agent]----------------------------------
 
 async def run_agent( app_name: str,
-                     user_id: str,
-                     session_id: str,):
+                     user_id: str):
     """
     세션 상태 변화를 표시하며 에이전트를 대화 루프에서 실행합니다.
 
@@ -21,7 +20,6 @@ async def run_agent( app_name: str,
     인자:
         app_name (str): 애플리케이션 이름
         user_id (str): 사용자 식별자
-        session_id (str): 세션 식별자
 
     반환값:
         없음
@@ -29,8 +27,7 @@ async def run_agent( app_name: str,
 
     session_service = InMemorySessionService()
     session = await session_service.create_session(app_name=app_name, 
-                                            user_id=user_id, 
-                                            session_id=session_id)
+                                                    user_id=user_id)
 
     runner = Runner(agent=agent.root_agent,
                     app_name=app_name,
@@ -46,8 +43,10 @@ async def run_agent( app_name: str,
 
         content = types.Content(role='user', parts=[types.Part(text=user_input)])
 
-        events = runner.run_async(user_id=user_id,
-                                session_id=session_id,
+        # 에이전트 러너를 사용하여 비동기적으로 이벤트를 실행합니다.
+        # 세션 정보는 user_id와 session_id를 통해 전달됩니다.
+        events = runner.run_async(user_id=session.user_id,
+                                session_id=session.id,
                                 new_message=content,)
 
         async for event in events:
@@ -55,12 +54,11 @@ async def run_agent( app_name: str,
                 final_response = event.content.parts[0].text            
                 print("\n 🤖 AI Assistant: " + final_response)
 
-        updated_session = await session_service.get_session(app_name = app_name, 
-                                                     user_id = user_id, 
-                                                     session_id = session_id)
+        updated_session = await session_service.get_session(app_name = session.app_name, 
+                                                     user_id = session.user_id, 
+                                                     session_id = session.id)
 
-        print(f"\nState after agent run: {updated_session.state}")
-        print(f"\nState after agent run - last_turn : {updated_session.state['last_turn']}")
+        print(f"\n\n output_key - last_turn : {updated_session.state['last_turn']}")
 
 #--------------------------------[__main__]----------------------------------
 
@@ -69,14 +67,13 @@ if __name__ == "__main__":
     import argparse
 
     print("Running the agent...")
-    print("Usage : uv run -m state.output_key --app_name <app_name> --user_id <user_id> --session_id <session_id>")
+    print("Usage : uv run -m state.output_key --app_name <app_name> --user_id <user_id> ")
 
     parser = argparse.ArgumentParser(description="Run the ADK agent with a user query.")
     parser.add_argument("--app_name",type=str,help="The application name of this agent.",)
     parser.add_argument("--user_id",type=str,help="The user name interacting with this agent",)
-    parser.add_argument("--session_id",type=str,help="The session id to identify the session of this agent",)
     args = parser.parse_args()
 
     asyncio.run(run_agent(app_name = args.app_name, 
                           user_id = args.user_id, 
-                          session_id = args.session_id,))
+                          ))

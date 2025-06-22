@@ -57,6 +57,7 @@ if __name__ == "__main__":
     else:
         raise ValueError("Invalid session type. Choose 'in_memory' or 'database' or 'vertexai'.")
 
+
     asyncio.run(runner.run_agent(session_service = session_service, 
                                  app_name = args.app_name, 
                                  user_id = args.user_id, 

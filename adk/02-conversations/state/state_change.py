@@ -22,7 +22,7 @@ from google.adk.sessions import InMemorySessionService
 
 async def run_agent( app_name: str,
                      user_id: str,
-                     session_id: str,):
+                     ):
     """
     ADK 이벤트 시스템을 사용하여 세션에서 명시적으로 상태를 변경하는 예시를 보여줍니다.
 
@@ -33,7 +33,6 @@ async def run_agent( app_name: str,
     인자:
         app_name (str): 애플리케이션 이름
         user_id (str): 사용자 식별자
-        session_id (str): 세션 식별자
 
     반환값:
         없음
@@ -43,13 +42,13 @@ async def run_agent( app_name: str,
 
     # 초기 상태 정의
     init_state = {
-        "task_status": "active", 
+        "task_status": "inactive", 
+        "timestamp": time.time(),  
     }
 
     session = await session_service.create_session(
-        app_name=app_name,
+        app_name= app_name,
         user_id=user_id,
-        session_id=session_id,
         state=init_state
     )
     
@@ -73,9 +72,9 @@ async def run_agent( app_name: str,
 
     print("2. 명시적 상태 delta에 새로운 변경 이벤트를 추가함.")
 
-    updated_session = await session_service.get_session(app_name=app_name,
-                                                user_id=user_id, 
-                                                session_id=session_id)
+    updated_session = await session_service.get_session(app_name=session.app_name,
+                                                user_id=session.user_id, 
+                                                session_id=session.id)
     
     print(f"3. 이벤트 전송 후 상태: {updated_session.state}")
 
@@ -84,14 +83,12 @@ if __name__ == "__main__":
     load_dotenv()
 
     print("에이전트를 실행 중...")
-    print("사용법 : python main.py --app_name <app_name> --user_id <user_id> --session_id <session_id>")
+    print("Usage : uv run -m state.state_change --app_name <app_name> --user_id <user_id> ")
 
     parser = argparse.ArgumentParser(description="사용자 쿼리로 ADK 에이전트를 실행합니다.")
     parser.add_argument("--app_name",type=str,help="이 에이전트의 애플리케이션 이름입니다.",)
     parser.add_argument("--user_id",type=str,help="이 에이전트와 상호작용하는 사용자 이름입니다.",)
-    parser.add_argument("--session_id",type=str,help="이 에이전트의 세션을 식별하는 세션 ID입니다.",)
     args = parser.parse_args()
-
+    
     asyncio.run(run_agent(app_name = args.app_name, 
-                          user_id = args.user_id, 
-                          session_id = args.session_id,))
+                          user_id = args.user_id,))
