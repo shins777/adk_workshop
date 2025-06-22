@@ -16,12 +16,12 @@ from pydantic import BaseModel, Field
 
 class SearchResult(BaseModel):
     """
-    Pydantic model representing the structure of a search result.
+    검색 결과의 구조를 나타내는 Pydantic 모델입니다.
 
-    Attributes:
-        query (str): The user's query string.
-        intention (str): The user's intention or purpose for asking the query.
-        result (str): The results or answer corresponding to the query.
+    속성:
+        query (str): 사용자의 질의 문자열.
+        intention (str): 사용자가 질문한 의도 또는 목적.
+        result (str): 질의에 해당하는 결과 또는 답변.
     """
     # ...existing code...
     query: str = Field(..., title="query", description="user's query")

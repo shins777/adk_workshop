@@ -21,18 +21,16 @@ from google.adk.agents.callback_context import CallbackContext
 def callback_before_agent(callback_context: CallbackContext) -> Optional[types.Content]:
 
     """
-    Pre-processing callback executed before the agent runs.
+    에이전트 실행 전에 호출되는 전처리 콜백입니다.
 
-    This function inspects the current state from the CallbackContext. If the state contains
-    'skip_agent' set to True, it prevents the agent from running and returns a custom response
-    to the user. Otherwise, it allows the agent to proceed by returning None.
+    이 함수는 CallbackContext에서 현재 상태를 확인합니다. 만약 상태에 'skip_agent'가 True로 설정되어 있으면,
+    에이전트 실행을 중단하고 사용자에게 커스텀 응답을 반환합니다. 그렇지 않으면 None을 반환해 에이전트가 정상적으로 실행되도록 합니다.
 
-    Args:
-        callback_context (CallbackContext): The context containing agent information and state.
+    인자:
+        callback_context (CallbackContext): 에이전트 정보와 상태를 담은 컨텍스트
 
-    Returns:
-        Optional[types.Content]: A custom Content response if the agent should be skipped,
-        or None to proceed with normal agent execution.
+    반환값:
+        Optional[types.Content]: 에이전트 실행을 건너뛰어야 할 경우 커스텀 Content 응답, 아니면 None(정상 실행)
     """
 
     # Get the contextual information from CallbackContext
@@ -59,18 +57,16 @@ def callback_before_agent(callback_context: CallbackContext) -> Optional[types.C
 
 def callback_after_agent(callback_context: CallbackContext) -> Optional[types.Content]:
     """
-    Post-processing callback executed after the agent runs.
+    에이전트 실행 후에 호출되는 후처리 콜백입니다.
 
-    This function examines the current state from the CallbackContext. If the state contains
-    'check_response' set to True, it returns a custom response to the user and halts further
-    processing. Otherwise, it allows the agent's normal execution to continue by returning None.
+    이 함수는 CallbackContext에서 현재 상태를 확인합니다. 만약 상태에 'check_response'가 True로 설정되어 있으면,
+    사용자에게 커스텀 응답을 반환하고 이후 처리를 중단합니다. 그렇지 않으면 None을 반환해 에이전트의 정상 실행을 계속합니다.
 
-    Args:
-        callback_context (CallbackContext): The context containing agent information and state.
+    인자:
+        callback_context (CallbackContext): 에이전트 정보와 상태를 담은 컨텍스트
 
-    Returns:
-        Optional[types.Content]: A custom Content response if post-processing is required,
-        or None to proceed with normal agent execution.
+    반환값:
+        Optional[types.Content]: 후처리가 필요한 경우 커스텀 Content 응답, 아니면 None(정상 실행)
     """
     
     # Get the contextual information from CallbackContext

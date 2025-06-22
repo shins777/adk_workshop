@@ -20,16 +20,17 @@ from tool_callback import agent
 
 async def run_agent(user_query: str):
     """
-    Asynchronously runs the AI agent with the provided user query.
+    주어진 사용자 질문으로 AI 에이전트를 비동기적으로 실행합니다.
 
-    This function creates a user session, initializes the agent runner, and sends the user's query
-    to the agent. It streams the agent's responses and prints the final response to the console.
+    이 함수는 사용자 세션을 생성하고, 에이전트 러너를 초기화한 뒤,
+    사용자의 질문을 에이전트에 전달합니다. 에이전트의 응답을 스트리밍하며
+    최종 응답을 콘솔에 출력합니다.
 
-    Args:
-        user_query (str): The user's input or question to be processed by the agent.
+    인자:
+        user_query (str): 에이전트가 처리할 사용자 입력 또는 질문
 
-    Returns:
-        None
+    반환값:
+        없음
     """
 
     print(f"\n 👤 User: {user_query}\n")

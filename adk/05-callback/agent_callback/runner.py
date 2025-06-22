@@ -24,18 +24,18 @@ async def run_agent(command: str,
                     user_query: str):
     
     """
-    Runs the AI agent asynchronously with the specified command and user query.
+    지정한 명령어와 사용자 질문으로 AI 에이전트를 비동기적으로 실행합니다.
 
-    This function sets up a session with the given command as part of the session state,
-    initializes the agent runner, and processes the user's query. It prints the user's input,
-    streams the agent's responses, and prints the final response from the agent.
+    이 함수는 주어진 명령어를 세션 상태에 포함해 세션을 설정하고,
+    에이전트 러너를 초기화한 뒤 사용자 질문을 처리합니다. 사용자 입력을 출력하고,
+    에이전트의 응답을 스트리밍하며 최종 응답을 출력합니다.
 
-    Args:
-        command (str): The command to control agent callback behavior (e.g., 'skip_agent', 'check_response').
-        user_query (str): The user's question or input to be processed by the agent.
+    인자:
+        command (str): 에이전트 콜백 동작을 제어할 명령어(예: 'skip_agent', 'check_response')
+        user_query (str): 에이전트가 처리할 사용자 질문 또는 입력
 
-    Returns:
-        None
+    반환값:
+        없음
     """
 
     print(f"\n 👤 User: {user_query}\n")

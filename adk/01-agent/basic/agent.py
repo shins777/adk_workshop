@@ -1,4 +1,4 @@
-# Copyright 2025 Forusone(forusone777@gmail.com)
+# Copyright 2025 Forusone(shins777@gmail.com)
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -20,31 +20,24 @@ load_dotenv()
 
 def build_agent() -> Agent:
     """
-    Creates and configures a basic Agent instance for answering user questions.
+    사용자 질문에 답변하는 기본 Agent 인스턴스를 생성하고 설정합니다.
+    이 함수는 환경 변수를 불러오고, 에이전트의 지시문 템플릿을 정의하며,
+    이름, 모델, 설명, 지시문을 포함해 Agent를 초기화합니다.
+    이 에이전트는 사용자 질문에 간결하고 구조화된 답변을 제공하도록 설계되었습니다.
 
-    This function loads environment variables, defines the agent's instruction template,
-    and initializes the Agent with a name, model, description, and instruction. The agent
-    is designed to provide concise and structured answers to user inquiries.
-
-    Returns:
-        Agent: A configured Agent instance ready to process user queries.
+    반환값:
+        Agent: 사용자 질문을 처리할 준비가 된 설정된 Agent 인스턴스
     """
 
     INSTRUCTION = """
-        You are an AI agent who provides answers to users' questions.
-        When providing answers, please respond concisely and clearly in the following structure:
-        - Question content:
-        - Question intent:
-        - Answer content:
-
-        Please answer everyday conversation questions without any special format.
-        Note : When answering, Must be sure to use the same language the user used when asking the question. 
+        당신은 사용자의 질문에 답변하는 AI 에이전트입니다.
+        답변을 제공할 때는 질문에 대한 이해를 설명하고 간결하고 명확하게 응답하세요:
     """
 
     agent = Agent(
         name = "basic_agent",
         model = os.getenv("MODEL"),
-        description = "Agents that answer questions about user query",
+        description = "사용자 질의에 대한 질문에 답변하는 에이전트",
         instruction = INSTRUCTION,
     )
     return agent

@@ -21,18 +21,18 @@ from model_callback import agent
 async def run_agent(keyword: str, 
                     user_query: str):
     """
-    Asynchronously runs the AI agent with the specified keyword and user query.
+    지정한 키워드와 사용자 질문으로 AI 에이전트를 비동기적으로 실행합니다.
 
-    This function creates a user session with a given keyword for callback control,
-    initializes the agent runner, and sends the user's query to the agent. It streams
-    the agent's responses and prints the final response to the console.
+    이 함수는 콜백 제어용 키워드를 포함한 사용자 세션을 생성하고,
+    에이전트 러너를 초기화한 뒤 사용자 질문을 에이전트에 전달합니다.
+    에이전트의 응답을 스트리밍하며 최종 응답을 콘솔에 출력합니다.
 
-    Args:
-        keyword (str): The keyword used to control the model's callback behavior.
-        user_query (str): The user's input or question to be processed by the agent.
+    인자:
+        keyword (str): 모델 콜백 동작을 제어할 키워드
+        user_query (str): 에이전트가 처리할 사용자 입력 또는 질문
 
-    Returns:
-        None
+    반환값:
+        없음
     """
 
     print(f"\n 👤 User: {user_query}\n")
@@ -74,4 +74,4 @@ if __name__ == "__main__":
     args = parser.parse_args()
     asyncio.run(run_agent(keyword = args.keyword,
                           user_query=args.query))
-    
+

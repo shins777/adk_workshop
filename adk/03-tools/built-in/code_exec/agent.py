@@ -22,15 +22,14 @@ load_dotenv()
 def build_agent() -> Agent:
 
     """
-    Creates and configures an Agent instance with built-in code execution tool support.
+    내장 코드 실행 툴이 포함된 Agent 인스턴스를 생성하고 설정합니다.
 
-    This function loads environment variables, defines the agent's instruction template,
-    and initializes the Agent with a name, model, description, instruction, and the built-in
-    code execution tool. The agent is designed to solve mathematical expressions by writing
-    and executing Python code, returning both the code and the result as plain text.
+    이 함수는 환경 변수를 불러오고, 에이전트의 지시문 템플릿을 정의하며,
+    이름, 모델, 설명, 지시문, 내장 코드 실행 툴을 포함해 Agent를 초기화합니다.
+    이 에이전트는 수학식을 받아 파이썬 코드로 계산하고, 코드와 결과를 평문으로 반환하도록 설계되었습니다.
 
-    Returns:
-        Agent: A configured Agent instance ready to process code execution queries.
+    반환값:
+        Agent: 코드 실행 질의를 처리할 준비가 된 설정된 Agent 인스턴스
     """
 
     INSTRUCTION = """

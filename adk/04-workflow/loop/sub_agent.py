@@ -32,17 +32,17 @@ SYSTEM_INSTRUCTION = """
 
 def exit_loop(tool_context: ToolContext):
     """
-    Signals the loop agent to exit the current loop iteration.
+    루프 에이전트에게 현재 루프 반복을 종료하도록 신호를 보냅니다.
 
-    This function is intended to be called as a tool by an agent within a loop.
-    It sets the 'escalate' action in the tool context to True, which instructs the
-    loop agent to break out of the loop and proceed to the next step in the workflow.
+    이 함수는 루프 내 에이전트가 툴로서 호출되도록 의도되었습니다.
+    툴 컨텍스트의 'escalate' 액션을 True로 설정하여,
+    루프 에이전트가 루프를 벗어나 워크플로우의 다음 단계로 진행하도록 지시합니다.
 
-    Args:
-        tool_context (ToolContext): The context object containing agent and action information.
+    인자:
+        tool_context (ToolContext): 에이전트 및 액션 정보를 담은 컨텍스트 객체
 
-    Returns:
-        dict: An empty dictionary, as no additional output is required.
+    반환값:
+        dict: 추가 출력이 필요 없으므로 빈 딕셔너리 반환
     """
   
     print(f"[Tool Call] exit_loop triggered by {tool_context.agent_name}")
@@ -55,11 +55,11 @@ def exit_loop(tool_context: ToolContext):
 research_agent = Agent(
     name = "research_agent",
     model = os.getenv("MODEL"),
-    description = "An agent that answers the positive and negative aspects of a user's questions.",
+    description = "주어진 주제에 대해 긍정적이고 부정적인 측면을 작성하는 에이전트입니다.",
     instruction = """
-            You are an agent who writes positive and negative reviews on a given topic.
-            When providing an answer, you should write as concisely and clearly as possible, and start by saying "Write a review.
-            Note : When answering, Must be sure to use the same language the user used when asking the question. 
+            당신은 주어진 주제에 대해 긍정적이고 부정적인 측면을 작성하는 에이전트입니다.
+            답변을 제공할 때는 가능한 간결하고 명확하게 작성해야 하며, "리뷰 작성."이라고 시작해야 합니다.
+            참고: 답변 시 반드시 사용자가 질문한 언어와 동일한 언어로 답변해야 합니다.
 
                 """,
     output_key="RESEARCH_OUTCOME"                
@@ -70,27 +70,27 @@ research_agent = Agent(
 critic_agent = Agent(
     name = "critic_agent",
     model = os.getenv("MODEL"),
-    description = "An Agent that reviews answers to a given topic.",
+    description = "주어진 주제에 대한 답변을 검토하는 건설적인 비평 AI 에이전트입니다.",
     instruction = f"""
-                    You are a constructive critique AI Agent that reviews answers to a given topic. 
-                    Add a title of "## Answer Review" to your answers.
+                    당신은 주어진 주제에 대한 답변을 검토하는 건설적인 비평 AI 에이전트입니다.
+                    답변에 "## 답변 검토"라는 제목을 추가하세요.
 
-                    **Answers to the given topic:**
+                    **주어진 주제에 대한 답변:**
                         ```
                         {RESEARCH_OUTCOME}
                         ```
 
-                    **Tasks:**
-                        Please review your response clearly against the following criteria:
+                    **작업:**
+                        다음 기준에 따라 응답을 명확하게 검토하세요:
 
-                        Provide 1-2 *clear and actionable* ways to improve the response.
-                        Must include implications for our society and organization.
-                        Provide specific suggestions concisely, such as: Print *only* the critique text. Document
+                        응답을 개선할 수 있는 1-2가지 *명확하고 실행 가능한* 방법을 제시하세요.
+                        우리 사회와 조직에 대한 시사점을 포함해야 합니다.
+                        구체적인 제안을 간결하게 제시하세요. 예를 들어: 비평 텍스트*만* 출력하세요. 문서
 
-                    ** If the answer is ok :
-                    Must respond *exactly* with the phrase "{COMPLETION_PHRASE}" and do not output any other phrases or add any explanations.
+                    ** 답변이 괜찮다면:
+                    *정확히* "{COMPLETION_PHRASE}" 문구로 응답해야 하며, 다른 문구를 출력하거나 설명을 추가하지 마세요.
 
-                    Note : When answering, Must be sure to use the same language the user used when asking the question. 
+                    참고: 답변 시 반드시 사용자가 질문한 언어와 동일한 언어로 답변해야 합니다.
 
                                 
                 """,
@@ -102,28 +102,28 @@ critic_agent = Agent(
 refine_agent = Agent(
     name = "refine_agent",
     model = os.getenv("MODEL"),
-    description = "An Agent that refine answers to a given topic.",
+    description = "사용자의 질문에 대한 답변을 검토하는 건설적인 비평 AI 에이전트입니다.",
     instruction = f"""
-                    You are a constructive critique AI Agent that reviews answers to users' questions. 
-                    Add a title of "## Answer Verification" to your response.
+                    당신은 사용자의 질문에 대한 답변을 검토하는 건설적인 비평 AI 에이전트입니다.
+                    응답에 "## 답변 검증"이라는 제목을 추가하세요.
 
-                    **Answers to a given topic:**
+                    **주어진 주제에 대한 답변:**
                         ```
                         {RESEARCH_OUTCOME}
                         ```
-                    **Critique/Suggestion:**
+                    **비평/제안:**
                         {STATE_CRITICISM}
 
-                    **Tasks:**
-                        Analyze 'Criticism/Suggestion'.
+                    **작업:**
+                        '비평/제안'을 분석하세요.
 
-                        If the critique is *exactly* "{COMPLETION_PHRASE}":
-                            You must call the 'exit_loop' function. Don't output the text.
-                        Otherwise (if the critique contains actionable feedback):
-                            Apply the suggestion carefully to improve the 'current document'. Output *only* the polished document text.
-                            Don't add descriptions. Output the polished document or call the exit_loop function.
+                        비평이 *정확히* "{COMPLETION_PHRASE}"인 경우:
+                            'exit_loop' 함수를 호출해야 합니다. 텍스트를 출력하지 마세요.
+                        그렇지 않은 경우 (비평에 실행 가능한 피드백이 포함된 경우):
+                            제안을 신중하게 적용하여 '현재 문서'를 개선하세요. 개선된 문서 텍스트*만* 출력하세요.
+                            설명을 추가하지 마세요. 개선된 문서를 출력하거나 exit_loop 함수를 호출하세요.
 
-                    Note : When answering, Must be sure to use the same language the user used when asking the question. 
+                    참고: 답변 시 반드시 사용자가 질문한 언어와 동일한 언어로 답변해야 합니다.
 
                 """,
     
@@ -136,19 +136,19 @@ refine_agent = Agent(
 conclusion_agent = Agent(
     name = "conclusion_agent",
     model = os.getenv("MODEL"),
-    description = "Agent that summarizes the positive and negative aspects of a user's question",
+    description = "사용자 질문의 긍정적 및 부정적 측면을 요약하는 에이전트",
     instruction = f"""
-                    You are an agent who explains the final summary and conclusion based on the positive and negative criticisms on the given topic.
-                    When answering, please refer to the current document below and the criticism/suggestion section and say "final summary" and answer.
+                    당신은 주어진 주제에 대한 긍정적 및 부정적 비평을 바탕으로 최종 요약 및 결론을 설명하는 에이전트입니다.
+                    답변 시 아래 현재 문서와 비평/제안 섹션을 참고하여 "최종 요약"이라고 말하고 답변하세요.
                     
-                    **Answers to a given topic:**
+                    **주어진 주제에 대한 답변:**
                     ```
                     {RESEARCH_OUTCOME}
                     ```
-                    **Critique/Suggestion:**
+                    **비평/제안:**
                     {STATE_CRITICISM}
 
-                    Note : When answering, Must be sure to use the same language the user used when asking the question. 
+                    참고: 답변 시 반드시 사용자가 질문한 언어와 동일한 언어로 답변해야 합니다.
 
                 """,
 )

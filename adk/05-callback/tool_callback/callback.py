@@ -24,16 +24,16 @@ from google.adk.tools.base_tool import BaseTool
 def get_capital_city(country: str) -> dict:
 
     """
-    Tool function for LLM function calling that returns the capital city of a given country.
+    주어진 국가의 수도를 반환하는 LLM 함수 호출용 툴 함수입니다.
 
-    This function looks up the capital city for the specified country from a predefined dictionary.
-    If the country is not found, it returns a message indicating that the capital was not found.
+    이 함수는 미리 정의된 딕셔너리에서 해당 국가의 수도를 조회합니다.
+    국가가 목록에 없으면 수도를 찾을 수 없다는 메시지를 반환합니다.
 
-    Args:
-        country (str): The name of the country to look up.
+    인자:
+        country (str): 조회할 국가명
 
-    Returns:
-        str: The capital city of the specified country, or a not found message if unavailable.
+    반환값:
+        str: 해당 국가의 수도 또는 정보를 찾을 수 없을 때의 메시지
     """
     country_capitals = {
         "south korea": "Seoul",
@@ -58,19 +58,19 @@ def callback_before_tool(tool: BaseTool,
                          tool_context: ToolContext
                         ) -> Optional[Dict]:
     """
-    Pre-processing callback executed before a tool is called.
+    툴이 호출되기 전에 실행되는 전처리 콜백입니다.
 
-    This function inspects the tool name and arguments before the tool is executed.
-    If the tool is 'get_capital_city' and the country argument is 'Dubai', it modifies
-    the argument to use 'UAE' instead. Otherwise, it allows the original arguments to proceed.
+    이 함수는 툴 이름과 인자를 검사하여,
+    툴이 'get_capital_city'이고 country 인자가 'Dubai'인 경우,
+    인자를 'UAE'로 변경합니다. 그 외에는 원래 인자를 그대로 사용합니다.
 
-    Args:
-        tool (BaseTool): The tool instance that will be called.
-        args (Dict[str, Any]): The arguments passed to the tool.
-        tool_context (ToolContext): The context containing agent and tool information.
+    인자:
+        tool (BaseTool): 호출될 툴 인스턴스
+        args (Dict[str, Any]): 툴에 전달되는 인자
+        tool_context (ToolContext): 에이전트 및 툴 정보를 담은 컨텍스트
 
-    Returns:
-        Optional[Dict]: Modified arguments dictionary if changes are made, or None to use the original arguments.
+    반환값:
+        Optional[Dict]: 인자가 변경된 경우 수정된 딕셔너리, 아니면 None(원본 인자 사용)
     """
 
     # Get the contextual information from CallbackContext
@@ -95,20 +95,21 @@ def callback_after_tool(tool: BaseTool,
                         tool_response: Dict
                         ) -> Optional[Dict]:
     """
-    Post-processing callback executed after a tool has been called.
+    툴이 호출된 후 실행되는 후처리 콜백입니다.
 
-    This function inspects the tool's response and, if the tool is 'get_capital_city' and the result is 'Seoul',
-    it modifies the response to add a note indicating that Seoul is the capital of South Korea. Otherwise,
-    it allows the original tool response to proceed unchanged.
+    이 함수는 툴의 응답을 검사하여,
+    툴이 'get_capital_city'이고 결과가 'Seoul'인 경우,
+    응답에 '서울은 대한민국의 수도'라는 노트를 추가해 반환합니다.
+    그 외에는 원래 응답을 그대로 사용합니다.
 
-    Args:
-        tool (BaseTool): The tool instance that was called.
-        args (Dict[str, Any]): The arguments passed to the tool.
-        tool_context (ToolContext): The context containing agent and tool information.
-        tool_response (Dict): The response returned by the tool.
+    인자:
+        tool (BaseTool): 호출된 툴 인스턴스
+        args (Dict[str, Any]): 툴에 전달된 인자
+        tool_context (ToolContext): 에이전트 및 툴 정보를 담은 컨텍스트
+        tool_response (Dict): 툴이 반환한 응답
 
-    Returns:
-        Optional[Dict]: A modified tool response dictionary if changes are made, or None to use the original response.
+    반환값:
+        Optional[Dict]: 응답이 변경된 경우 수정된 딕셔너리, 아니면 None(원본 응답 사용)
     """
 
     # Get the contextual information from CallbackContext

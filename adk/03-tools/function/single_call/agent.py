@@ -22,15 +22,14 @@ load_dotenv()
 
 def build_agent() -> Agent:
     """
-    Creates and configures an Agent instance with a function tool for exchange rate queries.
+    환율 조회용 함수형 툴이 포함된 Agent 인스턴스를 생성하고 설정합니다.
 
-    This function loads environment variables, defines the agent's instruction template,
-    and initializes the Agent with a name, model, description, instruction, and a tool for
-    retrieving exchange rate information. The agent is designed to answer user queries by
-    calling the appropriate function tool and formatting the response accordingly.
+    이 함수는 환경 변수를 불러오고, 에이전트의 지시문 템플릿을 정의하며,
+    이름, 모델, 설명, 지시문, 환율 정보 조회 툴을 포함해 Agent를 초기화합니다.
+    이 에이전트는 적절한 함수형 툴을 호출해 사용자 질의에 답변하고, 결과를 포맷에 맞게 반환하도록 설계되었습니다.
 
-    Returns:
-        Agent: A configured Agent instance ready to process exchange rate information queries.
+    반환값:
+        Agent: 환율 정보 질의를 처리할 준비가 된 설정된 Agent 인스턴스
     """
 
     INSTRUCTION = """ 

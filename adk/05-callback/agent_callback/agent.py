@@ -25,13 +25,13 @@ load_dotenv()
 
 def build_agent()->Agent:
     """
-    Builds and returns an AI agent configured to answer user questions.
-    The agent uses the model specified in the environment variable 'MODEL' and is initialized
-    with a specific instruction template to ensure concise and structured responses. 
-    It also attaches pre- and post-processing callbacks for additional handling.
+    사용자 질문에 답변하도록 설정된 AI 에이전트를 생성해 반환합니다.
+    이 에이전트는 환경 변수 'MODEL'에 지정된 모델을 사용하며,
+    간결하고 구조화된 답변을 보장하는 지시문 템플릿으로 초기화됩니다.
+    또한 추가 처리를 위한 전/후처리 콜백도 연결됩니다.
 
-    Returns:
-        Agent: An instance of the Agent class, ready to process user inquiries.
+    반환값:
+        Agent: 사용자 질문을 처리할 준비가 된 Agent 인스턴스
     """
 
     INSTRUCTION = """

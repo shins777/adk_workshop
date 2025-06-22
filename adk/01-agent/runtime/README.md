@@ -1,43 +1,41 @@
+# ADK 런타임 에이전트 예제 - ADK 런타임 이해하기
 
-# ADK Runtime Agent Example - Understanding ADK Runtime.
+이 폴더는 ADK(Agent Development Kit) 프레임워크를 활용해 서브 에이전트와 에이전트 툴을 사용한 고급 AI 에이전트를 구축하고 운영하는 방법을 보여줍니다. 특히 Runner class 사용법에 대해서 설명합니다. 
 
-This folder demonstrates how to build and operate an advanced AI agent using the ADK (Agent Development Kit) framework, featuring sub-agents and agent tools for critique tasks.
+## 배경
 
-## Background
-
-### Event Loop in ADK Runtime
-The following image explain the most important concept, that is event loop in ADK runtime. this even loop mechanism is similar with python async event loop. 
+### ADK 런타임의 이벤트 루프
+아래 이미지는 ADK 런타임에서 가장 중요한 개념인 이벤트 루프를 설명합니다. 이 이벤트 루프 메커니즘은 파이썬의 비동기 이벤트 루프와 유사합니다.
 ![event loop](https://google.github.io/adk-docs/assets/event-loop.png)
-Image source : https://google.github.io/adk-docs/runtime/#core-idea-the-event-loop
+이미지 출처: https://google.github.io/adk-docs/runtime/#core-idea-the-event-loop
 
-### Invocation Flow
+### 호출 흐름
 
 ![invocation flow](https://google.github.io/adk-docs/assets/invocation-flow.png)
-Image source : https://google.github.io/adk-docs/runtime/#how-it-works-a-simplified-invocation
+이미지 출처: https://google.github.io/adk-docs/runtime/#how-it-works-a-simplified-invocation
 
-## Overview
-The `runtime` agent example shows how to:
-- Define a root agent with sub-agents for positive and negative critique
-- Optionally use agent tools to wrap sub-agents
-- Load environment variables for configuration
-- Instantiate and return an ADK `Agent` object
-- Run the agent in a conversational loop using a runner script
+## 개요
+`runtime` 에이전트 예제는 다음을 보여줍니다:
+- 긍정 및 부정 크리틱을 위한 서브 에이전트를 포함하는 루트 에이전트 정의
+- 선택적으로 에이전트 툴을 사용해 서브 에이전트 래핑
+- 환경 변수로 설정값 불러오기
+- ADK `Agent` 객체 인스턴스화 및 반환
+- 러너 스크립트를 사용해 대화 루프에서 에이전트 실행
 
-## .env Sample
+## .env 설정.
 
-Note : This file should be located in the **parent upper folder**.
+`.env` 파일은 현재 basic 폴더의 **상위 폴더(01-agent)**에 위치해야 합니다.
 
 ```
 GOOGLE_GENAI_USE_VERTEXAI=FALSE
-GOOGLE_API_KEY=AIzerD6uPZRFklK--------WYZVM2uZh6Bd8 <-- you should use your key.
-
-PROJECT_ID = "ai-forus"
-PROJECT_NUMBER = "9215---43942"
-LOCATION = "us-central1"
-MODEL = "gemini-2.0-flash"
+GOOGLE_API_KEY=YOUR_GOOGLE_API_KEY
+PROJECT_ID=your-gcp-project-id
+PROJECT_NUMBER=your-gcp-project-number
+LOCATION=us-central1
+MODEL=gemini-2.0-flash
 ```
 
-## File Structure
+## 파일 구조
 ```
 adk/01-agent/runtime/
 ├── __init__.py
@@ -47,31 +45,27 @@ adk/01-agent/runtime/
 └── README.md
 ```
 
-- `agent.py`  
-  Contains the code to build and configure the root agent, including sub-agents and agent tool integration.
-- `runner.py`  
-  Provides a script to run the agent in a conversational loop, handling user input and agent responses.
-- `sub_agent.py`  
-  Defines the positive and negative critique sub-agents.
-- `__init__.py`  
-  Marks the folder as a Python package.
+- `agent.py` :서브 에이전트 및 에이전트 툴 연동을 포함한 루트 에이전트의 빌드 및 설정 코드를 포함합니다.
+- `runner.py` : 사용자 입력 및 에이전트 응답 처리를 위한 대화 루프 실행 스크립트를 제공합니다.
+- `sub_agent.py` : 긍정 및 부정 크리틱 서브 에이전트를 정의합니다.
+- `__init__.py` : 폴더를 파이썬 패키지로 지정합니다.
 
-## How It Works
+## 작동 방식
 
-The root agent is defined using the ADK `Agent` class. It can be configured in two modes:
-- **Sub-agent mode:** The agent delegates critique tasks to `positive_critic` and `negative_critic` sub-agents.
-- **Agent tool mode:** The agent uses `AgentTool` wrappers to expose sub-agents as callable tools.
+루트 에이전트는 ADK `Agent` 클래스를 사용해 정의됩니다. 두 가지 모드로 설정할 수 있습니다:
+- **서브 에이전트 모드:** 에이전트가 크리틱 작업을 `positive_critic` 및 `negative_critic` 서브 에이전트에 위임합니다.
+- **에이전트 툴 모드:** 에이전트가 `AgentTool` 래퍼를 사용해 서브 에이전트를 호출 가능한 툴로 노출합니다.
 
-The agent's instruction guides it to:
-- Organize the intent of the user's question
-- Use the appropriate sub-agent/tool for positive or negative critique
-- Always answer in the same language as the user's question
+에이전트의 지시문은 다음을 안내합니다:
+- 사용자 질문의 의도 정리
+- 긍정 또는 부정 크리틱에 적절한 서브 에이전트/툴 사용
+- 항상 사용자가 질문한 언어와 동일한 언어로 답변
 
-## Example Usage
+## 예제 실행
 ```
 ai_agent/adk/01-agent$ uv run -m runtime.runner
 ```
 
-## License
+## 라이선스
 
-This project is licensed under the Apache License 2.0.
+이 프로젝트는 Apache License 2.0을 따릅니다.

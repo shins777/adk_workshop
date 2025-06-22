@@ -15,7 +15,7 @@ def load_env():
 
 # @pytest.mark.asyncio
 def test_eval_full_conversation():
-    """Test the agent's basic ability on a few examples."""
+    """에이전트의 기본 동작을 몇 가지 예제로 테스트합니다."""
     AgentEvaluator.evaluate(
         agent_module="agent_eval",
         eval_dataset_file_path_or_dir=str(

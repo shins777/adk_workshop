@@ -22,14 +22,13 @@ load_dotenv()
 
 def get_vertex_search_tool():
     """
-    Creates and configures a Vertex AI Search tool instance.
+    Vertex AI Search 툴 인스턴스를 생성하고 설정합니다.
 
-    This function loads required environment variables for project, location, project number,
-    and datastore ID, initializes the Vertex AI environment, constructs the data store resource path,
-    and returns a VertexAiSearchTool instance configured for the specified data store.
+    이 함수는 프로젝트, 위치, 프로젝트 번호, 데이터스토어 ID에 필요한 환경 변수를 불러오고,
+    Vertex AI 환경을 초기화한 뒤, 데이터스토어 리소스 경로를 구성해 해당 데이터스토어와 연동되는 VertexAiSearchTool 인스턴스를 반환합니다.
 
-    Returns:
-        VertexAiSearchTool: An instance configured to interact with the specified Vertex AI Search data store.
+    반환값:
+        VertexAiSearchTool: 지정한 Vertex AI Search 데이터스토어와 연동되는 인스턴스
     """
 
     PROJECT_ID = os.getenv('GOOGLE_CLOUD_PROJECT')
@@ -51,15 +50,14 @@ def get_vertex_search_tool():
 
 def build_agent() -> Agent:
     """
-    Creates and configures an Agent instance with Vertex AI Search tool support.
+    Vertex AI Search 툴이 포함된 Agent 인스턴스를 생성하고 설정합니다.
 
-    This function loads environment variables, defines the agent's instruction template,
-    and initializes the Agent with a name, model, description, instruction, and the Vertex AI Search tool.
-    The agent is designed to answer user questions by performing a search using Vertex AI Search
-    and providing answers in a structured format including the question, source information, and answer.
+    이 함수는 환경 변수를 불러오고, 에이전트의 지시문 템플릿을 정의하며,
+    이름, 모델, 설명, 지시문, Vertex AI Search 툴을 포함해 Agent를 초기화합니다.
+    이 에이전트는 Vertex AI Search를 활용해 검색을 수행하고, 질문, 출처 정보, 답변을 구조화된 형식으로 제공합니다.
 
-    Returns:
-        Agent: A configured Agent instance ready to process user queries using Vertex AI Search.
+    반환값:
+        Agent: Vertex AI Search 기반 질의 처리가 가능한 설정된 Agent 인스턴스
     """
 
     INSTRUCTION = """

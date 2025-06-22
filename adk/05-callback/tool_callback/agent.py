@@ -26,15 +26,14 @@ load_dotenv()
 
 def build_agent() -> Agent:
     """
-    Creates and configures an Agent instance with a tool and callback support.
+    툴과 콜백 기능이 포함된 Agent 인스턴스를 생성하고 설정합니다.
 
-    This function loads environment variables, defines the agent's instruction template,
-    and initializes the Agent with a name, model, description, instruction, and a tool for
-    retrieving capital city information. It also attaches pre- and post-processing callbacks
-    for tool execution, allowing custom logic before and after tool calls.
+    이 함수는 환경 변수를 불러오고, 에이전트의 지시문 템플릿을 정의하며,
+    이름, 모델, 설명, 지시문, 수도 정보 조회 툴을 포함해 Agent를 초기화합니다.
+    또한 툴 실행 전후에 동작하는 콜백을 연결해, 툴 호출 전후에 커스텀 로직을 적용할 수 있습니다.
 
-    Returns:
-        Agent: A configured Agent instance ready to process user queries with tool and callback support.
+    반환값:
+        Agent: 툴과 콜백 기능을 갖춘 사용자 질의 처리용 설정된 Agent 인스턴스
     """
 
     INSTRUCTION = """

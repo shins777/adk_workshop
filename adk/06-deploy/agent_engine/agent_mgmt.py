@@ -31,21 +31,21 @@ def deploy_agent(agent: Agent,
                  requirements: list = None,
                  extra_packages: list = None) -> agent_engines.AgentEngine:
     """
-    Deploys an agent to Vertex AI Agent Engine.
+    에이전트를 Vertex AI Agent Engine에 배포합니다.
 
-    This function creates and deploys an agent engine using the provided agent and configuration options.
-    It allows you to specify display name, GCS directory, description, Python requirements, and extra packages.
+    이 함수는 주어진 에이전트와 설정 옵션을 사용해 에이전트 엔진을 생성 및 배포합니다.
+    표시 이름, GCS 디렉토리, 설명, 파이썬 요구사항, 추가 패키지 등을 지정할 수 있습니다.
 
-    Args:
-        agent (Agent): The agent instance to deploy.
-        display_name (str, optional): The display name for the agent engine.
-        gcs_dir_name (str, optional): The Google Cloud Storage directory for storing agent files.
-        description (str, optional): A description for the agent engine.
-        requirements (list, optional): A list of Python package requirements.
-        extra_packages (list, optional): Additional Python packages to install.
+    인자:
+        agent (Agent): 배포할 에이전트 인스턴스
+        display_name (str, optional): 에이전트 엔진의 표시 이름
+        gcs_dir_name (str, optional): 에이전트 파일을 저장할 Google Cloud Storage 디렉토리
+        description (str, optional): 에이전트 엔진 설명
+        requirements (list, optional): 파이썬 패키지 요구사항 리스트
+        extra_packages (list, optional): 추가로 설치할 파이썬 패키지 리스트
 
-    Returns:
-        agent_engines.AgentEngine: The deployed AgentEngine instance.
+    반환값:
+        agent_engines.AgentEngine: 배포된 AgentEngine 인스턴스
     """
 
     print("\n\n### Start to deploy agent engine. \n\n")

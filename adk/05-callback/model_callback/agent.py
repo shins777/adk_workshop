@@ -25,14 +25,13 @@ load_dotenv()
 
 def build_agent() -> Agent:
     """
-    Creates and configures an Agent instance for answering user questions.
+    사용자 질문에 답변하는 에이전트 인스턴스를 생성하고 설정합니다.
 
-    This function loads environment variables, defines the agent's instruction in Korean,
-    and initializes the Agent with a name, model, description, and instruction. It also
-    attaches pre- and post-processing callbacks for model execution.
+    이 함수는 환경 변수를 불러오고, 한글로 된 에이전트 지시문을 정의하며,
+    이름, 모델, 설명, 지시문을 포함해 Agent를 초기화합니다. 또한 모델 실행 전/후 콜백도 연결합니다.
 
-    Returns:
-        Agent: A configured Agent instance ready to process user queries.
+    반환값:
+        Agent: 사용자 질문을 처리할 준비가 된 설정된 Agent 인스턴스
     """
 
     INSTRUCTION = """
