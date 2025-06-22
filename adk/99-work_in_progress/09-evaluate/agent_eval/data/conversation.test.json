@@ -1,0 +1,19 @@
+[
+  {
+    "query": "Hi there, I have some questions about AI",
+    "expected_tool_use": [],
+    "reference": "Hi there! I'm ready to answer your questions about AI. What's on your mind? Feel free to ask anything you're curious about!"
+  },
+  {
+    "query": "What is Generative AI? write it in 3 sentences",
+    "expected_tool_use": [
+      {
+        "tool_name": "google_search",
+        "tool_input": {
+          "query": "What is Generative AI? write it in 1 sentences"
+        }
+      }
+    ],
+    "reference": "Generative AI is a type of artificial intelligence capable of creating new, original content, such as text, images, audio, or video. "
+  }
+]

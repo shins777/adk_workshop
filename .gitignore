@@ -197,5 +197,4 @@ cython_debug/
 
 adk/02-conversations/_memory/
 adk/03-tools/built-in/_code_exec/
-adk/09-evaluate/
 adk/99-unittests/
