@@ -6,7 +6,7 @@
 
 ## .env 설정.
 
-`.env` 파일은 현재 runtime 폴더의 **상위 폴더(01-agent)**에 위치해야 합니다.
+`.env` 파일은 현재 runtime 폴더의 **상위 폴더(02-conversations)**에 위치해야 합니다.
 
 ```
 GOOGLE_GENAI_USE_VERTEXAI=FALSE
@@ -16,8 +16,6 @@ PROJECT_NUMBER=your-gcp-project-number
 LOCATION=us-central1
 MODEL=gemini-2.5-flash
 ```
-
----
 
 ## 폴더 구조
 
@@ -29,22 +27,19 @@ adk/02-conversations/event/
 └── README.md
 ```
 
-- `agent.py`  
-  에이전트 정의, 지시문 템플릿 및 Google 검색 툴 연동 포함
-- `runner.py`  
-  에이전트 실행 및 이벤트 스트리밍, 각 단계별 상세 이벤트 정보 출력
-- `__init__.py`  
-  파이썬 패키지로 폴더 지정
-
----
+- `agent.py` : 에이전트 정의, 지시문 템플릿 및 Google 검색 툴 연동 포함
+- `runner.py` : 에이전트 실행 및 이벤트 스트리밍, 각 단계별 상세 이벤트 정보 출력
+- `__init__.py` : 파이썬 패키지로 폴더 지정
 
 ## 예제 실행
-**01-conversations** 폴더에서 아래 명령어를 실행하세요.
+
+**02-conversations** 폴더에서 아래 명령어를 실행하세요.
 
 아래 Runner 클래스를 사용하는 방법은 좀더 Programatic 방식으로 이벤트를 코드레벨에서 제어할 수 있습니다.
 ```
 ai_agent/adk/02-conversations$ uv run -m event.runner
 ```
+
 또는 웹상에서 이벤트별 내용을 확인하기 위해서 아래 명령어 사용도 가능합니다. 
 ```
 ai_agent/adk/02-conversations$ adk web
