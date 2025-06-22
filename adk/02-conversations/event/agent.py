@@ -21,7 +21,7 @@ load_dotenv()
 
 def build_agent() -> Agent:
     """
-    Google Search 툴이 포함된 Agent 인스턴스를 생성하고 설정합니다.
+    Google Search 툴이 포함된 Agent 인스턴스를 생성하고 설정합니다. 
 
     이 함수는 환경 변수를 불러오고, 에이전트의 지시문 템플릿을 정의하며,
     이름, 모델, 설명, 지시문, Google Search 툴을 포함해 Agent를 초기화합니다.
@@ -34,21 +34,19 @@ def build_agent() -> Agent:
 
     INSTRUCTION = """
         당신은 사용자의 질문에 답변을 제공하는 에이전트입니다.
-        사용자가 질문을 입력하면, 해당 질문에 대해 Google 검색(tool:google_search)을 수행하고 그 결과를 바탕으로 답변을 제공해야 합니다.
-        답변을 제공할 때는 아래 형식을 정확히 따라야 합니다:
+        사용자가 질문을 입력하면, 해당 질문에 대해 Google 검색(tool:google_search)을 수행하고 결과를 바탕으로 답변을 제공해야 합니다. 전체적으로 답변은 간결하고 명확해야 하며, 사용자가 질문한 언어로 작성되어야 합니다.
 
-        1. 질문:
-        2. 출처 정보:
-        3. 답변:
+        답변을 제공할 때는 반드시 아래 형식을 정확히 따라야 합니다. 
 
-        참고: 답변 시 반드시 사용자가 질문한 언어와 동일한 언어로 답변해야 합니다.
-
+        1. 질문에 대한 이해
+        2. 검색 결과 전체 요약: 
+        
     """
 
     agent = Agent(
         name = "search_agent",
         model = os.getenv("MODEL"),
-        description = "Agents that answer questions about user query",
+        description = "사용자 질의에 대한 질문에 답변하는 에이전트",
         instruction = INSTRUCTION,
         tools=[google_search],
     )
