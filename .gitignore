@@ -194,4 +194,4 @@ cython_debug/
 .cursorindexingignore
 
 
-adk/02-conversations/.memory/
+adk/02-conversations/_memory/
