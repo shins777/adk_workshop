@@ -14,12 +14,11 @@
 
 ```
 GOOGLE_GENAI_USE_VERTEXAI=FALSE
-GOOGLE_API_KEY=AIzerD6uPZRFklK--------WYZVM2uZh6Bd8 <-- 본인 키로 변경
-
-PROJECT_ID = "ai-forus"
-PROJECT_NUMBER = "9215---43942"
-LOCATION = "us-central1"
-MODEL = "gemini-2.0-flash"
+GOOGLE_API_KEY=YOUR_GOOGLE_API_KEY
+PROJECT_ID=your-gcp-project-id
+PROJECT_NUMBER=your-gcp-project-number
+LOCATION=us-central1
+MODEL=gemini-2.5-flash
 
 # RAG 엔진 메모리 저장용
 CORPUS_ID = "55253532324830177280" <-- 본인 RAG Engine 코퍼스 ID로 변경
@@ -79,12 +78,12 @@ adk/02-conversations/memory/
 
 #### 1. 명령줄에서 실행
 ```
-uv run memory.main --memory_type [in_memory|rag_corpus] --app_name <app_name> --user_id <user_id>")
+uv run memory.main --memory_type [in_memory|rag_corpus]
 ```
 
 ####  2. 메모리 유형으로 `in_memory` 사용
 ```
-uv run -m memory.main --memory_type in_memory --app_name search_assistant --user_id forusone
+uv run -m memory.main --memory_type in_memory 
 ```
 
 ####  3. 메모리 유형으로 `rag_corpus` 사용
@@ -99,10 +98,11 @@ gcloud auth application-default login
 ```
 로그인 후, 다음 명령어를 실행합니다. 
 ```
-uv run -m memory.main --memory_type rag_corpus --app_name search_assistant --user_id forusone
+uv run -m memory.main --memory_type rag_corpus 
 ```
 RAG 엔진에 접근할 수 없는 경우, 다음과 같은 오류 메시지가 표시될 수 있습니다.
 ```
 RuntimeError: ('Failed in indexing the RagFile due to: ', {'code': 403, 'message': "Permission 'aiplatform.ragFiles.upload' denied on resource '//aiplatform.googleapis.com/projects/ai-forus/locations/us-central1/ragCorpora/552535232177280' (or it may not exist)."
 ```
 
+RuntimeError: ('Failed in indexing the RagFile due to: ', {'code': 7, 'message': "failed to list files, folders: ['vertex_rag_service_upload_rag_file_drop_target_prod_us_central1/881d20c5-c76e-42d6-b3fe-e81e18e26ea1'], files: [], error: 403 GET https://storage.googleapis.com/storage/v1/b/vertex_rag_service_upload_rag_file_drop_target_prod_us_central1?projection=noAcl&prettyPrint=false: gke-agent-us-central1@rag-rental-prod-400e3dd3.iam.gserviceaccount.com does not have storage.buckets.get access to the Google Cloud Storage bucket. Permission 'storage.buckets.get' denied on resource (or it may not exist)."})
