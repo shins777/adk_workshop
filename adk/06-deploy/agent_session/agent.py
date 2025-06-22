@@ -25,22 +25,21 @@ load_dotenv()
 
 def build_agent() -> Agent:
     """
-    Creates and configures a SequentialAgent composed of multiple sub-agents.
+    여러 서브 에이전트로 구성된 SequentialAgent를 생성하고 설정합니다.
 
-    This function initializes a SequentialAgent named 'pipeline_agent' that executes
-    a sequence of sub-agents: positive_critic, negative_critic, and review_critic.
-    Each sub-agent is responsible for a specific part of the overall task, and the
-    SequentialAgent coordinates their execution in order.
+    이 함수는 'pipeline_agent'라는 이름의 SequentialAgent를 초기화하며,
+    positive_critic, negative_critic, review_critic 서브 에이전트를 순차적으로 실행합니다.
+    각 서브 에이전트는 전체 작업의 특정 부분을 담당하며, SequentialAgent가 이들의 실행을 순서대로 조율합니다.
 
-    Returns:
-        Agent: A configured SequentialAgent instance ready to process user queries.
+    반환값:
+        Agent: 사용자 질의를 처리할 준비가 된 SequentialAgent 인스턴스
     """
 
-    # SequentialAgent does not requrire instruction because each sub agent has their own instruction. 
+    # SequentialAgent는 각 서브 에이전트가 자체 instruction을 가지므로 별도의 instruction이 필요 없습니다.
     agent = SequentialAgent(
         name="pipeline_agent",
         sub_agents=[positive_critic, negative_critic, review_critic],
-        description="Executes a sequence of positive_critic, negative_critic, and review_critic.",
+        description="positive_critic, negative_critic, review_critic을 순차적으로 실행하는 에이전트입니다.",
     )
 
     return agent

@@ -21,21 +21,20 @@ load_dotenv()
 
 def build_agent():
     """
-    Creates and configures a SequentialAgent for a multi-step workflow.
+    다단계 워크플로우를 위한 SequentialAgent를 생성하고 설정합니다.
 
-    This function initializes a SequentialAgent named 'pipeline_agent' that executes
-    a sequence of sub-agents: positive_critic, negative_critic, and review_critic.
-    The agent is designed to process user queries by running each sub-agent in order,
-    enabling a structured workflow for critique and review.
+    이 함수는 'pipeline_agent'라는 이름의 SequentialAgent를 초기화하며,
+    positive_critic, negative_critic, review_critic 서브 에이전트를 순차적으로 실행합니다.
+    에이전트는 각 서브 에이전트를 순서대로 실행하여 비평 및 리뷰가 구조적으로 이루어지도록 설계되어 있습니다.
 
-    Returns:
-        SequentialAgent: A configured agent ready to process user queries through a sequential workflow.
+    반환값:
+        SequentialAgent: 순차 워크플로우를 통해 사용자 질의를 처리할 수 있는 설정된 에이전트
     """
 
     pipeline_agent = SequentialAgent(
         name="pipeline_agent",
         sub_agents=[positive_critic, negative_critic, review_critic],
-        description="Executes a sequence of positive_critic, negative_critic, and review_critic.",
+        description="positive_critic, negative_critic, review_critic을 순차적으로 실행하는 에이전트입니다.",
     )
     return pipeline_agent
 

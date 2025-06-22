@@ -26,14 +26,13 @@ load_dotenv()
 
 def build_agent() -> Agent:
     """
-    Creates and configures a CriticAgent instance with positive, negative, and review critic sub-agents.
+    긍정, 부정, 종합 비평 서브 에이전트가 포함된 CriticAgent 인스턴스를 생성하고 구성합니다.
 
-    This function initializes a CriticAgent with the specified sub-agents for positive critique,
-    negative critique, and review. The resulting agent is capable of orchestrating a multi-step
-    critique workflow by delegating tasks to its sub-agents.
+    이 함수는 긍정 비평, 부정 비평, 종합 리뷰를 위한 서브 에이전트들을 지정하여 CriticAgent를 초기화합니다.
+    결과적으로 생성된 에이전트는 각 서브 에이전트에 작업을 위임하여 다단계 비평 워크플로우를 오케스트레이션할 수 있습니다.
 
-    Returns:
-        CriticAgent: A configured CriticAgent instance ready to process user queries.
+    반환값:
+        CriticAgent: 사용자 질의 처리가 가능한 구성된 CriticAgent 인스턴스
     """
 
     agent = CriticAgent(

@@ -24,23 +24,8 @@ TAVILY_API_KEY=your_tavily_api_key
 각 하위 폴더별 추가 요구사항은 해당 폴더를 참고하세요.
 
 ## 소스코드 실행 방법
-- 각 하위 폴더의 에이전트 코드와 안내를 참고하세요.
-- 예시 (내장 툴):
-  ```bash
-  uv run python built-in/code_execution/agent.py
-  ```
-- 예시 (함수형 툴):
-  ```bash
-  uv run python function/single_call/agent.py
-  ```
-- 예시 (LangChain 툴):
-  ```bash
-  uv run python langchain/tavily_search/agent.py
-  ```
-- 예시 (MCP 툴):
-  ```bash
-  uv run python mcp/client_file_browser/agent.py
-  ```
+- 각 하위 폴더의 에이전트 코드와 README.md 파일 안내를 참고하세요.
 
-## 라이센스 정보
-이 프로젝트는 Apache License 2.0에 따라 라이센스가 부여됩니다. 자세한 내용은 [LICENSE](../LICENSE) 파일을 참조하세요.
+
+## 라이센스
+이 프로젝트는 Apache License 2.0을 따르며, 모든 코드와 콘텐츠의 저작권은 **ForusOne**(shins777@gmail.com)에 있습니다.

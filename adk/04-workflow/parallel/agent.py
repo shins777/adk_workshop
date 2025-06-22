@@ -22,26 +22,26 @@ load_dotenv()
 
 def build_agent():
     """
-    Creates and configures a workflow Agent using ParallelAgent and SequentialAgent.
+    ParallelAgent와 SequentialAgent를 활용하여 워크플로우 에이전트를 생성하고 설정합니다.
 
-    This function defines a parallel agent for running positive and negative critics in parallel,
-    and a sequential agent that first executes the parallel research agent and then the review critic.
-    The resulting agent executes a workflow where multiple research agents run in parallel, followed by a review step.
+    이 함수는 긍정/부정 비평을 병렬로 실행하는 parallel agent와,
+    병렬 연구 에이전트 실행 후 리뷰 비평을 순차적으로 실행하는 sequential agent를 정의합니다.
+    최종적으로 여러 연구 에이전트를 병렬로 실행한 뒤, 리뷰 단계를 거치는 워크플로우를 수행합니다.
 
-    Returns:
-        SequentialAgent: A configured agent ready to process user queries through a parallel and sequential workflow.
+    반환값:
+        SequentialAgent: 병렬 및 순차 워크플로우를 통해 사용자 질의를 처리할 수 있는 설정된 에이전트
     """
 
     parallel_research_agent = ParallelAgent(
         name="parallel_research_agent",
         sub_agents=[positive_critic, negative_critic],
-        description="Runs multiple research agents in parallel to gather information."
+        description="여러 연구 에이전트를 병렬로 실행하여 정보를 수집하는 에이전트입니다."
     )
 
     pipeline_agent = SequentialAgent(
         name="pipeline_agent",
         sub_agents=[parallel_research_agent, review_critic],
-        description="Executes a sequence of parallel_research_agent, and review_critic.",
+        description="parallel_research_agent와 review_critic을 순차적으로 실행하는 에이전트입니다.",
     )
     return pipeline_agent
 

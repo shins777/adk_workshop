@@ -33,18 +33,18 @@ def build_adk_app(root_agent:Agent,
               user_id:str,
               query:str,):
     """
-    Initializes and runs an ADK application with the provided agent and user query.
+    주어진 에이전트와 사용자 쿼리로 ADK 애플리케이션을 초기화하고 실행합니다.
 
-    This function sets up the Vertex AI environment, creates an AdkApp instance with the given agent,
-    and streams the agent's response to the provided user query. It prints each response outcome to the console.
+    이 함수는 Vertex AI 환경을 설정하고, 주어진 에이전트로 AdkApp 인스턴스를 생성한 뒤,
+    사용자 쿼리에 대한 에이전트의 응답을 스트리밍하여 콘솔에 출력합니다.
 
-    Args:
-        root_agent (Agent): The root agent to be used in the ADK application.
-        user_id (str): The user identifier for the query session.
-        query (str): The user's input or question to be processed by the agent.
+    인자:
+        root_agent (Agent): ADK 애플리케이션에 사용할 루트 에이전트
+        user_id (str): 쿼리 세션의 사용자 식별자
+        query (str): 에이전트가 처리할 사용자 입력 또는 질문
 
-    Returns:
-        AdkApp: The initialized AdkApp instance.
+    반환값:
+        AdkApp: 초기화된 AdkApp 인스턴스
     """
 
     print("### Agent LOCAL unit test")
@@ -70,12 +70,12 @@ def build_adk_app(root_agent:Agent,
 
 if __name__ == "__main__":
     
-    print(""" Usage : uv run -m agent_engine.deploy --query 'What is the Generative AI?' """)
-    parser = argparse.ArgumentParser(description="Run the ADK agent with a user query.")
-    parser.add_argument("--query",type=str,help="The application name of this agent.",)
-    parser.add_argument("--agent_name",type=str,help="The name of agent",)
-    parser.add_argument("--user_id",type=str,help="The user id",)
-    parser.add_argument("--session_id",type=str,help="The session_id",)
+    print(""" 사용법 : uv run -m agent_engine.deploy --query 'What is the Generative AI?' """)
+    parser = argparse.ArgumentParser(description="사용자 쿼리로 ADK 에이전트를 실행합니다.")
+    parser.add_argument("--query",type=str,help="이 에이전트의 애플리케이션 이름.",)
+    parser.add_argument("--agent_name",type=str,help="에이전트 이름.",)
+    parser.add_argument("--user_id",type=str,help="사용자 ID.",)
+    parser.add_argument("--session_id",type=str,help="세션 ID.",)
 
     args = parser.parse_args()
     query = args.query
@@ -83,16 +83,16 @@ if __name__ == "__main__":
     user_id = args.user_id
     session_id = args.session_id
 
-    #1. Print all registered agents.
+    #1. 등록된 모든 에이전트 출력
     show_agents()
 
-    #2. Build a adk_app.
+    #2. adk_app 빌드
     adk_app = build_adk_app(root_agent, user_id, query)
 
-    #3. Deploy the adk_app on Agent Engine.
+    #3. Agent Engine에 adk_app 배포
     display_name = agent_name
     gcs_dir_name = os.getenv("STAGING_BUCKET")
-    description = "AI information search assistant to user's question"
+    description = "사용자 질문에 대한 AI 정보 검색 어시스턴트"
     requirements = [
         "google-adk[vertexai]",
         "google-cloud-aiplatform[adk,agent-engines]",

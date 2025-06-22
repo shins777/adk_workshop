@@ -1,4 +1,4 @@
-# Copyright 2025 Forusone(forusone777@gmail.com)
+# Copyright 2025 Forusone(shins777@gmail.com)
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -24,20 +24,20 @@ from .critic import CriticAgent
 load_dotenv()
 
 def build_agent() -> Agent:
-    """Initializes and returns a CriticAgent.
+    """
+    CriticAgent를 초기화하여 반환합니다.
 
-    The CriticAgent is configured with a positive critic sub-agent
-    (positive_critic_agent) and a negative critic sub-agent
-    (negative_critic_agent), which are imported from the .sub_agent module.
+    CriticAgent는 .sub_agent 모듈에서 import한 긍정 비평 서브 에이전트(positive_critic_agent)와
+    부정 비평 서브 에이전트(negative_critic_agent)를 함께 구성하여 동작합니다.
 
-    Returns:
-        Agent: An instance of the CriticAgent.
+    반환값:
+        Agent: CriticAgent 인스턴스
     """
 
     agent = CriticAgent(
-        name = "critic_agent",
-        positive_critic_agent = positive_critic_agent,
-        negative_critic_agent = negative_critic_agent,
+        name = "critic_agent",  # 전체 비평 워크플로우를 담당하는 에이전트 이름
+        positive_critic_agent = positive_critic_agent,  # 긍정 비평 서브 에이전트
+        negative_critic_agent = negative_critic_agent,  # 부정 비평 서브 에이전트
     )
     return agent
 

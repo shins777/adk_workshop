@@ -25,33 +25,21 @@ load_dotenv()
 
 def build_agent(model_name: str) -> LlmAgent:
     """
-    Creates and configures an LlmAgent instance with Ollama model and Google Search tool support.
+    Ollama 모델과 Google Search 툴을 지원하는 LlmAgent 인스턴스를 생성하고 설정합니다.
 
-    This function selects the appropriate Ollama model based on the provided model_name,
-    defines the agent's instruction template, and initializes the LlmAgent with a name,
-    model, description, instruction, and the Google Search tool. The agent is designed
-    to answer user questions, optionally using the tool for up-to-date information, and
-    to format responses in a clear and structured way.
+    이 함수는 전달받은 model_name에 따라 적절한 Ollama 모델을 선택하고,
+    에이전트의 instruction 템플릿을 정의한 뒤, 이름, 모델, 설명, instruction, 툴을 포함해 LlmAgent를 초기화합니다.
+    에이전트는 사용자 질문에 답변하며, 필요 시 툴을 활용해 최신 정보를 제공하고, 명확하고 구조화된 답변을 생성합니다.
 
-    Args:
-        model_name (str): The name of the Ollama model to use ("llama" or "gemma").
+    인자:
+        model_name (str): 사용할 Ollama 모델 이름 ("llama" 또는 "gemma")
 
-    Returns:
-        LlmAgent: A configured LlmAgent instance ready to process user queries.
+    반환값:
+        LlmAgent: 사용자 질의 처리가 가능한 설정된 LlmAgent 인스턴스
     """
 
     INSTRUCTION = """
-        You are an AI agent who provides answers to users' questions.
-        When providing answers, please respond concisely and clearly in the following structure:
-        - Question content:
-        - Question intent:
-        - Answer content:
-
-        Answer casual conversation questions natually without any special format.
-        
-        Note : When answering, Must be sure to use the same language the user used when asking the question. 
-
-    """
+        당신은 사용자의 질문에 답변하는 AI 에이전트입니다.\n        답변을 제공할 때는 아래와 같은 구조로 간결하고 명확하게 작성해 주세요:\n        - 질문 내용:\n        - 질문 의도:\n        - 답변 내용:\n\n        일상적인 대화성 질문에는 별도의 형식 없이 자연스럽게 답변하세요.\n        \n        참고: 답변 시 반드시 사용자가 질문할 때 사용한 언어로 답변해야 합니다.\n\n    """
 
     if model_name == "llama":
         MODEL ="ollama_chat/llama3.2"
@@ -64,7 +52,7 @@ def build_agent(model_name: str) -> LlmAgent:
         model=LiteLlm(model=MODEL),
         name="agent",
         description=(
-            "Answer to a user's question"
+            "사용자 질문에 답변하는 에이전트입니다."
         ),
         instruction = INSTRUCTION,
 
@@ -73,4 +61,4 @@ def build_agent(model_name: str) -> LlmAgent:
     return ollama_agent
 
 
-root_agent = build_agent("gemma") # gemma or llama 
+root_agent = build_agent("gemma") # gemma 또는 llama

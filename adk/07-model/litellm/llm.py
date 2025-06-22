@@ -3,35 +3,34 @@ from google.adk.models.lite_llm import LiteLlm
 
 def build_agent(model_name: str):
     """
-    Creates and configures an LlmAgent instance for the specified model.
+    지정한 모델에 대한 LlmAgent 인스턴스를 생성하고 설정합니다.
 
-    This function initializes an LlmAgent using either OpenAI's GPT-4o or Anthropic's Claude Haiku,
-    depending on the provided model_name. It sets the appropriate model, agent name, and instruction
-    for each supported model.
+    이 함수는 전달받은 model_name에 따라 OpenAI GPT-4o 또는 Anthropic Claude Haiku를 사용하여
+    LlmAgent를 초기화합니다. 각 모델에 맞는 모델명, 에이전트 이름, instruction을 설정합니다.
 
-    Args:
-        model_name (str): The name of the model to use ("gpt" for OpenAI GPT-4o, "claude" for Anthropic Claude Haiku).
+    인자:
+        model_name (str): 사용할 모델 이름 ("gpt"는 OpenAI GPT-4o, "claude"는 Anthropic Claude Haiku)
 
-    Returns:
-        LlmAgent: A configured LlmAgent instance for the specified model.
+    반환값:
+        LlmAgent: 지정한 모델에 맞게 설정된 LlmAgent 인스턴스
     """
 
     if model_name =="gpt": 
-        # OpenAI's GPT-4o (Requires OPENAI_API_KEY) ---
+        # OpenAI의 GPT-4o (OPENAI_API_KEY 필요) ---
         agent_openai = LlmAgent(
-            model=LiteLlm(model="openai/gpt-4o"), # LiteLLM model string format
+            model=LiteLlm(model="openai/gpt-4o"), # LiteLLM 모델 문자열 포맷
             name="openai_agent",
-            instruction="You are a helpful assistant powered by GPT-4o.",
+            instruction="당신은 GPT-4o로 구동되는 유용한 어시스턴트입니다.",
         )
         return agent_openai
 
     elif model_name =="claude":
-        # Anthropic's Claude Haiku (non-Vertex) (Requires ANTHROPIC_API_KEY) ---
+        # Anthropic의 Claude Haiku (Vertex 미사용, ANTHROPIC_API_KEY 필요) ---
         agent_claude_direct = LlmAgent(
             model=LiteLlm(model="anthropic/claude-3-haiku-20240307"),
             name="claude_direct_agent",
-            instruction="You are an assistant powered by Claude Haiku.",
+            instruction="당신은 Claude Haiku로 구동되는 어시스턴트입니다.",
         )
         return agent_claude_direct
     
-root_agent = build_agent("gpt") # gpt or claude
+root_agent = build_agent("gpt") # gpt 또는 claude

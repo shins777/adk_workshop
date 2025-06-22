@@ -17,16 +17,15 @@ load_dotenv()
 def update_remote_agent(resource_name:str):
 
     """
-    Updates a remote agent engine on Vertex AI with the latest agent configuration.
+    Vertex AI의 원격 에이전트 엔진을 최신 에이전트 설정으로 업데이트합니다.
 
-    This function initializes the Vertex AI environment, retrieves the remote agent engine
-    using the provided resource name, and updates the agent engine with the current agent,
-    description, requirements, and other configuration options.
+    이 함수는 Vertex AI 환경을 초기화하고, 주어진 리소스 이름으로 원격 에이전트 엔진을 조회한 뒤,
+    현재 에이전트, 설명, 요구사항 등으로 에이전트 엔진을 업데이트합니다.
 
-    Args:
-        resource_name (str): The resource name of the agent engine to update.
+    인자:
+        resource_name (str): 업데이트할 에이전트 엔진의 리소스 이름
 
-    Returns:
+    반환값:
         None
     """
 
@@ -57,9 +56,9 @@ def update_remote_agent(resource_name:str):
 
 if __name__ == "__main__":
     
-    print(""" Usage : uv run -m agent_session.update --agent_engine_id 4971736494105427968 """)
+    print(""" 사용법 : uv run -m agent_session.update --agent_engine_id 4971736494105427968 """)
     
-    parser = argparse.ArgumentParser(description="Run the ADK agent with a user query.")    
+    parser = argparse.ArgumentParser(description="사용자 쿼리로 ADK 에이전트를 실행합니다.")    
     parser.add_argument("--agent_engine_id",type=str)
 
     args = parser.parse_args()
@@ -69,5 +68,4 @@ if __name__ == "__main__":
     resource_name = f"projects/{os.getenv('PROJECT_NUMBER')}/locations/{os.getenv('LOCATION')}/reasoningEngines/{agent_engine_id}"
 
     update_remote_agent(resource_name=resource_name)
-                        
-                        
+

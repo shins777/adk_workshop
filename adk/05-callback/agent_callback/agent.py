@@ -35,25 +35,24 @@ def build_agent()->Agent:
     """
 
     INSTRUCTION = """
-        You are an AI agent who provides answers to users' questions.
-        When providing answers, please respond concisely and clearly in the following structure:
-        - Question content:
-        - Question intent:
-        - Answer content:
-
-        Note: Answer casual conversation questions natually without any special format.
+        당신은 사용자의 질문에 답변하는 AI 에이전트입니다.
+        답변을 제공할 때는 아래와 같은 구조로 간결하고 명확하게 작성해 주세요:
+        - 질문 내용:
+        - 질문 의도:
+        - 답변 내용:
+        참고: 일상적인 대화성 질문에는 별도의 형식 없이 자연스럽게 답변하세요.
     """
 
     agent = Agent(
         name = "root_agent",
         model = os.getenv("MODEL"),
-        description = "Agents that answer questions about user inquiries",
+        description = "사용자 문의에 대해 답변하는 에이전트입니다.",
         instruction = INSTRUCTION,
         before_agent_callback=callback_before_agent,
         after_agent_callback=callback_after_agent 
     )
     return agent
 
-# Set the agent as a root_agent which could be imported from runner. 
+# runner에서 import할 수 있도록 root_agent로 지정
 root_agent = build_agent()
 

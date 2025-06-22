@@ -16,10 +16,9 @@ from vertexai import agent_engines
 from google.adk.agents import Agent
 
 """
-This sources are related to agent engine managment with APIs. 
-The code references is the following url:
+이 소스는 API를 활용한 에이전트 엔진 관리와 관련되어 있습니다.
+코드 참조는 다음 URL을 기반으로 합니다:
    https://cloud.google.com/vertex-ai/generative-ai/docs/agent-engine/manage/overview
-
 """
 
 #--------------------------------[deploy_agent]----------------------------------
@@ -31,21 +30,21 @@ def deploy_agent(agent: Agent,
                  requirements: list = None,
                  extra_packages: list = None) -> agent_engines.AgentEngine:
     """
-    Deploys an agent to Vertex AI Agent Engine.
+    에이전트를 Vertex AI Agent Engine에 배포합니다.
 
-    This function creates and deploys an agent engine using the provided agent and configuration options.
-    It allows you to specify display name, GCS directory, description, Python requirements, and extra packages.
+    이 함수는 주어진 에이전트와 설정 옵션을 사용해 에이전트 엔진을 생성 및 배포합니다.
+    표시 이름, GCS 디렉토리, 설명, 파이썬 요구사항, 추가 패키지 등을 지정할 수 있습니다.
 
-    Args:
-        agent (Agent): The agent instance to deploy.
-        display_name (str, optional): The display name for the agent engine.
-        gcs_dir_name (str, optional): The Google Cloud Storage directory for storing agent files.
-        description (str, optional): A description for the agent engine.
-        requirements (list, optional): A list of Python package requirements.
-        extra_packages (list, optional): Additional Python packages to install.
+    인자:
+        agent (Agent): 배포할 에이전트 인스턴스
+        display_name (str, optional): 에이전트 엔진의 표시 이름
+        gcs_dir_name (str, optional): 에이전트 파일을 저장할 Google Cloud Storage 디렉토리
+        description (str, optional): 에이전트 엔진 설명
+        requirements (list, optional): 파이썬 패키지 요구사항 리스트
+        extra_packages (list, optional): 추가로 설치할 파이썬 패키지 리스트
 
-    Returns:
-        agent_engines.AgentEngine: The deployed AgentEngine instance.
+    반환값:
+        agent_engines.AgentEngine: 배포된 AgentEngine 인스턴스
     """
 
     print("\n\n### Start to deploy agent engine. \n\n")
@@ -65,18 +64,17 @@ def deploy_agent(agent: Agent,
 def get_agent_engine(display_name = None,
                      resource_name = None) -> agent_engines.AgentEngine:
     """
-    Retrieves an AgentEngine instance by display name or resource name.
+    표시 이름 또는 리소스 이름으로 AgentEngine 인스턴스를 조회합니다.
 
-    This function searches through the available agent engines and returns the engine
-    that matches the provided display name or resource name. If no matching engine is found,
-    it prints an error message.
+    이 함수는 사용 가능한 에이전트 엔진을 순회하며, 주어진 표시 이름 또는 리소스 이름과 일치하는 엔진을 반환합니다.
+    일치하는 엔진이 없으면 에러 메시지를 출력합니다.
 
-    Args:
-        display_name (str, optional): The display name of the agent engine to retrieve.
-        resource_name (str, optional): The resource name of the agent engine to retrieve.
+    인자:
+        display_name (str, optional): 조회할 에이전트 엔진의 표시 이름
+        resource_name (str, optional): 조회할 에이전트 엔진의 리소스 이름
 
-    Returns:
-        agent_engines.AgentEngine: The matching AgentEngine instance if found, otherwise None.
+    반환값:
+        agent_engines.AgentEngine: 일치하는 AgentEngine 인스턴스(없으면 None)
     """
     
     # print("\n\n### Get a agent engines with display name or resource name. \n\n")
@@ -105,13 +103,12 @@ def get_agent_engine(display_name = None,
 
 def show_agents():
     """
-    Displays a list of all available agent engines.
+    사용 가능한 모든 에이전트 엔진 목록을 출력합니다.
 
-    This function retrieves and prints information about each agent engine, including
-    its display name, name, creation time, and resource name. If no agent engines are found,
-    it prints a message indicating that no reasoning engines are available.
+    이 함수는 각 에이전트 엔진의 표시 이름, 이름, 생성 시간, 리소스 이름 정보를 출력합니다.
+    에이전트 엔진이 없으면 관련 메시지를 출력합니다.
 
-    Returns:
+    반환값:
         None
     """
 
@@ -132,15 +129,15 @@ def show_agents():
 
 def delete_agent(name):
     """
-    Deletes an agent engine by its name.
+    이름으로 에이전트 엔진을 삭제합니다.
 
-    This function retrieves the agent engine with the specified name and deletes it from Vertex AI Agent Engine.
-    If the deletion is successful, it prints a confirmation message. If an error occurs, it prints the error.
+    이 함수는 지정한 이름의 에이전트 엔진을 조회하여 Vertex AI Agent Engine에서 삭제합니다.
+    삭제가 성공하면 확인 메시지를 출력하고, 에러 발생 시 에러를 출력합니다.
 
-    Args:
-        name (str): The name of the agent engine to delete.
+    인자:
+        name (str): 삭제할 에이전트 엔진의 이름
 
-    Returns:
+    반환값:
         None
     """
 
