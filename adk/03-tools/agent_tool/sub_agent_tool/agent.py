@@ -52,7 +52,7 @@ def build_agent() -> Agent:
     agent = Agent(
         name = "root_agent",
         model = os.getenv("MODEL"),
-        description = "Agents that answer questions about user query",
+        description = "사용자 질의에 답변하는 에이전트",
         instruction = INSTRUCTION,
         tools = [AgentTool(agent=positive_critic),
                 AgentTool(agent=negative_critic)]

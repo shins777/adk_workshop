@@ -22,5 +22,6 @@ STOCK_API_KEY=your_stock_api_key
 adk web
 ```
 
-## 라이센스 정보
-이 프로젝트는 Apache License 2.0에 따라 라이센스가 부여됩니다. 자세한 내용은 [LICENSE](../../LICENSE) 파일을 참조하세요.
+## 라이센스
+
+이 프로젝트는 Apache License 2.0을 따르며, 모든 코드와 콘텐츠의 저작권은 **ForusOne**(shins777@gmail.com)에 있습니다.

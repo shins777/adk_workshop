@@ -1,4 +1,4 @@
-# Copyright 2025 Forusone(forusone777@gmail.com)
+# Copyright 2025 Forusone(shins777@gmail.com)
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -33,13 +33,18 @@ def get_vertex_search_tool():
 
     PROJECT_ID = os.getenv('GOOGLE_CLOUD_PROJECT')
     LOCATION = os.getenv('GOOGLE_CLOUD_LOCATION')
+    
+    # Vertex AI Search는 글로벌 위치에서 사용 가능하므로, VERTEXAI_LOCATION을 "global"로 설정합니다.
+    # 그리고 data_store_id를 구성할 때, 프로젝트 번호와 데이터스토어 ID를 사용하여 전체 경로를 만듭니다.
+    VAIS_LOCATION = "global"  # Vertex AI Search는 글로벌 위치에서 사용 가능
     PROJECT_NUMBER = os.getenv('PROJECT_NUMBER')
     DATASTORE_ID = os.getenv('DATASTORE_ID')
 
     vertexai.init(project=PROJECT_ID, location=LOCATION)
 
-    data_store_id = f"projects/{PROJECT_NUMBER}/locations/{LOCATION}/collections/default_collection/dataStores/{DATASTORE_ID}"
+    data_store_id = f"projects/{PROJECT_NUMBER}/locations/{VAIS_LOCATION}/collections/default_collection/dataStores/{DATASTORE_ID}"
     
+
     print("Vertex AI Search : Data store ID : \n", data_store_id)
 
     vertex_search_tool = VertexAiSearchTool(data_store_id=data_store_id)
@@ -61,19 +66,19 @@ def build_agent() -> Agent:
     """
 
     INSTRUCTION = """
-        You are an agent that provides answers to users' questions.
-        When a user enters a question, you must perform a search on the 'vertex_search_tool' for that question and provide an answer based on the results.
+        당신은 사용자의 질문에 답변을 제공하는 에이전트입니다.
+        사용자가 질문을 입력하면, 해당 질문에 대해 'vertex_search_tool'을 사용해 검색을 수행하고 결과를 바탕으로 답변을 제공해야 합니다.
 
-        Note : When answering, Must be sure to use the same language the user used when asking the question. 
-        
+        참고: 답변 시 반드시 사용자가 질문에 사용한 언어와 동일한 언어로 답변해야 합니다.
     """
     
     vertex_search_tool = get_vertex_search_tool()
+    print("Vertex AI Search : vertex_search_tool : \n", vertex_search_tool)
 
     vertexai_search = Agent(
         name = "vertexai_search",
         model = os.getenv("MODEL"),
-        description = "Agents that answer questions about user query",
+        description = "사용자 질의에 답변하는 에이전트",
         instruction = INSTRUCTION,
         tools=[vertex_search_tool],
     )

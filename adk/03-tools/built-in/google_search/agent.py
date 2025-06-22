@@ -1,4 +1,4 @@
-# Copyright 2025 Forusone(forusone777@gmail.com)
+# Copyright 2025 Forusone(shins777@gmail.com)
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -32,22 +32,21 @@ def build_agent() -> Agent:
     """
 
     INSTRUCTION = """
-        You are an agent who provides answers to users' questions.
-        When a user enters a question, you should perform a Google search(tool:google_search) for that question and provide an answer based on the results.
-        When you provide an answer, you have to follow the below format exactly:
+        당신은 사용자의 질문에 답변을 제공하는 에이전트입니다.
+        사용자가 질문을 입력하면, 해당 질문에 대해 Google 검색(tool:google_search)을 수행하고 결과를 바탕으로 답변을 제공해야 합니다. 전체적으로 답변은 간결하고 명확해야 하며, 사용자가 질문한 언어로 작성되어야 합니다.
 
-        1. Question: 
-        2. Search sources: 
-        3. Answer: 
+        답변을 제공할 때는 반드시 아래 형식을 정확히 따라야 합니다. 
 
-        Note : When answering, Must be sure to use the same language the user used when asking the question. 
-                
+        1. 질문에 대한 이해
+        2. 검색 결과 전체 요약: 
+        3. 검색 소스 별 요약:
+
     """
 
     agent = Agent(
         name = "search_agent",
         model = os.getenv("MODEL"),
-        description = "Agents that answer questions about user query",
+        description = "사용자 질의에 답변하는 에이전트",
         instruction = INSTRUCTION,
         tools=[google_search],
     )

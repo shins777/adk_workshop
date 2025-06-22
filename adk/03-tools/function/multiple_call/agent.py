@@ -1,4 +1,4 @@
-# Copyright 2025 Forusone(forusone777@gmail.com)
+# Copyright 2025 Forusone(shins777@gmail.com)
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -22,47 +22,45 @@ load_dotenv()
 
 def build_agent() -> Agent:
     """
-    Creates and configures an Agent instance with multiple function tool support.
+    여러 함수 도구를 지원하는 Agent 인스턴스를 생성하고 구성합니다.
 
-    This function loads environment variables, defines the agent's instruction template,
-    and initializes the Agent with a name, model, description, instruction, and tools for
-    retrieving exchange rate and stock price information. The agent is designed to answer
-    user queries by calling the appropriate function tool and formatting the response accordingly.
+    이 함수는 환경 변수를 로드하고, 에이전트의 안내 템플릿을 정의하며,
+    이름, 모델, 설명, 안내문, 환율 및 주가 정보를 조회하는 도구를 포함하여 Agent를 초기화합니다.
+    이 에이전트는 적절한 함수 도구를 호출하여 사용자 질의에 답변하고, 응답을 지정된 형식에 맞게 제공합니다.
 
-    Returns:
-        Agent: A configured Agent instance ready to process exchange rate and stock information queries.
+    반환값:
+        Agent: 환율 및 주식 정보 질의 처리가 가능한 구성된 Agent 인스턴스
     """
 
-    INSTRUCTION = """ 
+    INSTRUCTION = """
 
-        You are an AI Agent that searches for exchange rate information and stock information and answers.
+        당신은 환율 정보와 주식 정보를 검색하여 답변하는 AI 에이전트입니다.
 
-        1. Search for exchange rate information
-            If you tell me the base exchange rate and the target exchange rate, I will tell you the exchange rate information based on the given date.
-            Please find the target exchange rate, target exchange rate, and date information from the given question and pass them to the 'get_exchange_rate' tool to search.
-            The answer format is as follows.
-            - Base exchange rate: USD
-            - Target exchange rate: KRW
-            - Date: 2025-05-20
-            - Exchange rate information: 1400
+        1. 환율 정보 검색
+            기준 환율과 대상 환율을 알려주면, 주어진 날짜를 기준으로 환율 정보를 안내합니다.
+            질문에서 기준 환율, 대상 환율, 날짜 정보를 추출하여 'get_exchange_rate' 도구에 전달해 검색하세요.
+            답변 형식은 다음과 같습니다.
+            - 기준 환율: USD
+            - 대상 환율: KRW
+            - 날짜: 2025-05-20
+            - 환율 정보: 1400
 
-        2. Search for stock information
-            For stock information, tell me the stock price as of today based on the given symbol.
-            Please find the symbol for the given company name and pass it to the 'get_stock_price' tool to search.
-            The answer format is as follows.
-            - Stock information: Google
-            - Date: 2025-05-20
-            - Stock price: $200
+        2. 주식 정보 검색
+            주식 정보는 주어진 심볼을 기준으로 오늘 날짜의 주가를 안내합니다.
+            회사명에서 심볼을 추출하여 'get_stock_price' 도구에 전달해 검색하세요.
+            답변 형식은 다음과 같습니다.
+            - 주식 정보: Google
+            - 날짜: 2025-05-20
+            - 주가: $200
 
-        Note : When answering, Must be sure to use the same language the user used when asking the question. 
+        참고: 답변 시 반드시 사용자가 질문에 사용한 언어와 동일한 언어로 답변해야 합니다.
 
-                    
     """
 
     agent = Agent(
         name = "basic_agent",
         model = os.getenv("MODEL"),
-        description = "Agents that answer questions about user query",
+        description = "사용자 질의에 답변하는 에이전트",
         instruction = INSTRUCTION,
         tools=[function.get_exchange_rate, function.get_stock_price],
 
