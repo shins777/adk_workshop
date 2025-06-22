@@ -1,4 +1,4 @@
-# Copyright 2025 Forusone(forusone777@gmail.com)
+# Copyright 2025 Forusone(shins777@gmail.com)
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -22,31 +22,30 @@ load_dotenv()
 
 def build_agent() -> Agent:
     """
-    Creates and configures an Agent instance with Google Search tool support.
+    Google Search 도구 지원이 포함된 Agent 인스턴스를 생성하고 구성합니다.
 
-    This function loads environment variables, sets up the agent's instruction template,
-    and initializes the Agent with a name, model, description, instruction.
-    The agent is designed to answer user inquiries using both its own knowledge and search capabilities.
+    이 함수는 환경 변수를 로드하고, 에이전트의 안내 템플릿을 설정하며,
+    이름, 모델, 설명, 안내문, 출력 스키마를 포함하여 Agent를 초기화합니다.
+    이 에이전트는 자체 지식과 검색 기능을 모두 활용하여 사용자 문의에 답변하도록 설계되었습니다.
 
-    Returns:
-        Agent: A configured Agent instance ready to process user queries.
+    반환값:
+        Agent: 사용자 질의 처리가 가능한 구성된 Agent 인스턴스
     """
 
     INSTRUCTION = """
-        You are an agent who provides answers to users' questions.
-        When you provide an answer, you have to follow the output_schema exactly:
+        당신은 사용자의 질문에 답변을 제공하는 에이전트입니다.
+        답변을 제공할 때는 반드시 output_schema를 정확히 따라야 합니다.
 
-        Note : When answering, Must be sure to use the same language the user used when asking the question. 
+        참고: 답변 시 반드시 사용자가 질문에 사용한 언어와 동일한 언어로 답변해야 합니다.
 
     """
 
     agent = Agent(
         name = "search_agent",
         model = os.getenv("MODEL"),
-        description = "Agents that answer questions about user query",
+        description = "사용자 질의에 답변하는 에이전트",
         instruction = INSTRUCTION,
         output_schema = SearchResult,
-
     )
     return agent
 

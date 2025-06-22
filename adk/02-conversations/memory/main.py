@@ -1,4 +1,4 @@
-# Copyright 2025 Forusone(forusone777@gmail.com)
+# Copyright 2025 Forusone(shins777@gmail.com)
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -27,14 +27,14 @@ if __name__ == "__main__":
 
     load_dotenv()
 
-    print("Running the agent...")
-    print("Usage : uv run memory.main --memory_type [in_memory|rag_corpus] --app_name <app_name> --user_id <user_id>")
-    print("Usage : memory_type : in_memory, rag_corpus")
+    print("에이전트를 실행합니다...")
+    print("사용법 : uv run memory.main --memory_type [in_memory|rag_corpus] --app_name <app_name> --user_id <user_id>")
+    print("사용 가능한 memory_type : in_memory, rag_corpus")
 
-    parser = argparse.ArgumentParser(description="Run the ADK agent with a user query.")
-    parser.add_argument("--memory_type",type=str,help="The type of session",)
-    parser.add_argument("--app_name",type=str,help="The application name of this agent.",)
-    parser.add_argument("--user_id",type=str,help="The user name interacting with this agent",)
+    parser = argparse.ArgumentParser(description="사용자 질의와 함께 ADK 에이전트를 실행합니다.")
+    parser.add_argument("--memory_type",type=str,help="세션의 유형",)
+    parser.add_argument("--app_name",type=str,help="이 에이전트의 애플리케이션 이름.",)
+    parser.add_argument("--user_id",type=str,help="이 에이전트와 상호작용하는 사용자 이름",)
     args = parser.parse_args()
     
     session_service = InMemorySessionService()
@@ -57,11 +57,10 @@ if __name__ == "__main__":
         )
     
     else:
-        raise ValueError("Invalid session type. Choose 'in_memory' or 'rag_corpus'.")
+        raise ValueError("유효하지 않은 세션 유형입니다. 'in_memory' 또는 'rag_corpus' 중에서 선택하세요.")
 
     asyncio.run(runner.orchestrate_search_and_recall(session_service = session_service, 
                                  memory_service = memory_service,
                                  app_name = args.app_name, 
                                  user_id = args.user_id, 
                                  ))
-    

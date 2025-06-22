@@ -1,4 +1,4 @@
-# Copyright 2025 Forusone(forusone777@gmail.com)
+# Copyright 2025 Forusone(shins777@gmail.com)
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -24,33 +24,32 @@ load_dotenv()
 
 def build_search_agent() -> Agent:
     """
-    Creates and configures an Agent instance with Google Search tool support.
+    Google Search 도구 지원이 포함된 Agent 인스턴스를 생성하고 구성합니다.
 
-    This agent is designed to answer user questions by performing a Google search using the
-    google_search tool and providing an answer based on the search results. The response
-    follows a structured format including the question, source information, and answer.
+    이 에이전트는 google_search 도구를 사용하여 사용자의 질문에 대해 Google 검색을 수행하고,
+    검색 결과를 바탕으로 답변을 제공합니다. 답변은 질문, 출처 정보, 답변의 구조화된 형식을 따릅니다.
 
-    Returns:
-        Agent: An Agent instance configured to answer queries using Google Search.
+    반환값:
+        Agent: Google Search를 활용해 질의에 답변하는 Agent 인스턴스
     """
 
     SEARCH_INSTRUCTION = """
-            You are an agent who provides answers to users' questions.
-            When a user enters a question, you should perform a Google search(tool:google_search) for that question and provide an answer based on the results.
-            When you provide an answer, you have to follow the below format exactly:
+            당신은 사용자의 질문에 답변을 제공하는 에이전트입니다.
+            사용자가 질문을 입력하면, 해당 질문에 대해 Google 검색(tool:google_search)을 수행하고 결과를 바탕으로 답변을 제공해야 합니다.
+            답변을 제공할 때는 반드시 아래 형식을 정확히 따라야 합니다:
 
-            1. Question: 
-            2. Source information: 
-            3. Answer: 
+            1. 질문: 
+            2. 출처 정보: 
+            3. 답변: 
 
-            Note : When answering, Must be sure to use the same language the user used when asking the question. 
+            참고: 답변 시 반드시 사용자가 질문에 사용한 언어와 동일한 언어로 답변해야 합니다.
 
         """
 
     search_agent = Agent(
         name = "search_agent",
         model = os.getenv("MODEL"),
-        description = "Agents that answer questions about user query",
+        description = "사용자 질의에 답변하는 에이전트",
         instruction = SEARCH_INSTRUCTION,
         tools=[google_search],
     )
@@ -60,25 +59,24 @@ def build_search_agent() -> Agent:
 
 def build_recall_agent() -> Agent:
     """
-    Creates and configures an Agent instance with memory recall capabilities.
+    메모리 리콜 기능이 포함된 Agent 인스턴스를 생성하고 구성합니다.
 
-    This agent is designed to answer user questions by querying stored memory using the
-    'load_memory' tool. The agent retrieves relevant information from memory and provides
-    answers based on the results.
+    이 에이전트는 'load_memory' 도구를 사용하여 저장된 메모리에 대해 질의함으로써 사용자 질문에 답변하도록 설계되었습니다.
+    에이전트는 메모리에서 관련 정보를 검색하여 결과를 바탕으로 답변을 제공합니다.
 
-    Returns:
-        Agent: An Agent instance configured to answer queries by retrieving information from memory.
+    반환값:
+        Agent: 메모리에서 정보를 검색하여 질의에 답변하도록 구성된 Agent 인스턴스
     """
 
     RECALL_INSTRUCTION = """
-            You are an agent that provides answers to users' questions. When a user asks a question, 
-            You should use the 'load_memory' tool to query the memory and provide an answer based on the results.
+            당신은 사용자의 질문에 답변을 제공하는 에이전트입니다. 사용자가 질문을 하면,
+            'load_memory' 도구를 사용하여 메모리를 질의하고 결과를 바탕으로 답변을 제공해야 합니다.
         """
 
     recall_agent = Agent(
         name = "recall_agent",
         model = os.getenv("MODEL"),
-        description = "An agent that answers users' questions by retrieving them from memory.",
+        description = "메모리에서 정보를 검색하여 사용자 질문에 답변하는 에이전트",
         instruction = RECALL_INSTRUCTION,
         tools=[load_memory],
     )

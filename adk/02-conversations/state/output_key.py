@@ -11,22 +11,20 @@ from state import agent
 async def run_agent( app_name: str,
                      user_id: str,
                      session_id: str,):
-
     """
-    Runs the agent in a conversational loop while displaying session state changes.
+    세션 상태 변화를 표시하며 에이전트를 대화 루프에서 실행합니다.
 
-    This function creates a session for the user and application, then enters a loop
-    where it prompts the user for input, sends the input to the agent, and prints the
-    agent's response. After each interaction, it retrieves and displays the updated
-    session state to show how the agent's state evolves over time.
+    이 함수는 사용자와 애플리케이션에 대한 세션을 생성한 후,
+    사용자 입력을 받아 에이전트에 전달하고, 에이전트의 응답을 출력합니다.
+    각 상호작용 후에는 업데이트된 세션 상태를 조회하여 에이전트의 상태가 어떻게 변화하는지 보여줍니다.
 
-    Args:
-        app_name (str): The name of the application.
-        user_id (str): The user identifier.
-        session_id (str): The session identifier.
+    인자:
+        app_name (str): 애플리케이션 이름
+        user_id (str): 사용자 식별자
+        session_id (str): 세션 식별자
 
-    Returns:
-        None
+    반환값:
+        없음
     """
 
     session_service = InMemorySessionService()
@@ -38,7 +36,7 @@ async def run_agent( app_name: str,
                     app_name=app_name,
                     session_service=session_service)
     
-    print(f"Initial state: {session.state}")
+    print(f"초기 상태: {session.state}")
 
     while True:
 
@@ -82,4 +80,3 @@ if __name__ == "__main__":
     asyncio.run(run_agent(app_name = args.app_name, 
                           user_id = args.user_id, 
                           session_id = args.session_id,))
-    

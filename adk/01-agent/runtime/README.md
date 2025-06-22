@@ -16,15 +16,14 @@
 
 ## 개요
 `runtime` 에이전트 예제는 다음을 보여줍니다:
-- 긍정 및 부정 크리틱을 위한 서브 에이전트를 포함하는 루트 에이전트 정의
+- 긍정 및 부정 평가를 위한 서브 에이전트를 포함하는 루트 에이전트 정의
 - 선택적으로 에이전트 툴을 사용해 서브 에이전트 래핑
 - 환경 변수로 설정값 불러오기
-- ADK `Agent` 객체 인스턴스화 및 반환
-- 러너 스크립트를 사용해 대화 루프에서 에이전트 실행
+- Runner class 를 활용하여 실행.
 
 ## .env 설정.
 
-`.env` 파일은 현재 basic 폴더의 **상위 폴더(01-agent)**에 위치해야 합니다.
+`.env` 파일은 현재 runtime 폴더의 **상위 폴더(01-agent)**에 위치해야 합니다.
 
 ```
 GOOGLE_GENAI_USE_VERTEXAI=FALSE
@@ -32,7 +31,7 @@ GOOGLE_API_KEY=YOUR_GOOGLE_API_KEY
 PROJECT_ID=your-gcp-project-id
 PROJECT_NUMBER=your-gcp-project-number
 LOCATION=us-central1
-MODEL=gemini-2.0-flash
+MODEL=gemini-2.5-flash
 ```
 
 ## 파일 구조

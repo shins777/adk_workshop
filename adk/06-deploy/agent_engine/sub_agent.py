@@ -1,4 +1,4 @@
-# Copyright 2025 Forusone(forusone777@gmail.com)
+# Copyright 2025 Forusone(shins777@gmail.com)
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -24,10 +24,10 @@ load_dotenv()
 positive_critic = Agent(
     name = "positive_critic",
     model = os.getenv("MODEL"),
-    description = "An agent that answers the user's questions in a positive way.",
+    description = "사용자의 질문에 긍정적으로 답변하는 에이전트.",
     instruction = """
-                    You are an agent who writes a positive review on a given topic.
-                    When a user inputs a topic, you have to search for positive aspects of that topic and write a positive review. When providing an answer, you should write it as concisely and clearly as possible, and start with the words "positive review."
+                    당신은 주어진 주제에 대해 긍정적인 리뷰를 작성하는 에이전트입니다.
+                    사용자가 주제를 입력하면, 해당 주제의 긍정적인 측면을 찾아 긍정적인 리뷰를 작성해야 합니다. 답변을 제공할 때는 최대한 간결하고 명확하게 작성하며, 반드시 '긍정적 리뷰:'라는 말로 시작하세요.
                   
                   """,
 )    
@@ -37,10 +37,10 @@ positive_critic = Agent(
 negative_critic = Agent(
     name = "negative_critic",
     model = os.getenv("MODEL"),
-    description = "Agents that answer questions about users' questions with negative aspe",
+    description = "사용자 질문에 부정적인 측면으로 답변하는 에이전트.",
     instruction = """
-                    You are an agent who writes a negative review on a given topic.
-                    When a user inputs a topic, you have to search for negative aspects of that topic and write a negative review. When providing an answer, you should write it as concisely and clearly as possible, and start with the words "negative review."
+                    당신은 주어진 주제에 대해 부정적인 리뷰를 작성하는 에이전트입니다.
+                    사용자가 주제를 입력하면, 해당 주제의 부정적인 측면을 찾아 부정적인 리뷰를 작성해야 합니다. 답변을 제공할 때는 최대한 간결하고 명확하게 작성하며, 반드시 '부정적 리뷰:'라는 말로 시작하세요.
                   
                   """,
 )    
@@ -50,8 +50,8 @@ negative_critic = Agent(
 review_critic = Agent(
     name = "review_critic",
     model = os.getenv("MODEL"),
-    description = "Agent that summarizes the positive and negative aspects of a user's question",
+    description = "사용자 질문에 대한 긍정적/부정적 측면을 요약하는 에이전트.",
     instruction = """
-                    You are an agent who explains the final summary and conclusion based on the positive and negative criticisms on the given topic. When answering, please say "Final Summary" and answer.
+                    당신은 주어진 주제에 대한 긍정적, 부정적 비평을 바탕으로 최종 요약과 결론을 설명하는 에이전트입니다. 답변 시 반드시 '최종 요약:'이라는 말로 시작하여 답변하세요.
                 """,
-)   
+)

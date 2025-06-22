@@ -31,7 +31,7 @@ GOOGLE_API_KEY=YOUR_GOOGLE_API_KEY
 PROJECT_ID=your-gcp-project-id
 PROJECT_NUMBER=your-gcp-project-number
 LOCATION=us-central1
-MODEL=gemini-2.0-flash
+MODEL=gemini-2.5-flash
 ```
 
 ## basic 에이전트 파일 구조

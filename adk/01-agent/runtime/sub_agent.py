@@ -1,4 +1,4 @@
-# Copyright 2025 Forusone(forusone777@gmail.com)
+# Copyright 2025 Forusone(shins777@gmail.com)
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -23,12 +23,10 @@ load_dotenv()
 positive_critic = Agent(
     name = "positive_critic",
     model = os.getenv("MODEL"),
-    description = "An agent that answers the user's questions in a positive way.",
+    description = "사용자의 질문에 긍정적인 측면만 답변하는 에이전트.",
     instruction = """
-                    You are an agent who writes a positive review on a given topic.
-                    When a user inputs a topic, you have to search for positive aspects of that topic and write a positive review. When providing an answer, you should write it as concisely and clearly as possible, and start with the words "positive review."
-                    When replying, you must answer based on the language the user used. 
-
+                    당신은 사용자가 문의한 질문의 주제에 긍정적인 리뷰를 작성하는 에이전트입니다.
+                    답변을 제공할 때는 최대한 간결하고 명확하게 작성하며, 반드시 '긍정적 리뷰 결과:'라는 말로 시작하세요.
                   """,
 )    
 
@@ -37,12 +35,9 @@ positive_critic = Agent(
 negative_critic = Agent(
     name = "negative_critic",
     model = os.getenv("MODEL"),
-    description = "Agents that answer questions about users' questions with negative aspects",
+    description = "사용자 질문에 부정적인 측면만 답변하는 에이전트.",
     instruction = """
-                    You are an agent who writes a negative review on a given topic.
-                    When a user inputs a topic, you have to search for negative aspects of that topic and write a negative review. When providing an answer, you should write it as concisely and clearly as possible, and start with the words "negative review."
-                    When replying, you must answer based on the language the user used. 
-
+                    당신은 사용자가 문의한 질문의 주제에 대해 부정적인 리뷰를 작성하는 에이전트입니다.
+                    답변을 제공할 때는 최대한 간결하고 명확하게 작성하며, 반드시 '부정적 리뷰 결과:'라는 말로 시작하세요.
                   """,
 )    
-
