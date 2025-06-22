@@ -51,20 +51,30 @@ adk/01-agent/runtime/
 
 ## 작동 방식
 
-루트 에이전트는 ADK `Agent` 클래스를 사용해 정의됩니다. 두 가지 모드로 설정할 수 있습니다:
-- **서브 에이전트 모드:** 에이전트가 크리틱 작업을 `positive_critic` 및 `negative_critic` 서브 에이전트에 위임합니다.
-- **에이전트 툴 모드:** 에이전트가 `AgentTool` 래퍼를 사용해 서브 에이전트를 호출 가능한 툴로 노출합니다.
+루트 에이전트는 ADK `Agent` 클래스를 사용해 정의되며, 해당 Agent는 아래와 같이 sub_agent를 포함합니다.
+아래 sub agent는 root_agent 에 의해서 사용자의 질문이 분석이 되고, 그 질문에 맞는 sub agent가 호출이 됩니다.
 
-에이전트의 지시문은 다음을 안내합니다:
-- 사용자 질문의 의도 정리
-- 긍정 또는 부정 크리틱에 적절한 서브 에이전트/툴 사용
-- 항상 사용자가 질문한 언어와 동일한 언어로 답변
+```
+    agent = Agent(
+        name = "root_agent",
+        model = os.getenv("MODEL"),
+        description = "사용자 질의에 대한 질문에 답변하는 에이전트",
+        instruction = INSTRUCTION,
+        sub_agents = [positive_critic, negative_critic],
+    ) 
+```
 
 ## 예제 실행
+### 1. google.adk.runners.Runner 클래스를 통해서 실행
 ```
 ai_agent/adk/01-agent$ uv run -m runtime.runner
 ```
 
+또는 web browser를 통해서 실행.
+```
+ai_agent/adk/01-agent$ adk web
+```
+
 ## 라이선스
 
-이 프로젝트는 Apache License 2.0을 따릅니다.
+이 프로젝트는 Apache License 2.0을 따르며, 모든 코드와 콘텐츠의 저작권은 **ForusOne**(shins777@gmail.com)에 있습니다.
