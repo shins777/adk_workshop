@@ -46,6 +46,10 @@ def exit_loop(tool_context: ToolContext):
     """
   
     print(f"[Tool Call] exit_loop triggered by {tool_context.agent_name}")
+    
+    # 루프 에이전트에게 현재 루프 반복을 종료하도록 신호를 보냅니다.
+    # 툴 컨텍스트의 'escalate' 액션을 True로 설정하여,
+    # 루프 에이전트가 루프를 벗어나 워크플로우의 다음 단계로 진행하도록 지시합니다.
     tool_context.actions.escalate = True
 
     return {}
