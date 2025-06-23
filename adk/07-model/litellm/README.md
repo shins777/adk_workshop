@@ -11,16 +11,13 @@ OPENAI_API_KEY=your_openai_key
 ANTHROPIC_API_KEY=your_anthropic_key
 ```
 
-기타 기능을 위해서는 (예: GOOGLE_API_KEY) 추가 키가 필요할 수 있습니다.
-
 ## 실행 방법
 아래 명령어로 에이전트 예제를 실행하세요.
+`llm.py` 파일을 수정하여 사용할 모델(`gpt` 또는 `claude`)을 선택할 수 있습니다.
 
 ```bash
-uv run python llm.py
+adk web
 ```
-
-`llm.py` 파일을 수정하여 사용할 모델(`gpt` 또는 `claude`)을 선택할 수 있습니다.
 
 ## 라이선스
 이 프로젝트는 Apache License 2.0을 따릅니다. 자세한 내용은 [LICENSE](../../LICENSE) 파일을 참고하세요.

@@ -21,5 +21,6 @@ uv run python agent.py
 
 `agent.py` 파일을 수정하여 사용할 모델(`gemma` 또는 `llama`)을 선택할 수 있습니다.
 
-## 라이선스
-이 프로젝트는 Apache License 2.0을 따릅니다. 자세한 내용은 [LICENSE](../../LICENSE) 파일을 참고하세요.
+
+## 라이센스
+이 프로젝트는 Apache License 2.0을 따르며, 모든 코드와 콘텐츠의 저작권은 **ForusOne**(shins777@gmail.com)에 있습니다.
