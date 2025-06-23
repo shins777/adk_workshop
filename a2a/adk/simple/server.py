@@ -1,4 +1,4 @@
-# Copyright 2025 Forusone(forusone777@gmail.com)
+# Copyright 2025 Forusone(shins777@gmail.com)
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -36,21 +36,20 @@ from .executor import ADKAgentExecutor
 
 def run_a2a_server():
     """
-    Starts the A2A server with an ADK agent executor.
+    ADK 에이전트 실행기와 함께 A2A 서버를 시작합니다.
 
-    This function sets up the agent's skill and card, initializes the ADK agent and its runner,
-    configures the request handler and task store, and launches the A2AStarletteApplication using Uvicorn.
-    The server listens for incoming requests and processes them using the ADKAgentExecutor, enabling
-    interaction with the agent via the A2A protocol.
+    이 함수는 에이전트의 스킬 및 카드를 설정하고, ADK 에이전트와 러너를 초기화하며,
+    요청 핸들러와 태스크 스토어를 구성한 뒤, Uvicorn을 통해 A2AStarletteApplication을 실행합니다.
+    서버는 외부 요청을 수신하여 ADKAgentExecutor를 통해 A2A 프로토콜 기반 에이전트 상호작용을 지원합니다.
 
-    Returns:
+    반환값:
         None
     """
 
     skill = AgentSkill(
         id='echo_agent',
-        name='Response text changed with upper case',
-        description='echo agent',
+        name='대답 텍스트를 대문자로 변환',
+        description='에코 에이전트',
         tags=['echo', 'upper case'],
         examples=['Hi', 'change the text to upper case'],
         inputModes=['text/plain'],
@@ -59,7 +58,7 @@ def run_a2a_server():
 
     agent_card = AgentCard(
         name='Echoing Agent',
-        description='Eching agent resonses with upper case.',
+        description='대답을 대문자로 반환하는 에코 에이전트.',
         url='http://localhost:7777/',
         version='1.0.0',
         defaultInputModes=['text'],

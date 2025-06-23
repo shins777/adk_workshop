@@ -24,14 +24,14 @@ from a2a.types import  (AgentCard,
 
 async def main() -> None:
     """
-    Entry point for the A2A client example.
+    A2A 클라이언트 예제의 진입점입니다.
 
-    This function initializes an HTTP client, resolves the public agent card from a remote agent,
-    and creates an A2AClient instance. It then enters a loop to accept user input, sends messages
-    to the agent (both non-streaming and streaming), and prints the agent's responses to the console.
+    이 함수는 HTTP 클라이언트를 초기화하고, 원격 에이전트로부터 공개 에이전트 카드를 조회한 뒤,
+    A2AClient 인스턴스를 생성합니다. 이후 사용자 입력을 받아 에이전트에게 메시지를 전송(스트리밍/비스트리밍 모두)
+    하고, 에이전트의 응답을 콘솔에 출력하는 루프를 실행합니다.
 
-    Returns:
-        None
+    반환값:
+        없음
     """
 
     base_url = 'http://localhost:7777'
@@ -45,22 +45,22 @@ async def main() -> None:
         public_agent_card: AgentCard | None = None
 
         try:
-            print(f'Attempting to fetch public agent card from: {base_url}{AGENT_CARD_PATH}')
+            print(f'공개 에이전트 카드를 가져오는 중: {base_url}{AGENT_CARD_PATH}')
 
             public_agent_card = await resolver.get_agent_card()
 
-            print('Successfully fetched public agent card:')
+            print('공개 에이전트 카드 조회 성공:')
             print(public_agent_card.model_dump_json(indent=2, exclude_none=True))
 
         except Exception as e:
-            print(f'Critical error fetching agent card: {e}')
+            print(f'에이전트 카드 조회 중 치명적 오류 발생: {e}')
 
         client = A2AClient(httpx_client=httpx_client, agent_card=public_agent_card)
-        print('A2AClient initialized.')
+        print('A2AClient가 초기화되었습니다.')
 
         while True:
 
-            user_input = input("\n 👤 User: ")
+            user_input = input("\n 👤 사용자: ")
             if user_input.lower() == "exit":
                 break
 
@@ -80,7 +80,7 @@ async def main() -> None:
 
             #----------------------[No streaming]----------------------
             response = await client.send_message(request)
-            print(f"\n 🤖 [No Streaming] AI Assistant: {response.model_dump(mode='json', exclude_none=True)}")
+            print(f"\n 🤖 [비스트리밍] AI 어시스턴트: {response.model_dump(mode='json', exclude_none=True)}")
 
             #----------------------[Streaming]----------------------
             streaming_request = SendStreamingMessageRequest(
@@ -88,7 +88,7 @@ async def main() -> None:
             )
             stream_response = client.send_message_streaming(streaming_request)
             async for chunk in stream_response:
-                print(f"\n 🤖 [Streaming] AI Assistant: {chunk.model_dump(mode='json', exclude_none=True)}")
+                print(f"\n 🤖 [스트리밍] AI 어시스턴트: {chunk.model_dump(mode='json', exclude_none=True)}")
 
 if __name__ == '__main__':
     import asyncio

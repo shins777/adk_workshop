@@ -1,4 +1,4 @@
-# Copyright 2025 Forusone(forusone777@gmail.com)
+# Copyright 2025 Forusone(shins777@gmail.com)
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -24,13 +24,13 @@ from a2a.types import  (AgentCard,
 
 async def main() -> None:
     """
-    Entry point for the A2A client example.
+    A2A 클라이언트 예제의 진입점입니다.
 
-    This function initializes an HTTP client, resolves the public agent card from a remote agent,
-    and creates an A2AClient instance. It then enters a loop to accept user input, sends messages
-    to the agent (both non-streaming and streaming), and prints the agent's responses to the console.
+    이 함수는 HTTP 클라이언트를 초기화하고, 원격 에이전트로부터 public agent card를 조회한 뒤,
+    A2AClient 인스턴스를 생성합니다. 이후 사용자 입력을 받아 에이전트에 메시지를 전송(스트리밍/비스트리밍 모두)하고,
+    에이전트의 응답을 콘솔에 출력하는 루프를 실행합니다.
 
-    Returns:
+    반환값:
         None
     """
 

@@ -27,29 +27,29 @@ from .executor import EchoAgentExecutor
 
 def run_a2a_server():
     """
-    Starts the A2A server with an EchoAgentExecutor.
+    EchoAgentExecutor와 함께 A2A 서버를 시작합니다.
 
-    This function sets up the agent's skill and card, initializes the request handler and task store,
-    and launches the A2AStarletteApplication using Uvicorn. The server listens for incoming requests
-    and processes them using the EchoAgentExecutor, which responds to user input by echoing it in uppercase.
+    이 함수는 에이전트의 스킬과 카드를 설정하고, 요청 핸들러와 태스크 저장소를 초기화한 뒤,
+    Uvicorn을 사용해 A2AStarletteApplication을 실행합니다. 서버는 들어오는 요청을 수신하며,
+    EchoAgentExecutor를 통해 사용자의 입력을 대문자로 변환해 응답합니다.
 
-    Returns:
-        None
+    반환값:
+        없음
     """
 
     skill = AgentSkill(
         id='echo_agent',
-        name='Response text changed with upper case',
-        description='echo agent',
-        tags=['echo', 'upper case'],
+        name='대문자로 변환된 텍스트를 반환하는 에이전트',
+        description='입력받은 텍스트를 대문자로 에코하는 에이전트',
+        tags=['에코', '대문자'],
         examples=['Hi', 'change the text to upper case'],
         inputModes=['text/plain'],
         outputModes=['text/plain'],
     )
 
     agent_card = AgentCard(
-        name='Echoing Agent',
-        description='Eching agent resonses with upper case.',
+        name='에코 에이전트',
+        description='입력받은 텍스트를 대문자로 응답하는 에이전트입니다.',
         url='http://localhost:7777/',
         version='1.0.0',
         defaultInputModes=['text'],

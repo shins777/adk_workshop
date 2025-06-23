@@ -20,14 +20,13 @@ from a2a.types import UnsupportedOperationError
 
 class EchoAgent:
     """
-    A simple agent that echoes back the user's query in uppercase.
+    사용자의 질의를 대문자로 변환하여 그대로 반환하는 간단한 에이전트입니다.
 
-    The EchoAgent provides a single asynchronous method, `invoke`, which takes a string query
-    and returns a formatted string with the query converted to uppercase. This class is intended
-    for demonstration or testing purposes, showing how an agent can process and respond to input.
+    EchoAgent는 비동기 메서드 `invoke`만을 제공하며, 입력된 질의를 대문자로 변환한 후 포맷팅된 문자열로 반환합니다.
+    이 클래스는 에이전트가 입력을 처리하고 응답하는 방식을 시연하거나 테스트할 때 사용됩니다.
 
-    Methods:
-        invoke(query: str) -> str: Asynchronously returns the uppercase version of the input query.
+    메서드:
+        invoke(query: str) -> str: 입력 질의를 대문자로 변환하여 비동기로 반환합니다.
     """
 
     async def invoke(self, query: str) -> str:
@@ -35,16 +34,15 @@ class EchoAgent:
 
 class EchoAgentExecutor(AgentExecutor):
     """
-    An agent executor that delegates user queries to an EchoAgent and enqueues the response.
+    사용자의 질의를 EchoAgent에 위임하고, 응답을 이벤트 큐에 넣는 에이전트 실행기입니다.
 
-    The EchoAgentExecutor manages the lifecycle of an EchoAgent, handling the execution context
-    and event queue. It processes user input, invokes the agent to generate a response, and
-    enqueues the result as an event for downstream consumption. The executor also provides a
-    cancel method that raises an error for unsupported operations.
+    EchoAgentExecutor는 EchoAgent의 생명주기를 관리하며, 실행 컨텍스트와 이벤트 큐를 처리합니다.
+    사용자 입력을 받아 에이전트를 호출해 응답을 생성하고, 그 결과를 이벤트로 큐에 넣어 후속 처리가 가능하게 합니다.
+    또한, 지원하지 않는 작업에 대해 오류를 발생시키는 cancel 메서드도 제공합니다.
 
-    Methods:
-        execute(context, event_queue): Processes the user query, invokes the agent, and enqueues the response.
-        cancel(context, event_queue): Raises an error indicating that cancellation is not supported.
+    메서드:
+        execute(context, event_queue): 사용자 질의를 처리하고, 에이전트를 호출해 응답을 이벤트 큐에 넣습니다.
+        cancel(context, event_queue): 취소 작업이 지원되지 않음을 알리는 오류를 발생시킵니다.
     """
 
     def __init__(self):
