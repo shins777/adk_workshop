@@ -7,20 +7,52 @@
 `.env` 파일에 아래와 같이 키를 설정하세요.
 
 ```
+GOOGLE_GENAI_USE_VERTEXAI=FALSE
+GOOGLE_API_KEY=YOUR_GOOGLE_API_KEY
+PROJECT_ID=your-gcp-project-id
+PROJECT_NUMBER=your-gcp-project-number
+LOCATION=us-central1
+MODEL=gemini-2.5-flash
+
 OLLAMA_API_BASE=http://localhost:11434
 ```
 
 기타 기능을 위해서는 (예: GOOGLE_API_KEY) 추가 키가 필요할 수 있습니다.
 
 ## 실행 방법
+
+ollama 설치 후 간단한 단위테스트 
+
+```
+/Users/hangsik$ ollama list
+NAME               ID              SIZE      MODIFIED     
+gemma3:latest      a2af6cc3eb7f    3.3 GB    3 weeks ago     
+llama3.2:latest    a80c4f17acd5    2.0 GB    2 months ago    
+gemma3:4b          a2af6cc3eb7f    3.3 GB    2 months ago    
+/Users/hangsik$ ollama run gemma3
+>>> 
+>>> what is the generative ai ?
+Okay, let's break down what Generative AI is. It's a really hot topic 
+right now, and it's evolving rapidly, but here's a clear explanation:
+**1. What is AI (Artificial Intelligence)?**
+First, let's quickly recap AI in general. AI refers to computer systems 
+that can perform tasks that typically require human intelligence.
+
+
+```
 아래 명령어로 에이전트 예제를 실행하세요.
 
 ```bash
-uv run python agent.py
+adk web
 ```
 
 `agent.py` 파일을 수정하여 사용할 모델(`gemma` 또는 `llama`)을 선택할 수 있습니다.
 
+python 코드로 단위테스트는 
+```
+python ollama_test.py
+
+```
 
 ## 라이센스
 이 프로젝트는 Apache License 2.0을 따르며, 모든 코드와 콘텐츠의 저작권은 **ForusOne**(shins777@gmail.com)에 있습니다.

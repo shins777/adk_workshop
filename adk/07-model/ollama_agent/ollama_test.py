@@ -8,7 +8,7 @@ client = Client(
 response = client.chat(model='gemma3', messages=[
   {
     'role': 'user',
-    'content': 'Why is the sky blue?',
+    'content': 'what is the generative ai?',
   },
 ])
 
