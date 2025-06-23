@@ -1,16 +1,16 @@
-# Custom Workflow CriticAgent Example (ADK)
+# 커스텀 워크플로우 CriticAgent 예제 (ADK)
 
-## Example Overview
-This folder demonstrates how to build and operate a custom multi-stage critique agent using the Agent Development Kit (ADK). The agent orchestrates a workflow of positive and negative critiques by delegating to specialized sub-agents and coordinating their outputs.
+## 예제 개요
+이 폴더는 Agent Development Kit(ADK)를 활용하여 커스텀 다단계 비평 에이전트를 구축하고 운영하는 방법을 보여줍니다. 에이전트는 긍정/부정 비평을 각각의 서브 에이전트에 위임하고, 그 결과를 조율하여 워크플로우를 완성합니다.
 
-- `agent.py`: Defines the root `CriticAgent`, which coordinates the workflow using sub-agents for positive and negative critiques.
-- `critic.py`: Implements the `CriticAgent` class, a custom agent that runs a multi-step critique workflow, yielding events from each sub-agent.
-- `sub_agent.py`: Defines the sub-agents:
-    - `positive_critic_agent`: Generates positive reviews.
-    - `negative_critic_agent`: Generates negative reviews.
+- `agent.py`: 긍정/부정 비평을 위한 서브 에이전트들을 활용해 전체 워크플로우를 조율하는 루트 `CriticAgent`를 정의합니다.
+- `critic.py`: 각 단계별 서브 에이전트의 이벤트를 순차적으로 실행 및 yield하는 커스텀 `CriticAgent` 클래스를 구현합니다.
+- `sub_agent.py`: 다음과 같은 서브 에이전트들을 정의합니다:
+    - `positive_critic_agent`: 긍정적 리뷰 생성
+    - `negative_critic_agent`: 부정적 리뷰 생성
 
-## Environment Setting
-Set the following keys in your `.env` file (located in the parent folder):
+## 환경 설정
+상위 폴더에 위치한 `.env` 파일에 다음과 같은 키를 설정하세요:
 
 ```
 GOOGLE_GENAI_USE_VERTEXAI=FALSE
@@ -21,14 +21,14 @@ LOCATION=your_location
 MODEL=your_model_name
 ```
 
-## How to Run the Source Code
-Run the agent example with:
+## 실행 방법
+아래 명령어로 에이전트 예제를 실행할 수 있습니다:
 
 ```bash
 adk web
 ```
 
-You can customize the workflow logic in `critic.py` and the sub-agent behaviors in `sub_agent.py`.
+워크플로우 로직은 `critic.py`에서, 서브 에이전트의 동작은 `sub_agent.py`에서 자유롭게 커스터마이즈할 수 있습니다.
 
-## License Information
-This project is licensed under the Apache License 2.0. See the [LICENSE](../../LICENSE) file for details.
+## 라이선스 안내
+이 프로젝트는 Apache License 2.0 하에 배포됩니다. 자세한 내용은 [LICENSE](../../LICENSE) 파일을 참고하세요.
