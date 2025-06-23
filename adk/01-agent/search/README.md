@@ -13,7 +13,7 @@ PROJECT_ID=your-gcp-project-id
 PROJECT_NUMBER=your-gcp-project-number
 LOCATION=us-central1
 MODEL=gemini-2.5-flash
-```
+
 
 ## 폴더 구조
 

@@ -1,4 +1,4 @@
-# Copyright 2025 Forusone(forusone777@gmail.com)
+# Copyright 2025 Forusone(shins777@gmail.com)
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -64,20 +64,19 @@ def deploy_agent(agent: Agent,
 def get_agent_engine(display_name = None,
                      resource_name = None) -> agent_engines.AgentEngine:
     """
-    표시 이름 또는 리소스 이름으로 AgentEngine 인스턴스를 조회합니다.
+    display_name 또는 resource_name 으로 AgentEngine 인스턴스를 조회합니다.
 
-    이 함수는 사용 가능한 에이전트 엔진을 순회하며, 주어진 표시 이름 또는 리소스 이름과 일치하는 엔진을 반환합니다.
-    일치하는 엔진이 없으면 에러 메시지를 출력합니다.
+    이 함수는 사용 가능한 에이전트 엔진을 순회하며, 주어진 display_name 또는 resource_name 과 일치하는 엔진을 반환합니다. 일치하는 엔진이 없으면 에러 메시지를 출력합니다.
 
     인자:
-        display_name (str, optional): 조회할 에이전트 엔진의 표시 이름
-        resource_name (str, optional): 조회할 에이전트 엔진의 리소스 이름
+        display_name (str, optional): 조회할 에이전트 엔진의 display_name
+        resource_name (str, optional): 조회할 에이전트 엔진의 resource_name
 
     반환값:
         agent_engines.AgentEngine: 일치하는 AgentEngine 인스턴스(없으면 None)
     """
     
-    # print("\n\n### Get a agent engines with display name or resource name. \n\n")
+    print("\n\n### Get a agent engines with display name or resource name. \n\n")
 
     try:
         for agent in agent_engines.list():

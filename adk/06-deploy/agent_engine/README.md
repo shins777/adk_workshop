@@ -29,14 +29,14 @@ gcloud auth application-default login
 4. 에이전트를 로컬에서 실행하거나 Vertex AI에 배포:
    - 로컬 테스트 및 배포:
      ```bash
-     uv run -m agent_engine.deploy --query 'What is Generative AI?' --agent_name my_agent --user_id user1 --session_id 12345
+     uv run -m agent_engine.deploy --query 'What is Generative AI?' --agent_name my_agent --user_id user1
      ```
    - 배포된 에이전트를 원격으로 실행:
      ```bash
-     uv run -m agent_engine.run --resource_name <resource_name> --user_id user1 --session_id 12345 --query 'What is Generative AI?'
+     uv run -m agent_engine.query --engine_id <agent engine_id> --user_id user1 --query 'What is Generative AI?'
      ```
      참고: resource_name에는 프로젝트 번호를 사용해야 합니다.
-     예시: uv run -m agent_engine.run --resource_name projects/721521243942/locations/us-central1/reasoningEngines/2417773292921290752 --user_id user1 --session_id 12345 --query 'What is Generative AI?'
+     예시: uv run -m agent_engine.query --engine_id 2231366489594658816 --user_id forus --query 'What is the Generative AI?'
      
 
      ```

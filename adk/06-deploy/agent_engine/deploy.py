@@ -1,4 +1,4 @@
-# Copyright 2025 Forusone(forusone777@gmail.com)
+# Copyright 2025 Forusone(shins777@gmail.com)
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -15,7 +15,6 @@
 import os
 from dotenv import load_dotenv
 import argparse
-import asyncio
 
 import vertexai
 from vertexai.preview.reasoning_engines import AdkApp
@@ -34,7 +33,6 @@ def build_adk_app(root_agent:Agent,
               query:str,):
     """
     주어진 에이전트와 사용자 쿼리로 ADK 애플리케이션을 초기화하고 실행합니다.
-
     이 함수는 Vertex AI 환경을 설정하고, 주어진 에이전트로 AdkApp 인스턴스를 생성한 뒤,
     사용자 쿼리에 대한 에이전트의 응답을 스트리밍하여 콘솔에 출력합니다.
 
@@ -47,21 +45,25 @@ def build_adk_app(root_agent:Agent,
         AdkApp: 초기화된 AdkApp 인스턴스
     """
 
+    # 디플로이 전에 생성된 AI Agent 단위테스트를 위한 입력.
     print("### Agent LOCAL unit test")
     print(f"\n 👤 User: {query}\n")
 
-    # Initialize Vertex AI to deploy Agent Engine. 
+    # Vertex AI 환경 초기화 (Agent Engine 배포용)
+    # 환경 변수에서 프로젝트, 위치, 스테이징 버킷 정보 가져오기(스테이징 버킷은 실제 배포에 필요한 Artifact 저장소)
     vertexai.init(
         project=os.getenv("PROJECT_ID"),
         location=os.getenv("LOCATION"),
         staging_bucket=os.getenv("STAGING_BUCKET"),
     )
-    # Create a adk_app with root_agent. 
+
+    # root_agent로 adk_app 생성
     adk_app = AdkApp(agent=root_agent)
 
-    #Create a event for unit test.    
+    # 유닛 테스트용 이벤트 생성 및 응답 스트리밍
     events = adk_app.stream_query(user_id=user_id,
                                   message=query)
+    # 단위테스트용  Agent 호출 
     for event in events:
         response = event['content']['parts'][0]['text']
         print(f"\n 🤖 Local AI Assistant: {response}\n")
@@ -75,21 +77,19 @@ if __name__ == "__main__":
     parser.add_argument("--query",type=str,help="이 에이전트의 애플리케이션 이름.",)
     parser.add_argument("--agent_name",type=str,help="에이전트 이름.",)
     parser.add_argument("--user_id",type=str,help="사용자 ID.",)
-    parser.add_argument("--session_id",type=str,help="세션 ID.",)
 
     args = parser.parse_args()
     query = args.query
     agent_name = args.agent_name
     user_id = args.user_id
-    session_id = args.session_id
 
-    #1. 등록된 모든 에이전트 출력
+    # 1. 등록된 모든 에이전트 출력
     show_agents()
 
-    #2. adk_app 빌드
+    # 2. adk_app 빌드
     adk_app = build_adk_app(root_agent, user_id, query)
 
-    #3. Agent Engine에 adk_app 배포
+    # 3. Agent Engine에 adk_app 배포
     display_name = agent_name
     gcs_dir_name = os.getenv("STAGING_BUCKET")
     description = "사용자 질문에 대한 AI 정보 검색 어시스턴트"
@@ -101,6 +101,8 @@ if __name__ == "__main__":
     ]
 
     extra_packages = []
+
+    # 4. 에이전트 엔진 배포
     remote_agent = deploy_agent(agent = adk_app, 
                                 display_name = display_name, 
                                 gcs_dir_name = gcs_dir_name,

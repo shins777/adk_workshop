@@ -1,4 +1,4 @@
-# Copyright 2025 Forusone(forusone777@gmail.com)
+# Copyright 2025 Forusone(shins777@gmail.com)
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -23,29 +23,32 @@ load_dotenv()
 
 if __name__ == "__main__":
     
-    # resource name example : 
-    #   "projects/7215332243942/locations/us-central1/reasoningEngines/112774723411728768"
 
-    print(""" Usage : uv run -m agent_engine.run --resource_name projects/721521243942/locations/us-central1/reasoningEngines/112774708637728768 --user_id forus --session_id 8517270617299353600 --query 'What is the Generative AI?' """)
+
+    print(""" Usage : uv run -m agent_engine.query --engine_id 2231366489594658816 --user_id forus --query 'What is the Generative AI?' """)
     
     parser = argparse.ArgumentParser(description="Run the ADK agent with a user query.")
-    
-    parser.add_argument("--resource_name",type=str,help="The resource_name of agent",)
-
+    parser.add_argument("--engine_id",type=str,help="The engin id of agent",)
     parser.add_argument("--user_id",type=str,help="The user id",)
-    parser.add_argument("--session_id",type=str,help="The session_id",)
     parser.add_argument("--query",type=str,help="The application name of this agent.",)
     
     args = parser.parse_args()
-    query = args.query
-    resource_name = args.resource_name
-    user_id = args.user_id
-    session_id = args.session_id
+    engine_id = args.engine_id.strip()
+    user_id = args.user_id.strip()
+    query = args.query.strip()
 
     #1. Print all registered agents.
     show_agents()
 
     #2. Get the remote agent engine instance.
+    
+    # resource name example : You should set the environment variables PROJECT_NUMBER and LOCATION.
+    # projects/7215332243942/locations/us-central1/reasoningEngines/2231366489594658816
+    
+    project_number = os.getenv("PROJECT_NUMBER")
+    location = os.getenv("LOCATION")
+    resource_name = f"projects/{project_number}/locations/{location}/reasoningEngines/{engine_id}"
+
     remote_agent_engine = get_agent_engine(resource_name = resource_name)
 
     #3. Execute the query.

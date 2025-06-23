@@ -24,8 +24,10 @@ MODEL=gemini-2.0-flash
    ```
    또는 러너 스크립트가 제공된 경우:
    ```bash
-   uv run -m agent_callback.runner
+   uv run -m agent_callback.runner --command [skip_agent|check_response] --query 'Explain about Generative AI' 
    ```
+
+   
 4. 웹 인터페이스 또는 터미널 프롬프트로 에이전트와 상호작용
 
 ## 4. 라이선스 정보
