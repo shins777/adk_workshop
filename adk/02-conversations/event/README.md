@@ -13,7 +13,7 @@ GOOGLE_GENAI_USE_VERTEXAI=FALSE
 GOOGLE_API_KEY=YOUR_GOOGLE_API_KEY
 PROJECT_ID=your-gcp-project-id
 PROJECT_NUMBER=your-gcp-project-number
-LOCATION=us-central1
+LOCATION=global
 MODEL=gemini-2.5-flash
 ```
 

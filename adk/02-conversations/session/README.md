@@ -62,7 +62,7 @@ adk/02-conversations/session/
 본 예제 실행 방법은 아래와 같이 크게 3가지 타입으로 세션을 설정할 수 있습니다. 
 
 ```
-uv run -m session.main --type <session_type> --session_id <session_id>
+uv run -m session.main --type <session_type> --app_name <app_name> --user_id <user_id>
 ```
 사용 가능한 세션 타입 : in_memory, database, vertexai
 
