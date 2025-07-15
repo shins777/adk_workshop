@@ -39,7 +39,7 @@
 상위 폴더의 `.env` 파일에 다음 키를 설정하세요:
 
 ```
-GOOGLE_GENAI_USE_VERTEXAI=TRUE
+GOOGLE_GENAI_USE_VERTEXAI=FALSE
 GOOGLE_API_KEY=your_google_api_key
 PROJECT_ID=your_project_id
 PROJECT_NUMBER=your_project_number
