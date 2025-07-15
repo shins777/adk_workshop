@@ -21,6 +21,12 @@ MODEL=your_model_name
 ## 예제 실행 방법
 참고: 아래 명령어는 **03-tools/built-in** 폴더에서 실행하세요.
 
+### 1. GCP 로그인(인증)
+```
+gcloud auth application-default login
+```
+
+### 2. 소스 실행
 ```
 ai_agent/adk/03-tools/built-in$ adk web
 ```

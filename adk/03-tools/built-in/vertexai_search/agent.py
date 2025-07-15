@@ -37,14 +37,14 @@ def get_vertex_search_tool():
     # Vertex AI Search는 글로벌 위치에서 사용 가능하므로, VERTEXAI_LOCATION을 "global"로 설정합니다.
     # 그리고 data_store_id를 구성할 때, 프로젝트 번호와 데이터스토어 ID를 사용하여 전체 경로를 만듭니다.
     VAIS_LOCATION = "global"  # Vertex AI Search는 글로벌 위치에서 사용 가능
+    PROJECT_ID = os.getenv('PROJECT_ID')
     PROJECT_NUMBER = os.getenv('PROJECT_NUMBER')
     DATASTORE_ID = os.getenv('DATASTORE_ID')
 
-    vertexai.init(project=PROJECT_ID, location=LOCATION)
+    # vertexai.init(project=PROJECT_ID, location=LOCATION)
 
     data_store_id = f"projects/{PROJECT_NUMBER}/locations/{VAIS_LOCATION}/collections/default_collection/dataStores/{DATASTORE_ID}"
     
-
     print("Vertex AI Search : Data store ID : \n", data_store_id)
 
     vertex_search_tool = VertexAiSearchTool(data_store_id=data_store_id)
