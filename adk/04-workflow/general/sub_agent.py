@@ -25,7 +25,7 @@ positive_critic = Agent(
     name = "positive_critic",
     model = os.getenv("MODEL"),
     description = "사용자의 질문에 긍정적인 방식으로 답변하는 에이전트입니다.",
-    tools=[google_search],
+    # tools=[google_search],
 
     instruction = """
                     당신은 주어진 주제에 대해 긍정적인 리뷰를 작성하는 에이전트입니다.\n
@@ -39,7 +39,7 @@ negative_critic = Agent(
     name = "negative_critic",
     model = os.getenv("MODEL"),
     description = "사용자의 질문에 대해 부정적인 측면을 답변하는 에이전트입니다.",
-    tools=[google_search],
+    # tools=[google_search],
 
     instruction = """
                     당신은 주어진 주제에 대해 부정적인 리뷰를 작성하는 에이전트입니다.\n

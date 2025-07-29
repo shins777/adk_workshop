@@ -44,7 +44,7 @@ def build_agent() -> Agent:
 
     agent = Agent(
         name = "root_agent",
-        model = os.getenv("MODEL"),
+        model = os.getenv("GOOGLE_GENAI_MODEL"),
         description = "사용자 질의에 대한 질문에 답변하는 에이전트",
         instruction = INSTRUCTION,
         sub_agents = [positive_critic, negative_critic],

@@ -1,6 +1,7 @@
 # ADK 런타임 에이전트 예제 - ADK 런타임 이해하기
 
-이 폴더는 ADK(Agent Development Kit) 프레임워크를 활용해 서브 에이전트와 에이전트 툴을 사용한 고급 AI 에이전트를 구축하고 운영하는 방법을 보여줍니다. 특히 Runner class 사용법에 대해서 설명합니다. 
+이 폴더는 ADK(Agent Development Kit) 프레임워크를 활용해 서브 에이전트와 에이전트 툴을 사용한 고급 AI 에이전트를 구축하고 운영하는 방법을 보여줍니다.   
+이 예제는 Runner class 사용법에 대해서 설명합니다. 
 
 ## 배경
 
@@ -10,7 +11,6 @@
 이미지 출처: https://google.github.io/adk-docs/runtime/#core-idea-the-event-loop
 
 ### 호출 흐름
-
 ![invocation flow](https://google.github.io/adk-docs/assets/invocation-flow.png)
 이미지 출처: https://google.github.io/adk-docs/runtime/#how-it-works-a-simplified-invocation
 
@@ -23,15 +23,23 @@
 
 ## .env 설정.
 
-`.env` 파일은 현재 runtime 폴더의 **상위 폴더(01-agent)**에 위치해야 합니다.
+`.env` 파일은 현재 runtime 폴더의 `상위 폴더(01-agent)` 에 위치해야 합니다.  환경파일내 들어갈 내용은 아래 URL을 참고하세요.    
+https://google.github.io/adk-docs/get-started/quickstart/#set-up-the-model 
+
+아래 환경설정은 기업에서 `Vertex AI`기반에서 ADK를 사용할때 적용되는 예제입니다.    
+
+```
+GOOGLE_GENAI_USE_VERTEXAI=TRUE                  # 기업용 Vertex AI 사용.
+GOOGLE_CLOUD_PROJECT="ai-hangsik"               # 각자 Project ID 를 참고해서 변경.
+GOOGLE_CLOUD_LOCATION="global"                  # Global Endpoint 사용.
+GOOGLE_GENAI_MODEL = "gemini-2.5-flash"         # 현재 Gemini 최신 버전.
+```
+
+참고로 `AI Studio`를 사용하는 일반 사용자 버전은 아래와 같이 GOOGLE_API_KEY 를 셋팅해야 합니다.  
 
 ```
 GOOGLE_GENAI_USE_VERTEXAI=FALSE
-GOOGLE_API_KEY=YOUR_GOOGLE_API_KEY
-PROJECT_ID=your-gcp-project-id
-PROJECT_NUMBER=your-gcp-project-number
-LOCATION=us-central1
-MODEL=gemini-2.5-flash
+GOOGLE_API_KEY=PASTE_YOUR_ACTUAL_API_KEY_HERE
 ```
 
 ## 파일 구조

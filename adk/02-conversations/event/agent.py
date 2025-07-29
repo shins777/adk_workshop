@@ -23,10 +23,8 @@ def build_agent() -> Agent:
     """
     Google Search 툴이 포함된 Agent 인스턴스를 생성하고 설정합니다. 
 
-    이 함수는 환경 변수를 불러오고, 에이전트의 지시문 템플릿을 정의하며,
-    이름, 모델, 설명, 지시문, Google Search 툴을 포함해 Agent를 초기화합니다.
-    이 에이전트는 Google 검색을 수행하여 사용자 질문에 답변하고,
-    질문, 출처 정보, 답변을 포함하는 구조화된 형식으로 답변을 제공하도록 설계되었습니다.
+    이 함수는 환경 변수를 불러오고, 에이전트의 지시문 템플릿을 정의하며, 이름, 모델, 설명, 지시문, Google Search 툴을 포함해 Agent를 초기화합니다.
+    이 에이전트는 Google 검색을 수행하여 사용자 질문에 답변하고, 질문, 출처 정보, 답변을 포함하는 구조화된 형식으로 답변을 제공하도록 설계되었습니다.
 
     반환값:
         Agent: 사용자 질의를 처리할 준비가 된 설정된 Agent 인스턴스
@@ -40,7 +38,7 @@ def build_agent() -> Agent:
 
     agent = Agent(
         name = "search_agent",
-        model = os.getenv("MODEL"),
+        model = os.getenv("GOOGLE_GENAI_MODEL"),
         description = "사용자 질의에 대한 질문에 답변하는 에이전트",
         instruction = INSTRUCTION,
         tools=[google_search],
