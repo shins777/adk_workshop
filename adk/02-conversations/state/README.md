@@ -26,6 +26,12 @@ GOOGLE_API_KEY=PASTE_YOUR_ACTUAL_API_KEY_HERE
 
 ## 소스코드 실행 방법
 
+gcloud 명령어를 통해서 Google Cloud 실행 환경 로그인 설정합니다.
+
+```
+gcloud auth application-default login
+```
+
 ### 1. output_key 테스트
 output_key는 세션내에서 간단하게 사용할 수 있는 상태를 표시하는 예약된 keyword 입니다.
 일반적으로 멀티턴 환경에서 마지막 turn 에 대한 정보를 가지고 있는 state 입니다.

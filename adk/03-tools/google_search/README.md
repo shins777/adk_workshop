@@ -1,12 +1,7 @@
-# 서브 에이전트 도구 예제 (ADK)
-ADK 에서는 Sub Agent를 도구로 등록해서 사용할 수 있습니다. Agent를 도구로 사용하는 경우와 sub agent 로 사용하는 경우는 아래와 같이 큰 차이가 있습니다.
- * Agent를 도구로 사용하는 경우 : 다른 Tool 사용하는 경우와 동일하게 모든 출력에 대한 제어권을 호출한 Agent가 가져감. 
-   * 이 경우에는 등록된 Tool들을 모두 호출이 가능함.
- * Agent를 Sub Agent로 사용하는 경우 : 호출한 Agent는 호출되는 sub agent 에게 해당 Agent 출력에 대한 사항을 위임함.
-   * 이 경우 특정 Sub Agent 하나만 호출됨. 
+# Google Search 도구 예제 (ADK)
 
 ## 예제 개요
-이 폴더는 ADK 에이전트 내에서 서브 에이전트를 도구로 활용하여 모듈화되고 조합 가능한 워크플로우를 구현하는 방법을 보여줍니다.
+이 폴더는 ADK 에이전트와 함께 내장 Google Search 도구를 활용하여 실시간 웹 검색 결과로 사용자 질의에 답변하는 방법을 보여줍니다.
 
 ## .env 설정.
 
@@ -38,6 +33,11 @@ gcloud auth application-default login
 아래 명령어로 서브 에이전트 도구 예제를 실행할 수 있습니다:
 ```
 ai_agent/adk/03-tools$ adk web
+```
+
+UI 에서 function_call 선택 후 아래와 같이 명령어 실행합니다.
+```
+이번주 한국의 사회 이슈는 ?
 ```
 
 ## 라이센스
