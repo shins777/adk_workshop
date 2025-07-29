@@ -39,14 +39,16 @@ async def run_agent():
     # InMemorySessionService는 메모리 내에서 세션을 관리합니다.
     session_service = InMemorySessionService()
     session = await session_service.create_session(app_name=APP_NAME,
-                                            user_id=USER_ID)
+                                                    user_id=USER_ID)
     
     runner = Runner(agent=agent.root_agent,
                     app_name=session.app_name,
                     session_service=session_service)
     
     while True:
-
+        print("\n질문을 입력하세요 (종료하려면 'exit' 또는 'quit' 입력):")
+        
+        # 사용자로부터 질의를 입력받습니다.
         query = input("\n 👤 User: ")
         if query.strip().lower() in ["exit", "quit"]:
             break

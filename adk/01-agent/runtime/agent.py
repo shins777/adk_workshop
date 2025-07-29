@@ -48,7 +48,7 @@ def build_agent() -> Agent:
         description = "사용자 질의에 대한 질문에 답변하는 에이전트",
         instruction = INSTRUCTION,
         sub_agents = [positive_critic, negative_critic],
-    )        
+    )
     return agent
 
 root_agent = build_agent()

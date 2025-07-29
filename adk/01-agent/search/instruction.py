@@ -12,6 +12,12 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+"""
+이 파일은 Intrauction 부분을 따로 분리하여 관리합니다.
+실제 프로젝트에서는 이 부분을 별도의 파일로 관리하여 가독성을 높이고, 유지보수를 용이하게 할 수 있습니다. 
+
+"""
+
 INSTRUCTION = """
     당신은 사용자의 질문에 답변을 제공하는 에이전트입니다.
     사용자가 질문을 입력하면, 해당 질문에 대해 Google 검색(tool:google_search)을 수행하고 결과를 바탕으로 답변을 제공해야 합니다. 전체적으로 답변은 간결하고 명확해야 하며, 사용자가 질문한 언어로 작성되어야 합니다.

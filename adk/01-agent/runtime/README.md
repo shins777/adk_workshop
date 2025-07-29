@@ -1,7 +1,7 @@
 # ADK 런타임 에이전트 예제 - ADK 런타임 이해하기
 
 이 폴더는 ADK(Agent Development Kit) 프레임워크를 활용해 서브 에이전트와 에이전트 툴을 사용한 고급 AI 에이전트를 구축하고 운영하는 방법을 보여줍니다.   
-이 예제는 Runner class 사용법에 대해서 설명합니다. 
+이 예제는 Runner class 사용법에 대해서 설명합니다. 이 처리 방식은 adk web 형태로 실행하는 방식이 아닌 API를 통해서 실행하는 방식으로 실제 프로젝트에서 presentation layer 에서 호출하는 형태입니다. 결국 Production 환경에서 customized 된 UI에서 Runner를 사용해서 호출을 하게 됩니다. 
 
 ## 배경
 
