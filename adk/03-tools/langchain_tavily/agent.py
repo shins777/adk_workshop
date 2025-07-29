@@ -74,7 +74,7 @@ def build_agent():
 
     agent = Agent(
         name = "root_agent",
-        model = os.getenv("MODEL"),
+        model = os.getenv("GOOGLE_GENAI_MODEL"),
         description = "Agents that answer questions about user query",
         instruction = INSTRUCTION,
         tools=[adk_tavily_tool, function.get_exchange_rate]

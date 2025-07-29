@@ -14,6 +14,10 @@ GOOGLE_GENAI_USE_VERTEXAI=TRUE                  # 기업용 Vertex AI 사용.
 GOOGLE_CLOUD_PROJECT="ai-hangsik"               # 각자 Project ID 를 참고해서 변경.
 GOOGLE_CLOUD_LOCATION="global"                  # Global Endpoint 사용.
 GOOGLE_GENAI_MODEL = "gemini-2.5-flash"         # 현재 Gemini 최신 버전.
+
+# Stock API keys
+STOCK_API_KEY = "STOCK_API_KEY"
+
 ```
 
 참고로 `AI Studio`를 사용하는 일반 사용자 버전은 아래와 같이 GOOGLE_API_KEY 를 셋팅해야 합니다.  

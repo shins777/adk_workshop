@@ -66,7 +66,7 @@ def build_agent() -> LlmAgent:
 
     agent = LlmAgent(
         name = "search_agent",
-        model = os.getenv("MODEL"),
+        model = os.getenv("GOOGLE_GENAI_MODEL"),
         description = "Agents that answer questions about user query",
         instruction = INSTRUCTION,
         tools=[exchange_rate_tool],

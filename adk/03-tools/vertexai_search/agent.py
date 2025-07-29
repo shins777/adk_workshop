@@ -31,20 +31,13 @@ def get_vertex_search_tool():
         VertexAiSearchTool: 지정한 Vertex AI Search 데이터스토어와 연동되는 인스턴스
     """
 
-    PROJECT_ID = os.getenv('GOOGLE_CLOUD_PROJECT')
-    LOCATION = os.getenv('GOOGLE_CLOUD_LOCATION')
-    
     # Vertex AI Search는 글로벌 위치에서 사용 가능하므로, VERTEXAI_LOCATION을 "global"로 설정합니다.
     # 그리고 data_store_id를 구성할 때, 프로젝트 번호와 데이터스토어 ID를 사용하여 전체 경로를 만듭니다.
-    VAIS_LOCATION = "global"  # Vertex AI Search는 글로벌 위치에서 사용 가능
-    PROJECT_ID = os.getenv('PROJECT_ID')
-    PROJECT_NUMBER = os.getenv('PROJECT_NUMBER')
-    DATASTORE_ID = os.getenv('DATASTORE_ID')
+    VAIS_PROJECT_NUMBER = os.getenv('VAIS_PROJECT_NUMBER')
+    VAIS_LOCATION = os.getenv('VAIS_LOCATION')  # Vertex AI Search는 글로벌 위치에서 사용 가능
+    VAIS_DATASTORE_ID = os.getenv('VAIS_DATASTORE_ID')
 
-    # vertexai.init(project=PROJECT_ID, location=LOCATION)
-
-    data_store_id = f"projects/{PROJECT_NUMBER}/locations/{VAIS_LOCATION}/collections/default_collection/dataStores/{DATASTORE_ID}"
-    
+    data_store_id = f"projects/{VAIS_PROJECT_NUMBER}/locations/{VAIS_LOCATION}/collections/default_collection/dataStores/{VAIS_DATASTORE_ID}"
     print("Vertex AI Search : Data store ID : \n", data_store_id)
 
     vertex_search_tool = VertexAiSearchTool(data_store_id=data_store_id)
@@ -77,7 +70,7 @@ def build_agent() -> Agent:
 
     vertexai_search = Agent(
         name = "vertexai_search",
-        model = os.getenv("MODEL"),
+        model = os.getenv("GOOGLE_GENAI_MODEL"),
         description = "사용자 질의에 답변하는 에이전트",
         instruction = INSTRUCTION,
         tools=[vertex_search_tool],
