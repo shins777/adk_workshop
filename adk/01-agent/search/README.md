@@ -26,6 +26,12 @@ GOOGLE_API_KEY=PASTE_YOUR_ACTUAL_API_KEY_HERE
 
 ## 예제 실행
 
+gcloud 명령어를 통해서 Google Cloud 실행 환경 로그인 설정합니다.
+
+```
+gcloud auth application-default login
+```
+
 **01-agent** 폴더에서 아래 명령어를 실행하세요. 실행 하면 UI 접속 URL을 통해서 단위테스트를 할 수 있습니다.
 
 ```

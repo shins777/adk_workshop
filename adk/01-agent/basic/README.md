@@ -36,6 +36,13 @@ adk/01-agent/basic/
 
 
 ## 예제 실행
+
+gcloud 명령어를 통해서 Google Cloud 실행 환경 로그인 설정합니다.
+
+```
+gcloud auth application-default login
+```
+
 `01-agent` 폴더에서 아래 명령어를 실행후 adk web 화면에서 테스트를 진행하시면 됩니다. 
 
 ```

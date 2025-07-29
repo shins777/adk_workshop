@@ -39,7 +39,7 @@ def build_agent() -> Agent:
     agent = Agent(
         name = "search_agent",
         model = os.getenv("GOOGLE_GENAI_MODEL"),
-        description = "사용자 질의에 대한 질문에 답변하는 에이전트",
+        description = "사용자 질문에 답변하는 에이전트",
         instruction = INSTRUCTION,
         tools=[google_search],
     )

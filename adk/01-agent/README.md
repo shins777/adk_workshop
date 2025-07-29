@@ -13,73 +13,38 @@ ADK는 **하나의 프로세스** 내에서 멀티 에이전트 시스템을 구
 ## 하위 폴더 개요
 
 ### 1. `basic/` — 기본 에이전트 예제
-
 간단한 ADK 에이전트 정의 및 실행 예제.
 
-- **주요 특징:**
-  - 맞춤 지시문 및 설명
-  - 환경 변수 기반 설정
-  - ADK `Agent` 객체 인스턴스화 및 반환
-  - 예시 `.env` 구성 제공
-- **실행 방법:**
-  - `.env` 파일을 상위 폴더에 위치
-  - `01-agent` 디렉토리에서 `adk web` 실행
-
-자세한 내용은 [`basic/README.md`](./basic/README.md) 참고.
-
----
-
 ### 2. `runtime/` — 런타임 에이전트 예제
-
 루트 에이전트와 긍정/부정 크리틱 서브 에이전트, 선택적 에이전트 툴 통합 등 고급 예제.
 
-- **주요 특징:**
-  - 루트 에이전트와 서브 에이전트 구조
-  - 크리틱 작업용 에이전트 툴
-  - 대화형 루프 실행 스크립트
-  - 예시 `.env` 구성 제공
-- **실행 방법:**
-  - `.env` 파일을 상위 폴더에 위치
-  - 제공된 실행기 스크립트를 사용한 대화형 세션
-
-자세한 내용은 [`runtime/README.md`](./runtime/README.md) 참고.
-
----
-
 ### 3. `search/` — 검색 에이전트 예제
-
 Google 검색을 활용하여 사용자 쿼리에 답변하고, 출처 참조와 함께 최신 정보를 제공하는 에이전트.
 
-- **주요 특징:**
-  - Google 검색 툴 통합
-  - 질문, 출처 및 응답 형식으로 답변 포맷팅
-  - 예시 `.env` 구성 제공
-- **실행 방법:**
-  - `.env` 파일을 상위 폴더에 위치
-  - `01-agent` 디렉토리에서 `adk web` 실행
-
-자세한 내용은 [`search/README.md`](./search/README.md) 참고.
-
----
-
 ## 공통 요구 사항
-
 - Python 3.8 이상
 - `python-dotenv`
 - ADK 및 Google ADK 라이브러리 (반드시 `google.adk`가 설치 및 구성되어 있어야 함)
 - Google API 키 및 프로젝트 구성 (.env 예제는 각 하위 폴더에 있음)
 
----
+## .env 설정.
+환경파일내 들어갈 내용은 아래 URL을 참고하세요.    
+https://google.github.io/adk-docs/get-started/quickstart/#set-up-the-model 
 
-## 예시 `.env` 파일
+아래 환경설정은 기업에서 `Vertex AI`기반에서 ADK를 사용할때 적용되는 예제입니다.    
+
 ```
-GOOGLE_GENAI_USE_VERTEXAI=FALSE 
-GOOGLE_API_KEY=YOUR_GOOGLE_API_KEY 
+GOOGLE_GENAI_USE_VERTEXAI=TRUE                  # 기업용 Vertex AI 사용.
+GOOGLE_CLOUD_PROJECT="ai-hangsik"               # 각자 Project ID 를 참고해서 변경.
+GOOGLE_CLOUD_LOCATION="global"                  # Global Endpoint 사용.
+GOOGLE_GENAI_MODEL = "gemini-2.5-flash"         # 현재 Gemini 최신 버전.
+```
 
-PROJECT_ID=your-project-id 
-PROJECT_NUMBER=your-project-number 
-LOCATION=us-central1 
-MODEL=gemini-2.0-flash
+참고로 `AI Studio`를 사용하는 일반 사용자 버전은 아래와 같이 GOOGLE_API_KEY 를 셋팅해야 합니다.  
+
+```
+GOOGLE_GENAI_USE_VERTEXAI=FALSE
+GOOGLE_API_KEY=PASTE_YOUR_ACTUAL_API_KEY_HERE
 ```
 
 ## 시작하기
@@ -89,12 +54,8 @@ MODEL=gemini-2.0-flash
 3. 위에 설명된 대로 상위 폴더에 `.env` 파일을 배치합니다.
 4. 해당 예제에 권장되는 명령어로 에이전트를 실행합니다.
 
----
-
 자세한 정보는 각 하위 폴더의 개별 README 파일을 참조하십시오.
-
-
 
 ## 라이센스
 
-이 프로젝트는 Apache License 2.0에 따라 라이센스가 부여됩니다.
+이 프로젝트는 Apache License 2.0을 따르며, 모든 코드와 콘텐츠의 저작권은 **ForusOne**(shins777@gmail.com)에 있습니다.

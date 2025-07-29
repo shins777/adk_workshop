@@ -74,6 +74,13 @@ adk/01-agent/runtime/
 
 ## 예제 실행
 ### 1. google.adk.runners.Runner 클래스를 통해서 실행
+
+gcloud 명령어를 통해서 Google Cloud 실행 환경 로그인 설정합니다.
+
+```
+gcloud auth application-default login
+```
+
 ```
 ai_agent/adk/01-agent$ uv run -m runtime.runner
 ```

@@ -10,19 +10,31 @@
 
 ## .env 설정.
 
-`.env` 파일은 현재 runtime 폴더의 **상위 폴더(02-conversations)**에 위치해야 합니다.
+`.env` 파일은 현재 runtime 폴더의 `상위 폴더(02-conversations)` 에 위치해야 합니다.  환경파일내 들어갈 내용은 아래 URL을 참고하세요.    
+https://google.github.io/adk-docs/get-started/quickstart/#set-up-the-model 
+
+아래 환경설정은 기업에서 `Vertex AI`기반에서 ADK를 사용할때 적용되는 예제입니다.    
+참고 : Gemini 의 Endpoint location 과 Agent Engine 의 Location 은 다르게 설정할 수 있습니다. 
+
+```
+GOOGLE_GENAI_USE_VERTEXAI=TRUE                  # 기업용 Vertex AI 사용.
+GOOGLE_CLOUD_PROJECT="ai-hangsik"               # 각자 Project ID 를 참고해서 변경.
+GOOGLE_CLOUD_LOCATION="global"              # Global Endpoint 사용.
+GOOGLE_GENAI_MODEL = "gemini-2.5-flash"         # 현재 Gemini 최신 버전.
+
+AGENT_ENGINE_ID=your-agent-engine-id            # vertexai 세션 타입에서만 필요
+AGENT_ENGINE_LOCATION = "us-central1"            # vertexai 세션 타입에서만 필요
+
+```
+
+참고로 `AI Studio`를 사용하는 일반 사용자 버전은 아래와 같이 GOOGLE_API_KEY 를 셋팅해야 합니다.  
 
 ```
 GOOGLE_GENAI_USE_VERTEXAI=FALSE
-GOOGLE_API_KEY=YOUR_GOOGLE_API_KEY
-PROJECT_ID=your-gcp-project-id
-PROJECT_NUMBER=your-gcp-project-number
-LOCATION=us-central1
-MODEL=gemini-2.5-flash
-
-AGENT_ENGINE_ID=your-agent-engine-id  # vertexai 세션 타입에서만 필요
-
+GOOGLE_API_KEY=PASTE_YOUR_ACTUAL_API_KEY_HERE
+AGENT_ENGINE_ID=your-agent-engine-id            # vertexai 세션 타입에서만 필요
 ```
+
 
 
 ## 폴더 구조
@@ -31,38 +43,26 @@ AGENT_ENGINE_ID=your-agent-engine-id  # vertexai 세션 타입에서만 필요
 adk/02-conversations/session/
 ├── __init__.py
 ├── agent.py
-├── main.py
 ├── runner.py
 └── README.md
 ```
 
 - `agent.py` : 에이전트 정의, 지시문 템플릿 및 Google 검색 툴 연동 포함
 - `runner.py` : 에이전트 실행 및 세션 관리 스크립트
-- `main.py` : 메인 실행 파일
 - `__init__.py` :  파이썬 패키지로 폴더 지정
 
+## 예제 실행
 
-### 1.실행 스크립트 (`runner.py`)
+gcloud 명령어를 통해서 Google Cloud 실행 환경 로그인 설정합니다.
 
-- 에이전트를 비동기적으로 실행하여 세션 인식 대화 루프를 수행
-- 기존 세션 확인 후 계속하거나 새로 생성
-- 사용자 입력을 프롬프트하고, 에이전트에 전송하며, 에이전트의 응답 출력
-- 각 턴 이후 세션 속성과 이벤트 출력
-
-### 2. 메인 스크립트 (`main.py`)
-- 에이전트 실행을 위한 진입점
-- `--type` 인수를 통해 세션 백엔드 선택 (`in_memory`, `database`, `vertexai`)
-- 적절한 세션 서비스 설정
-- 사용자 지정 앱 이름, 사용자 ID 및 세션 ID로 세션 인식 대화 루프 실행
-
-
-
-### 사용 예시
+```
+gcloud auth application-default login
+```
 
 본 예제 실행 방법은 아래와 같이 크게 3가지 타입으로 세션을 설정할 수 있습니다. 
 
 ```
-uv run -m session.main --type <session_type> --app_name <app_name> --user_id <user_id>
+uv run -m session.runner --type <session_type> --app_name <app_name> --user_id <user_id>
 ```
 사용 가능한 세션 타입 : in_memory, database, vertexai
 
@@ -73,53 +73,43 @@ uv run -m session.main --type <session_type> --app_name <app_name> --user_id <us
 * 세션을 생성하거나 조회할때 Session id 정보를 사용할수 없음, session id 는 현재 자동으로 생성됨.
 * 결국 세션 생성, 조회는 app_name, user_id 를 사용해서 처리.
 
-#### 1. 타입이 in_memory인 경우
+### 1. 타입이 in_memory인 경우
 
 이 방법은 세션 정보가 메모리에만 존재하기 때문에 프로세스 종료후 모든 세션 정보가 삭제됩니다.
 결국 프로세스 기동 중에만 사용이 가능한 세션입니다. 
 
 ```
-uv run -m session.main --type in_memory --app_name ai_assist --user_id forus
+uv run -m session.runner --type in_memory --app_name ai_assist --user_id forus
 ```
-#### 2. 타입이 database인 경우
+### 2. 타입이 database인 경우
 
 이 방법은 세션 정보를 database에 저장하는 경우입니다. 
 데이터베이스는 관계형 데이터 베이스(e.g., PostgreSQL, MySQL, SQLite)를 사용하여 해당 세선 정보를 테이블에 저장할 수 있습니다.
 
 ```
-uv run -m session.main --type database --app_name ai_assist --user_id forus
+uv run -m session.runner --type database --app_name ai_assist --user_id forus
 ```
+테스트가 정상적으로 처리되면 파일로 adk_database.db 파일이 생성되고 해당 정보를 확인 할수가 있습니다. 해당 파일은 SQLite 로써 VS code 에서 Extension을 설치하면 해당 파일 내용을 확인 할 수 있습니다.
 
-버그 참고 : 
- * 2025년 6월 1일 기준 버그 : https://github.com/google/adk-python/issues/885  
-    ```
-    sqlalchemy.exc.StatementError: (builtins.TypeError) Object of type GroundingMetadata is not JSON serializable
-    ```
+### 3. 타입이 vertexai인 경우
 
- * 2025년 6월 22일 기준 버그 Fix 되었음 : https://github.com/google/adk-python/commit/bf27f22a9534279b942bb8047d747effc9e7dd7a
-
-#### 3. 타입이 vertexai인 경우
-
-Agent Engine에 물리적인 접근을 위해서 GCP에 아래와 같이 로그인을 해야 합니다. 
-GCP 로그인을 위해서 다음 명령어를 사용하세요. 정상적인 접근을 위해서 사용하는 계정은 Agent Engine 을 사용할 수 있는 권한이 있어야 합니다. GCP 권한 설정 부분 참고하세요. 
+이 방법은 Vertex AI의 Agent Engine과 같은 물리적인 서버를 활용하는 방법입니다. 
+Agent Engine 은 독립적으로 기동되는 서버이며, AI Agent를 포팅해서 처리하도록 설계된 Cloud Run기반의 시스템입니다. 
+Agent Engine에 세션을 저장하려면 먼저 Agent Engine 을 구성하고 ID 와 해당 Location을 아래와 같이 환경파일인 .env 파일에 추가해야 합니다.
 
 ```
-gcloud auth application-default login
-```
+AGENT_ENGINE_ID = "1769934533233804800"    # Vertex AI에 배포된 Agent Engine ID.
+AGENT_ENGINE_LOCATION = "us-central"       # Vertex AI에 배포된 Agent Engine의 Locatoin.
 
-이 방법은 데이터베이스와 같이 물리적인 서버를 활용하는 방법으로 구글의 Agent Engine 을 사용하는 방법입니다.
-Agent Engine에 세션을 저장하려면 먼저 Agent Engine 을 구성하고 ID를 환경파일인 .env 파일에 추가해야 합니다.
-
-```
-AGENT_ENGINE_ID = "17699933548393804800"
 ```
 
 테스트 방법은 아래와 같습니다. 테스트시에는 아래의 app_name, user_id 을 동일하게 주어야 해당 정보를 가지고 동일한 세션 정보를 가져오게 됩니다.
 
 ```
-uv run -m session.main --type vertexai --app_name ai_assist --user_id forus
+uv run -m session.runner --type vertexai --app_name ai_assist --user_id forus
 
 ```
+테스트가 정상적으로 되었다면 Vertex AI 에서 Agent Engine 화면에서 session 이 forus 로 생성되어 있는것을 볼수 있습니다. 명시적으로 지우지 않으면 해당 정보는 계속 유지가 되고, 위의 app name 와 user id 로 동일하게 접속을 할 경우에는 기존 저장된 세션 정보를 context로 계속 사용할 수 있습니다. 
 
 
 ## 라이센스
