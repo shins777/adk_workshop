@@ -23,7 +23,7 @@ load_dotenv()
 
 positive_critic_agent = Agent(
     name = "positive_critic",
-    model = os.getenv("MODEL"),
+    model = os.getenv("GOOGLE_GENAI_MODEL"),
     description = "사용자의 질문에 긍정적인 방식으로 답변하는 에이전트입니다.",
     instruction = """
                     당신은 주어진 주제에 대해 긍정적인 리뷰를 작성하는 에이전트입니다. 
@@ -40,7 +40,7 @@ positive_critic_agent = Agent(
 
 negative_critic_agent = Agent(
     name = "negative_critic",
-    model = os.getenv("MODEL"),
+    model = os.getenv("GOOGLE_GENAI_MODEL"),
     description = "사용자의 질문에 대해 부정적인 측면을 답변하는 에이전트입니다.",
     instruction = """
                     당신은 주어진 주제에 대해 부정적인 리뷰를 작성하는 에이전트입니다. 
@@ -57,7 +57,7 @@ negative_critic_agent = Agent(
 
 review_critic_agent = Agent(
     name = "review_critic",
-    model = os.getenv("MODEL"),
+    model = os.getenv("GOOGLE_GENAI_MODEL"),
     description = "사용자의 질문에 대한 긍정적/부정적 측면을 종합하여 요약하는 에이전트입니다.",
     instruction = """
                 당신은 주어진 주제에 대한 긍정적/부정적 비평을 바탕으로 최종 요약과 결론을 설명하는 에이전트입니다. 

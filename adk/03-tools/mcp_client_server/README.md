@@ -3,29 +3,42 @@
 이 폴더는 ADK(Agent Development Kit)에서 Model Context Protocol(MCP)을 활용하여 커스텀 Python MCP 서버와 연동, 실시간 환율 정보를 조회하는 에이전트 예제를 제공합니다.
 
 
-## 환경 설정
-상위 폴더의 `.env` 파일에 다음과 같은 키를 설정하세요.
+## .env 설정.
+
+`.env` 파일은 현재 폴더의 `상위 폴더(03-tools)` 에 위치해야 합니다.  환경파일 내 들어갈 내용은 아래 URL을 참고하세요.   
+https://google.github.io/adk-docs/get-started/quickstart/#set-up-the-model 
+
+아래 환경설정은 기업에서 `Vertex AI`기반에서 ADK를 사용할때 적용되는 예제입니다.    
 
 ```
-GOOGLE_GENAI_USE_VERTEXAI=TRUE
-GOOGLE_API_KEY=your_google_api_key
-PROJECT_ID=your_project_id
-PROJECT_NUMBER=your_project_number
-LOCATION=your_location
-MODEL=your_model_name
-```
-
-## 주요 파일 안내
-- `agent.py` : MCPToolset을 통해 환율 정보를 조회하는 LlmAgent의 메인 코드입니다.
-- `exchange_rate_server.py` : 실제 환율 정보를 제공하는 커스텀 MCP 서버(Python) 코드입니다.
-- `__init__.py` : 에이전트 모듈을 임포트합니다.
-
-## 실행 방법
+GOOGLE_GENAI_USE_VERTEXAI=TRUE                  # 기업용 Vertex AI 사용.
+GOOGLE_CLOUD_PROJECT="ai-hangsik"               # 각자 Project ID 를 참고해서 변경.
+GOOGLE_CLOUD_LOCATION="global"                  # Global Endpoint 사용.
+GOOGLE_GENAI_MODEL = "gemini-2.5-flash"         # 현재 Gemini 최신 버전.
 
 ```
-adk web
+
+참고로 `AI Studio`를 사용하는 일반 사용자 버전은 아래와 같이 GOOGLE_API_KEY 를 셋팅해야 합니다.  
+
 ```
-질문 : 원달러 환율을 알려주세요. 
+GOOGLE_GENAI_USE_VERTEXAI=FALSE
+GOOGLE_API_KEY=PASTE_YOUR_ACTUAL_API_KEY_HERE
+```
+## 소스 코드 실행 방법
+gcloud 명령어를 통해서 Google Cloud 실행 환경 로그인 설정합니다.
+```
+gcloud auth application-default login
+```
+
+아래 명령어로 서브 에이전트 도구 예제를 실행할 수 있습니다:
+```
+adk_workshop/adk/03-tools$ adk web
+```
+
+테스트 할때는 질문은 아래와 같이 해주세요. 
+```
+원달러 환율을 알려주세요. 
+```
 
 ## 예제 기능
 - 사용자의 환율 질의에 대해 MCP 서버와 연동하여 실시간 환율 정보를 제공합니다.

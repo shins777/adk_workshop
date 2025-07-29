@@ -10,7 +10,7 @@
 
 ## .env 설정.
 
-`.env` 파일은 현재 runtime 폴더의 `상위 폴더(02-conversations)` 에 위치해야 합니다.  환경파일내 들어갈 내용은 아래 URL을 참고하세요.    
+`.env` 파일은 현재 폴더의 `상위 폴더(02-conversations)` 에 위치해야 합니다.  환경파일내 들어갈 내용은 아래 URL을 참고하세요.    
 https://google.github.io/adk-docs/get-started/quickstart/#set-up-the-model 
 
 아래 환경설정은 기업에서 `Vertex AI`기반에서 ADK를 사용할때 적용되는 예제입니다.    
@@ -79,7 +79,7 @@ uv run -m session.runner --type <session_type> --app_name <app_name> --user_id <
 결국 프로세스 기동 중에만 사용이 가능한 세션입니다. 
 
 ```
-uv run -m session.runner --type in_memory --app_name ai_assist --user_id forus
+adk_workshop/adk/02-conversations$ uv run -m session.runner --type in_memory --app_name ai_assist --user_id forus
 ```
 ### 2. 타입이 database인 경우
 
@@ -87,7 +87,7 @@ uv run -m session.runner --type in_memory --app_name ai_assist --user_id forus
 데이터베이스는 관계형 데이터 베이스(e.g., PostgreSQL, MySQL, SQLite)를 사용하여 해당 세선 정보를 테이블에 저장할 수 있습니다.
 
 ```
-uv run -m session.runner --type database --app_name ai_assist --user_id forus
+adk_workshop/adk/02-conversations$ uv run -m session.runner --type database --app_name ai_assist --user_id forus
 ```
 테스트가 정상적으로 처리되면 파일로 adk_database.db 파일이 생성되고 해당 정보를 확인 할수가 있습니다. 해당 파일은 SQLite 로써 VS code 에서 Extension을 설치하면 해당 파일 내용을 확인 할 수 있습니다.
 

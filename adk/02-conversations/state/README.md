@@ -5,7 +5,7 @@
 
 ## .env 설정.
 
-`.env` 파일은 현재 runtime 폴더의 `상위 폴더(02-conversations)` 에 위치해야 합니다.  환경파일내 들어갈 내용은 아래 URL을 참고하세요.    
+`.env` 파일은 현재 폴더의 `상위 폴더(02-conversations)` 에 위치해야 합니다.  환경파일내 들어갈 내용은 아래 URL을 참고하세요.    
 https://google.github.io/adk-docs/get-started/quickstart/#set-up-the-model 
 
 아래 환경설정은 기업에서 `Vertex AI`기반에서 ADK를 사용할때 적용되는 예제입니다.    
@@ -37,7 +37,7 @@ output_key는 세션내에서 간단하게 사용할 수 있는 상태를 표시
 일반적으로 멀티턴 환경에서 마지막 turn 에 대한 정보를 가지고 있는 state 입니다.
 
 ```
-uv run -m state.output_key --app_name ai_assist --user_id forus
+adk_workshop/adk/02-conversations$ uv run -m state.output_key --app_name ai_assist --user_id forus
 ```
 ### 2. Session 내에서 State를 변경하는 테스트
 일반적으로 세션 내에서의 state에 대한 변경은 이벤트를 생성해서 append 하므로써 state를 변경할 수 있습니다.
@@ -47,7 +47,7 @@ await session_service.append_event(session, system_event)
 
 해당 예제를 실행하는 방법은 아래와 같습니다.
 ```
-uv run -m state.state_change --app_name ai_assist --user_id forus 
+adk_workshop/adk/02-conversations$ uv run -m state.state_change --app_name ai_assist --user_id forus 
 ```
 
 ## 라이센스

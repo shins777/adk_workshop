@@ -1,6 +1,5 @@
 # 커스텀 워크플로우 CriticAgent 예제 (ADK)
 
-## 예제 개요
 이 폴더는 Agent Development Kit(ADK)를 활용하여 커스텀 다단계 비평 에이전트를 구축하고 운영하는 방법을 보여줍니다. 에이전트는 긍정, 부정, 종합 리뷰 비평을 각각의 서브 에이전트에 위임하고, 그 결과를 조율하여 워크플로우를 완성합니다.
 
 - `agent.py`: 긍정/부정/리뷰 비평을 위한 서브 에이전트들을 활용해 전체 워크플로우를 조율하는 루트 `CriticAgent`를 정의합니다.
@@ -10,26 +9,39 @@
     - `negative_critic_agent`: 부정적 리뷰 생성
     - `review_critic_agent`: 비평 결과를 종합 및 요약
 
-## 환경 설정
-상위 폴더에 위치한 `.env` 파일에 다음과 같은 키를 설정하세요:
+## .env 환경 설정.
+
+상위 폴더(`adk/04-workflow/`)에 아래와 같이 `.env` 파일을 생성하세요. 
+
+환경파일내 들어갈 내용은 아래 URL을 참고하세요.    
+https://google.github.io/adk-docs/get-started/quickstart/#set-up-the-model 
+
+아래 환경설정은 기업에서 `Vertex AI`기반에서 ADK를 사용할때 적용되는 예제입니다.    
+
+```
+GOOGLE_GENAI_USE_VERTEXAI=TRUE                  # 기업용 Vertex AI 사용.
+GOOGLE_CLOUD_PROJECT="ai-hangsik"               # 각자 Project ID 를 참고해서 변경.
+GOOGLE_CLOUD_LOCATION="global"                  # Global Endpoint 사용.
+GOOGLE_GENAI_MODEL = "gemini-2.5-flash"         # 현재 Gemini 최신 버전.
+```
+
+참고로 `AI Studio`를 사용하는 일반 사용자 버전은 아래와 같이 GOOGLE_API_KEY 를 셋팅해야 합니다.  
 
 ```
 GOOGLE_GENAI_USE_VERTEXAI=FALSE
-GOOGLE_API_KEY=your_google_api_key
-PROJECT_ID=your_project_id
-PROJECT_NUMBER=your_project_number
-LOCATION=your_location
-MODEL=your_model_name
+GOOGLE_API_KEY=PASTE_YOUR_ACTUAL_API_KEY_HERE
 ```
 
-## 실행 방법
-아래 명령어로 에이전트 예제를 실행할 수 있습니다:
-
-```bash
-adk web
+## 소스 코드 실행 방법
+gcloud 명령어를 통해서 Google Cloud 실행 환경 로그인 설정합니다.
+```
+gcloud auth application-default login
 ```
 
-워크플로우 로직은 `critic.py`에서, 서브 에이전트의 동작은 `sub_agent.py`에서 자유롭게 커스터마이즈할 수 있습니다.
+아래 명령어로 서브 에이전트 도구 예제를 실행할 수 있습니다:
+```
+adk_workshop/adk/04-workflow$ adk web
+```
 
-## 라이선스 안내
-이 프로젝트는 Apache License 2.0 하에 배포됩니다. 자세한 내용은 [LICENSE](../../LICENSE) 파일을 참고하세요.
+## 라이센스
+이 프로젝트는 Apache License 2.0을 따르며, 모든 코드와 콘텐츠의 저작권은 **ForusOne**(shins777@gmail.com)에 있습니다.

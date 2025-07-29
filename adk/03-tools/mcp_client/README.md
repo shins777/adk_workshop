@@ -2,29 +2,43 @@
 
 이 폴더는 ADK(Agent Development Kit)에서 Model Context Protocol(MCP)을 활용하여 파일 시스템을 탐색하고 관리할 수 있는 에이전트 예제를 제공합니다.
 
-## 주요 파일 안내
-- `agent.py` : MCPToolset을 활용해 지정 폴더 내 파일을 관리하는 LlmAgent의 메인 코드입니다.
-- `__init__.py` : 에이전트 모듈을 임포트합니다.
+## .env 설정.
 
-## 환경 설정
-상위 폴더의 `.env` 파일에 다음과 같은 키를 설정하세요.
+`.env` 파일은 현재 폴더의 `상위 폴더(03-tools)` 에 위치해야 합니다.  환경파일 내 들어갈 내용은 아래 URL을 참고하세요.   
+https://google.github.io/adk-docs/get-started/quickstart/#set-up-the-model 
 
-```
-GOOGLE_GENAI_USE_VERTEXAI=TRUE
-GOOGLE_API_KEY=your_google_api_key
-PROJECT_ID=your_project_id
-PROJECT_NUMBER=your_project_number
-LOCATION=your_location
-MODEL=your_model_name
-```
-
-## 실행 방법
-아래 명령어로 예제를 실행할 수 있습니다.
+아래 환경설정은 기업에서 `Vertex AI`기반에서 ADK를 사용할때 적용되는 예제입니다.    
 
 ```
-adk web
+GOOGLE_GENAI_USE_VERTEXAI=TRUE                  # 기업용 Vertex AI 사용.
+GOOGLE_CLOUD_PROJECT="ai-hangsik"               # 각자 Project ID 를 참고해서 변경.
+GOOGLE_CLOUD_LOCATION="global"                  # Global Endpoint 사용.
+GOOGLE_GENAI_MODEL = "gemini-2.5-flash"         # 현재 Gemini 최신 버전.
+
 ```
-테스트 할때는 질문은 "현재 폴더내의 정보를 검색해주세요." 라고해주세요. 
+
+참고로 `AI Studio`를 사용하는 일반 사용자 버전은 아래와 같이 GOOGLE_API_KEY 를 셋팅해야 합니다.  
+
+```
+GOOGLE_GENAI_USE_VERTEXAI=FALSE
+GOOGLE_API_KEY=PASTE_YOUR_ACTUAL_API_KEY_HERE
+```
+
+## 소스 코드 실행 방법
+gcloud 명령어를 통해서 Google Cloud 실행 환경 로그인 설정합니다.
+```
+gcloud auth application-default login
+```
+
+아래 명령어로 서브 에이전트 도구 예제를 실행할 수 있습니다:
+```
+adk_workshop/adk/03-tools$ adk web
+```
+
+테스트 할때는 질문은 아래와 같이 해주세요. 
+```
+현재 폴더내의 정보를 검색해주세요." 
+```
 
 ## 예제 기능
 - 지정한 폴더 내 파일 목록 조회, 파일 읽기 등 파일 시스템 관리 작업을 MCP 서버와 연동하여 수행할 수 있습니다.

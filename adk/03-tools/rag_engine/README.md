@@ -5,7 +5,7 @@
 
 ## .env 설정.
 
-`.env` 파일은 현재 runtime 폴더의 `상위 폴더(03-tools)` 에 위치해야 합니다.  환경파일내 들어갈 내용은 아래 URL을 참고하세요.    
+`.env` 파일은 현재 폴더의 `상위 폴더(03-tools)` 에 위치해야 합니다.  환경파일 내 들어갈 내용은 아래 URL을 참고하세요.   
 https://google.github.io/adk-docs/get-started/quickstart/#set-up-the-model 
 
 아래 환경설정은 기업에서 `Vertex AI`기반에서 ADK를 사용할때 적용되는 예제입니다.    
@@ -36,7 +36,7 @@ gcloud auth application-default login
 
 아래 명령어로 서브 에이전트 도구 예제를 실행할 수 있습니다:
 ```
-ai_agent/adk/03-tools$ adk web
+adk_workshop/adk/03-tools$ adk web
 ```
 
 UI 에서 rag_engine 선택 후 Corpus 로 등록한 정보를 조회합니다.

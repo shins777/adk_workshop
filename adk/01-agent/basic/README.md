@@ -4,7 +4,7 @@
 
 ## .env 설정.
 
-`.env` 파일은 현재 runtime 폴더의 `상위 폴더(01-agent)` 에 위치해야 합니다.  환경파일내 들어갈 내용은 아래 URL을 참고하세요.    
+`.env` 파일은 현재  폴더의 `상위 폴더(01-agent)` 에 위치해야 합니다.  환경파일내 들어갈 내용은 아래 URL을 참고하세요.    
 https://google.github.io/adk-docs/get-started/quickstart/#set-up-the-model 
 
 아래 환경설정은 기업에서 `Vertex AI`기반에서 ADK를 사용할때 적용되는 예제입니다.    
@@ -46,7 +46,7 @@ gcloud auth application-default login
 `01-agent` 폴더에서 아래 명령어를 실행후 adk web 화면에서 테스트를 진행하시면 됩니다. 
 
 ```
-ai_agent/adk/01-agent$ adk web
+adk_workshop/adk/01-agent$ adk web
 ```
 
 ## 라이선스

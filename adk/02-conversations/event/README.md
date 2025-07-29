@@ -8,7 +8,7 @@
 
 ## .env 설정.
 
-`.env` 파일은 현재 runtime 폴더의 `상위 폴더(02-conversations)` 에 위치해야 합니다.  환경파일내 들어갈 내용은 아래 URL을 참고하세요.    
+`.env` 파일은 현재  폴더의 `상위 폴더(02-conversations)` 에 위치해야 합니다.  환경파일내 들어갈 내용은 아래 URL을 참고하세요.    
 https://google.github.io/adk-docs/get-started/quickstart/#set-up-the-model 
 
 아래 환경설정은 기업에서 `Vertex AI`기반에서 ADK를 사용할때 적용되는 예제입니다.    
@@ -53,12 +53,12 @@ gcloud auth application-default login
 
 아래 Runner 클래스를 사용하는 방법은 좀더 Programatic 방식으로 이벤트를 코드레벨에서 제어할 수 있습니다.
 ```
-ai_agent/adk/02-conversations$ uv run -m event.runner
+adk_workshop/adk/02-conversations$ uv run -m event.runner
 ```
 
 또는 웹상에서 이벤트별 내용을 확인하기 위해서 아래 명령어 사용도 가능합니다. 
 ```
-ai_agent/adk/02-conversations$ adk web
+adk_workshop/adk/02-conversations$ adk web
 ```
 
 ## 라이센스
