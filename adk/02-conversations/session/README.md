@@ -32,24 +32,7 @@ AGENT_ENGINE_LOCATION = "us-central1"            # vertexai 세션 타입에서�
 ```
 GOOGLE_GENAI_USE_VERTEXAI=FALSE
 GOOGLE_API_KEY=PASTE_YOUR_ACTUAL_API_KEY_HERE
-AGENT_ENGINE_ID=your-agent-engine-id            # vertexai 세션 타입에서만 필요
 ```
-
-
-
-## 폴더 구조
-
-```
-adk/02-conversations/session/
-├── __init__.py
-├── agent.py
-├── runner.py
-└── README.md
-```
-
-- `agent.py` : 에이전트 정의, 지시문 템플릿 및 Google 검색 툴 연동 포함
-- `runner.py` : 에이전트 실행 및 세션 관리 스크립트
-- `__init__.py` :  파이썬 패키지로 폴더 지정
 
 ## 예제 실행
 
@@ -62,7 +45,7 @@ gcloud auth application-default login
 본 예제 실행 방법은 아래와 같이 크게 3가지 타입으로 세션을 설정할 수 있습니다. 
 
 ```
-uv run -m session.runner --type <session_type> --app_name <app_name> --user_id <user_id>
+adk_workshop/adk/02-conversations$ uv run -m session.runner --type <session_type> --app_name <app_name> --user_id <user_id>
 ```
 사용 가능한 세션 타입 : in_memory, database, vertexai
 
@@ -106,7 +89,7 @@ AGENT_ENGINE_LOCATION = "us-central"       # Vertex AI에 배포된 Agent Engine
 테스트 방법은 아래와 같습니다. 테스트시에는 아래의 app_name, user_id 을 동일하게 주어야 해당 정보를 가지고 동일한 세션 정보를 가져오게 됩니다.
 
 ```
-uv run -m session.runner --type vertexai --app_name ai_assist --user_id forus
+adk_workshop/adk/02-conversations$ uv run -m session.runner --type vertexai --app_name ai_assist --user_id forus
 
 ```
 테스트가 정상적으로 되었다면 Vertex AI 에서 Agent Engine 화면에서 session 이 forus 로 생성되어 있는것을 볼수 있습니다. 명시적으로 지우지 않으면 해당 정보는 계속 유지가 되고, 위의 app name 와 user id 로 동일하게 접속을 할 경우에는 기존 저장된 세션 정보를 context로 계속 사용할 수 있습니다. 
