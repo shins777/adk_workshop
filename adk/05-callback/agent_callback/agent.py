@@ -45,7 +45,7 @@ def build_agent()->Agent:
 
     agent = Agent(
         name = "root_agent",
-        model = os.getenv("MODEL"),
+        model = os.getenv("GOOGLE_GENAI_MODEL"),
         description = "사용자 문의에 대해 답변하는 에이전트입니다.",
         instruction = INSTRUCTION,
         before_agent_callback=callback_before_agent,
@@ -53,6 +53,4 @@ def build_agent()->Agent:
     )
     return agent
 
-# runner에서 import할 수 있도록 root_agent로 지정
 root_agent = build_agent()
-

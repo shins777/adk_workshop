@@ -33,24 +33,24 @@ def callback_before_agent(callback_context: CallbackContext) -> Optional[types.C
         Optional[types.Content]: 에이전트 실행을 건너뛰어야 할 경우 커스텀 Content 응답, 아니면 None(정상 실행)
     """
 
-    # Get the contextual information from CallbackContext
+    # CallbackContext에서 컨텍스트 정보를 가져옵니다.
     agent_name = callback_context.agent_name
     current_state = callback_context.state.to_dict()
 
-    # Check the information in the state to control flow berfore calling the agent. 
+    # 상태 정보를 확인하여 에이전트 실행 전 흐름을 제어합니다.
     if current_state.get("skip_agent", False):
-        print(f"[Before Agent] State condition met, don't run agent due to command in state - Agent: {agent_name} : Current State: {current_state}")
+        print(f"[Before Agent] 상태 조건 충족: state 명령에 따라 에이전트 실행하지 않음 - Agent: {agent_name} : Current State: {current_state}")
 
-        # Build a content to be returned back to user without calling agent.
+        # 에이전트를 호출하지 않고 사용자에게 반환할 Content를 생성합니다.
         return_content = types.Content(
-            parts=[types.Part(text=f"Agent {agent_name} skipped by before_agent_callback due to user's command.")],
-            role="model" # Assign model role to the overriding response
+            parts=[types.Part(text=f"Agent {agent_name}가 사용자의 명령에 의해 before_agent_callback에서 건너뛰어졌습니다.")],
+            role="model" # 응답의 역할을 model로 지정
         )
         return return_content
-    else: # If the condition is OK to go to run agent, the return response shoud be just None. 
-        
-        print(f"[Before Agent] Run agent - Proceeding with agent {agent_name}.")
-        return None  # Return None to allow the LlmAgent's normal execution
+    else: # 조건이 정상일 경우 None을 반환하여 에이전트가 실행되도록 합니다.
+        print(f"[Before Agent] 에이전트 실행 - {agent_name} 진행 중.")
+        return None  # None 반환 시 LlmAgent가 정상적으로 실행됨
+
 
 
 #----------------------------------[ callback_after_agent ]------------------------------------
@@ -69,19 +69,21 @@ def callback_after_agent(callback_context: CallbackContext) -> Optional[types.Co
         Optional[types.Content]: 후처리가 필요한 경우 커스텀 Content 응답, 아니면 None(정상 실행)
     """
     
-    # Get the contextual information from CallbackContext
+    # CallbackContext에서 컨텍스트 정보를 가져옵니다.
     agent_name = callback_context.agent_name
     current_state = callback_context.state.to_dict()
 
-    # Check the information in the state to control flow after calling the agent. 
-    if current_state.get("check_response", False):
-        print(f"[After Agent] State condition met : Manage the response after calling agent : {agent_name} : Current State: {current_state}")
+    print(f"[After Agent] current_state : Current State: {current_state}")
 
-        # Stop the remained process after this agent called and build a content to notify to user. 
+    # 상태 정보를 확인하여 에이전트 실행 후 흐름을 제어합니다.
+    if current_state.get("check_response"):
+        print(f"[After Agent] 상태 조건 충족: 에이전트 호출 후 응답 관리 - {agent_name} : Current State: {current_state}")
+
+        # 에이전트 호출 후 남은 프로세스를 중단하고 사용자에게 알림 Content를 생성합니다.
         return types.Content(
-            parts=[types.Part(text=f"Agent {agent_name}'s callback function was called after calling the agent due to state.")],
-            role="model" # Assign model role to the overriding response
+            parts=[types.Part(text=f"Agent {agent_name}의 콜백 함수가 상태에 의해 에이전트 호출 후 실행되었습니다.")],
+            role="model" # 응답의 역할을 model로 지정
         )
     else:
-        print(f"[After Agent] State condition not met: Proceeding with agent {agent_name} forward.")
-        return None # Return None to allow the LlmAgent's normal execution
+        print(f"[After Agent] 상태 조건 미충족: 에이전트 {agent_name} 진행.")
+        return None # None 반환 시 LlmAgent가 정상적으로 실행됨

@@ -73,7 +73,7 @@ def callback_before_tool(tool: BaseTool,
         Optional[Dict]: 인자가 변경된 경우 수정된 딕셔너리, 아니면 None(원본 인자 사용)
     """
 
-    # Get the contextual information from CallbackContext
+    # CallbackContext에서 컨텍스트 정보를 가져옵니다.
     agent_name = tool_context.agent_name
     tool_name = tool.name
 
@@ -81,10 +81,10 @@ def callback_before_tool(tool: BaseTool,
 
     if tool_name == 'get_capital_city' and args.get('country', '').lower() == 'korea':
         args['country'] = 'south korea'
-        print(f"[Before Tool] Detected 'Korea'. Modifying args to 'south korea'. : {args}")
+        print(f"[Before Tool] 'Korea'가 감지되었습니다. args를 'south korea'로 수정합니다. : {args}")
         return None
     else:
-        print(f"[Before Tool] Passing original args through. : {args}")
+        print(f"[Before Tool] 원래 인수를 전달합니다. : {args}")
         return None
 
 #--------------------------------[callback_after_tool]----------------------------------
@@ -123,11 +123,11 @@ def callback_after_tool(tool: BaseTool,
 
     # If the tool was 'get_capital_city' and result is 'Seoul'
     if tool_name == 'get_capital_city' and original_tool_response.lower() == "seoul" :
-        print("[After Tool] Detected 'Seoul'. Modifying tool response.")
+        print("[After Tool] '서울'을 감지했습니다. 도구 응답을 수정합니다.")
 
         # Note: Create a new response.
         modified_response = deepcopy(tool_response)
-        modified_response["result"] = f"{original_tool_response} (Note: This is the capital of the South Korea)."
+        modified_response["result"] = f"{original_tool_response} (Note: 이곳은 대한민국의 수도입니다)."
         modified_response["note_added_by_callback"] = True # Add extra info if needed
 
         print(f"[After Tool] Modified tool_response: {modified_response}")

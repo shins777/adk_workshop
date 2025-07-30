@@ -23,7 +23,7 @@ def callback_before_model(callback_context: CallbackContext,
                          llm_request: LlmRequest
                          ) -> Optional[LlmResponse]:
     """
-    LLM 모델이 호출되기 전에 실행되는 전처리 콜백입니다.
+    LLM 모델이 호출되기 전에 실행되는 Callback function입니다.
 
     이 함수는 에이전트 상태에 정의된 특정 키워드가 사용자의 마지막 메시지에 포함되어 있는지 확인합니다.
     키워드가 감지되면 LLM 호출을 차단하고 커스텀 응답 메시지를 반환합니다.
@@ -37,30 +37,30 @@ def callback_before_model(callback_context: CallbackContext,
         Optional[LlmResponse]: 키워드가 감지된 경우 커스텀 LlmResponse, 아니면 None(정상 호출)
     """
     
-    # Get the contextual information from CallbackContext
+    # CallbackContext에서 컨텍스트 정보를 가져옵니다.
     agent_name = callback_context.agent_name
     current_state = callback_context.state.to_dict()
     keyword = current_state.get("keyword").lower()
 
-    # Inspect the last user message in the request contents
+    # 요청 내용의 마지막 사용자 메시지를 검사합니다.
     last_user_message = ""
     if llm_request.contents and llm_request.contents[-1].role == 'user':
          if llm_request.contents[-1].parts:
             last_user_message = llm_request.contents[-1].parts[0].text.lower()
 
-    print(f"[Before Model] Agent Name : {agent_name} Keyworkd : {keyword} - Last user message: '{last_user_message}'")
+    print(f"[Before Model] Agent Name : {agent_name} Keyworkd : {keyword} - 마지막 메시지 '{last_user_message}'")
 
-    # Check the keyword in the user's message that could be undesirable keyword.
+    # 사용자 메시지에서 바람직하지 않은 키워드가 포함되어 있는지 확인하세요.
     if keyword in last_user_message:        
-        print(f"[Before Model] Asking with {keyword} keyword was detected in user's query. Skipping LLM call.")
+        print(f"[Before Model] 사용자 쿼리에서 {keyword} 키워드로 문의하는 것이 감지되었습니다. LLM 호출을 건너뜁니다.")
         return LlmResponse(
             content=types.Content(
                 role="model",
-                parts=[types.Part(text="LLM call was blocked by callback function since keyword was not allowed to use.")],
+                parts=[types.Part(text="키워드를 사용할 수 없으므로 LLM 호출이 콜백 함수에 의해 차단되었습니다.")],
             )
         )
     else:
-        print(f"[Before Model] No specific {keyword} keyword was detected to be violated in user's query, proceeding with LLM call.")
+        print(f"[Before Model] 사용자 쿼리에서 위반된 특정 {keyword} 키워드가 감지되지 않았습니다. LLM 호출을 진행합니다.")
         return None
 
 #--------------------------------[callback_after_model]----------------------------------
@@ -69,7 +69,7 @@ def callback_after_model(callback_context: CallbackContext,
                         llm_response: LlmResponse
                         ) -> Optional[LlmResponse]:
     """
-    LLM 모델이 응답을 생성한 후 실행되는 후처리 콜백입니다.
+    LLM 모델이 응답을 생성한 후 실행되는 Callback function 입니다.
 
     이 함수는 에이전트 상태에 정의된 특정 키워드가 LLM 응답에 포함되어 있는지 확인합니다.
     키워드가 감지되면 원래 LLM 응답을 차단하고 커스텀 메시지를 반환합니다.
@@ -83,7 +83,7 @@ def callback_after_model(callback_context: CallbackContext,
         Optional[LlmResponse]: 키워드가 감지된 경우 커스텀 LlmResponse, 아니면 None(정상 응답)
     """
 
-    # Get the contextual information from CallbackContext
+    # CallbackContext에서 컨텍스트 정보를 가져옵니다.
     agent_name = callback_context.agent_name
     current_state = callback_context.state.to_dict()
     keyword = current_state.get("keyword").lower()
@@ -92,17 +92,17 @@ def callback_after_model(callback_context: CallbackContext,
     if llm_response.content and llm_response.content.parts:
         llm_response_message = llm_response.content.parts[0].text.lower()
 
-    print(f"[After Model] Agent Name : {agent_name} Keyworkd : {keyword} - Inspecting last model message: '{llm_response_message}'")
+    print(f"[After Model] Agent Name : {agent_name} Keyworkd : {keyword} - 메시지 검사: '{llm_response_message}'")
 
     if keyword in llm_response_message:
 
-        print(f"[After Model] {keyword} keyword found in AI response. don't reply the received model response to user.")
+        print(f"[After Model] {keyword} AI 응답에서 키워드가 발견되었습니다. 수신된 모델 응답을 사용자에게 회신하지 마세요..")
         return LlmResponse(
             content=types.Content(
                 role="model",
-                parts=[types.Part(text=f"Response of model call was blocked by callback_after_model due to {keyword} found in model response.")],
+                parts=[types.Part(text=f"모델 호출 응답은 callback_after_model로 인해 차단되었습니다. {keyword} 키워드가 응답에 포함되어 있습니다.")],
             )
         )
     else:
-        print(f"[After Model] No specific {keyword} found in model response. Proceeding with response of model call.")
+        print(f"[After Model] 모델 응답에서 특정 {keyword}를 찾을 수 없습니다. 모델 호출에 대한 응답을 진행합니다.")
         return None

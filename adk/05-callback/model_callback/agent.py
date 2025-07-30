@@ -44,7 +44,7 @@ def build_agent() -> Agent:
 
     agent = Agent(
         name = "root_agent",
-        model = os.getenv("MODEL"),
+        model = os.getenv("GOOGLE_GENAI_MODEL"),
         description = "사용자 문의에 대해 답변하는 에이전트입니다.",
         instruction = INSTRUCTION,
         before_model_callback=callback_before_model,

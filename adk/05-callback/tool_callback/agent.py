@@ -39,11 +39,14 @@ def build_agent() -> Agent:
     INSTRUCTION = """
         당신은 사용자의 질문에 답변하는 AI 에이전트입니다.
         답변을 제공할 때는 아래와 같은 구조로 간결하고 명확하게 작성해 주세요:
-        - 질문 내용:\n        - 질문 의도:\n        - 답변 내용:\n\n        참고: 일상적인 대화성 질문에는 별도의 형식 없이 자연스럽게 답변하세요.\n    """
+        - 질문 내용:        
+        - 질문 의도:         
+        - 답변 내용:         
+        참고: 일상적인 대화성 질문에는 별도의 형식 없이 자연스럽게 답변하세요. """
 
     agent = Agent(
         name = "root_agent",
-        model = os.getenv("MODEL"),
+        model = os.getenv("GOOGLE_GENAI_MODEL"),
         description = "사용자 문의에 대해 답변하는 에이전트입니다.",
         instruction = INSTRUCTION,
         tools = [get_capital_city],

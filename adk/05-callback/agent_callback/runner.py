@@ -46,7 +46,9 @@ async def run_agent(command: str,
     session_service = InMemorySessionService()
     session = await session_service.create_session(app_name=APP_NAME,
                                             user_id=USER_ID,
-                                            state={command: True})
+                                            
+                                            # 참고 : 이 부분에 command 인자로 받은 정보를 상태로 추가합니다.
+                                            state={command: True})  
     
     runner = Runner(agent=agent.root_agent,
                     app_name=session.app_name,
