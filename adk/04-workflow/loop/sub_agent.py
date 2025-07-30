@@ -17,16 +17,11 @@ from dotenv import load_dotenv
 
 from google.adk.agents import Agent
 from google.adk.tools import ToolContext
+from google.adk.tools import google_search
 
 load_dotenv()
 
-RESEARCH_OUTCOME = "initial_sentence"
-STATE_CRITICISM = "criticism"
-COMPLETION_PHRASE = "No major issues found."
-
-SYSTEM_INSTRUCTION = """
-    When answering, Must be sure to use the same language the user used when asking the question. 
-"""
+COMPLETION_PHRASE = "전체적으로 답변이 괜찮습니다."
 
 #--------------------------------[exit_loop]----------------------------------
 
@@ -58,30 +53,32 @@ def exit_loop(tool_context: ToolContext):
 
 research_agent = Agent(
     name = "research_agent",
-    model = os.getenv("MODEL"),
+    model = os.getenv("GOOGLE_GENAI_MODEL"),
     description = "주어진 주제에 대해 긍정적이고 부정적인 측면을 작성하는 에이전트입니다.",
     instruction = """
-            당신은 주어진 주제에 대해 긍정적이고 부정적인 측면을 작성하는 에이전트입니다.
-            답변을 제공할 때는 가능한 간결하고 명확하게 작성해야 하며, "리뷰 작성."이라고 시작해야 합니다.
+            당신은 주어진 주제에 대해 긍정적인 면과 부정적인 측면을 작성하는 에이전트입니다.
+            답변을 제공할 때는 가능한 간결하고 명확하게 작성해야 하며, "### 리서치 결과 : " 라고 시작해야 합니다.
             참고: 답변 시 반드시 사용자가 질문한 언어와 동일한 언어로 답변해야 합니다.
 
-                """,
-    output_key="RESEARCH_OUTCOME"                
+            """,
+    tools=[google_search],
+
+    output_key="research_outcome",                
 )    
 
 #--------------------------------[critic_agent]----------------------------------
 
 critic_agent = Agent(
     name = "critic_agent",
-    model = os.getenv("MODEL"),
+    model = os.getenv("GOOGLE_GENAI_MODEL"),
     description = "주어진 주제에 대한 답변을 검토하는 건설적인 비평 AI 에이전트입니다.",
     instruction = f"""
                     당신은 주어진 주제에 대한 답변을 검토하는 건설적인 비평 AI 에이전트입니다.
-                    답변에 "## 답변 검토"라는 제목을 추가하세요.
+                    답변에 "### 답변 검토"라는 제목을 추가하세요.
 
                     **주어진 주제에 대한 답변:**
                         ```
-                        {RESEARCH_OUTCOME}
+                        {{research_outcome}}
                         ```
 
                     **작업:**
@@ -96,16 +93,15 @@ critic_agent = Agent(
 
                     참고: 답변 시 반드시 사용자가 질문한 언어와 동일한 언어로 답변해야 합니다.
 
-                                
                 """,
-    output_key=STATE_CRITICISM,                
+    output_key="criticism",                
 )   
 
 #--------------------------------[refine_agent]----------------------------------
 
 refine_agent = Agent(
     name = "refine_agent",
-    model = os.getenv("MODEL"),
+    model = os.getenv("GOOGLE_GENAI_MODEL"),
     description = "사용자의 질문에 대한 답변을 검토하는 건설적인 비평 AI 에이전트입니다.",
     instruction = f"""
                     당신은 사용자의 질문에 대한 답변을 검토하는 건설적인 비평 AI 에이전트입니다.
@@ -113,11 +109,12 @@ refine_agent = Agent(
 
                     **주어진 주제에 대한 답변:**
                         ```
-                        {RESEARCH_OUTCOME}
+                        {{research_outcome}}
                         ```
                     **비평/제안:**
-                        {STATE_CRITICISM}
-
+                        ```
+                        {{criticism}}
+                        ```
                     **작업:**
                         '비평/제안'을 분석하세요.
 
@@ -139,19 +136,20 @@ refine_agent = Agent(
 
 conclusion_agent = Agent(
     name = "conclusion_agent",
-    model = os.getenv("MODEL"),
+    model = os.getenv("GOOGLE_GENAI_MODEL"),
     description = "사용자 질문의 긍정적 및 부정적 측면을 요약하는 에이전트",
     instruction = f"""
                     당신은 주어진 주제에 대한 긍정적 및 부정적 비평을 바탕으로 최종 요약 및 결론을 설명하는 에이전트입니다.
-                    답변 시 아래 현재 문서와 비평/제안 섹션을 참고하여 "최종 요약"이라고 말하고 답변하세요.
+                    답변 시 아래 현재 문서와 비평/제안 섹션을 참고하여 "### 최종 요약"이라고 말하고 답변하세요.
                     
                     **주어진 주제에 대한 답변:**
                     ```
-                    {RESEARCH_OUTCOME}
+                    {{research_outcome}}
                     ```
                     **비평/제안:**
-                    {STATE_CRITICISM}
-
+                    ```
+                    {{criticism}}
+                    ```
                     참고: 답변 시 반드시 사용자가 질문한 언어와 동일한 언어로 답변해야 합니다.
 
                 """,
