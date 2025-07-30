@@ -13,12 +13,19 @@
 # limitations under the License.
 
 import os
+import agentops
 
 from dotenv import load_dotenv
 from google.adk.agents import Agent
 
 load_dotenv()
 
+agentops.init(
+    api_key=os.getenv("AGENTOPS_API_KEY"), # Your AgentOps API Key
+    trace_name="adk-app-trace"  # Optional: A name for your trace
+    # auto_start_session=True is the default. 
+    # Set to False if you want to manually control session start/end.
+)
 
 def build_agent() -> Agent:
     """
