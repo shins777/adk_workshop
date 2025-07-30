@@ -111,7 +111,7 @@ def show_agents():
         None
     """
 
-    print("\n\n### Show agent engines. \n\n")
+    print("\n\n### Show agent engines. ")
 
     try:
         if not agent_engines.list():

@@ -12,6 +12,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+import vertexai
+
 from vertexai import agent_engines
 from google.adk.agents import Agent
 
@@ -124,6 +126,43 @@ def show_agents():
     except Exception as e:
         print(e)
 
+#-----------------------------[create_agent_engine]-----------------------------
+
+def create_agent(display_name:str,
+                 project_id:str=None,
+                 location:str=None,
+                 gcs_dir_name:str=None,
+                 description:str=None)-> agent_engines.AgentEngine:
+    """
+
+    Vertex AI에 Blank Agent Engine 을 생성 및 배포합니다.
+
+    이 함수는 환경 변수로 Vertex AI 환경을 초기화한 뒤,
+    지정한 표시 이름과 설명으로 에이전트 엔진 인스턴스를 생성합니다.
+
+    인자:
+        display_name (str): 에이전트 엔진의 표시 이름
+        description (str, optional): 에이전트 엔진 설명
+
+    반환값:
+        agent_engines.AgentEngine: 생성된 에이전트 엔진 인스턴스
+    """
+
+    # Initialize Vertex AI to deploy Agent Engine. 
+    vertexai.init(
+        project=project_id,
+        location=location,
+        staging_bucket=gcs_dir_name,
+    )
+
+    # Create an agent engine instance
+    agent_engine = agent_engines.create(
+        display_name=display_name,
+        gcs_dir_name=gcs_dir_name,
+        description=description,
+    )
+
+    return agent_engine
 
 #--------------------------------[delete_agent]----------------------------------
 
