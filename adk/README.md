@@ -106,6 +106,13 @@ GOOGLE_API_KEY=PASTE_YOUR_ACTUAL_API_KEY_HERE
 
 ### 3. 단위테스트 실행:
 
+gcloud 명령어를 통해서 Google Cloud 실행 환경 로그인 설정합니다.
+
+```
+gcloud auth application-default login
+```
+
+실행은 아래와 같이 adk web 을 사용해서 처리합니다. 
 ```
 (adk) /adk_agent/adk/01-agent$ adk web
 ```
