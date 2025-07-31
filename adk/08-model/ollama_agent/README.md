@@ -7,17 +7,9 @@
 `.env` 파일에 아래와 같이 키를 설정하세요.
 
 ```
-GOOGLE_GENAI_USE_VERTEXAI=FALSE
-GOOGLE_API_KEY=YOUR_GOOGLE_API_KEY
-PROJECT_ID=your-gcp-project-id
-PROJECT_NUMBER=your-gcp-project-number
-LOCATION=us-central1
-MODEL=gemini-2.5-flash
-
 OLLAMA_API_BASE=http://localhost:11434
 ```
 
-기타 기능을 위해서는 (예: GOOGLE_API_KEY) 추가 키가 필요할 수 있습니다.
 
 ## 실행 방법
 
@@ -37,20 +29,21 @@ right now, and it's evolving rapidly, but here's a clear explanation:
 **1. What is AI (Artificial Intelligence)?**
 First, let's quickly recap AI in general. AI refers to computer systems 
 that can perform tasks that typically require human intelligence.
+```
 
+## 예제 실행
+
+`08-model` 폴더에서 아래 명령어를 실행후 adk web 실행 후 화면에서 테스트를 진행하시면 됩니다. 
 
 ```
-아래 명령어로 에이전트 예제를 실행하세요.
-
-```bash
-adk web
+adk_workshop/adk/08-model$ adk web
 ```
 
 `agent.py` 파일을 수정하여 사용할 모델(`gemma` 또는 `llama`)을 선택할 수 있습니다.
 
 python 코드로 단위테스트는 
 ```
-python ollama_test.py
+python ollama_unittest.py
 
 ```
 

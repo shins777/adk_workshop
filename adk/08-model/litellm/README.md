@@ -12,12 +12,14 @@ ANTHROPIC_API_KEY=your_anthropic_key
 ```
 
 ## 실행 방법
-아래 명령어로 에이전트 예제를 실행하세요.
-`llm.py` 파일을 수정하여 사용할 모델(`gpt` 또는 `claude`)을 선택할 수 있습니다.
 
-```bash
-adk web
+`08-model` 폴더에서 아래 명령어를 실행후 adk web 실행 후 화면에서 테스트를 진행하시면 됩니다. 
+
+```
+adk_workshop/adk/08-model$ adk web
 ```
 
-## 라이선스
-이 프로젝트는 Apache License 2.0을 따릅니다. 자세한 내용은 [LICENSE](../../LICENSE) 파일을 참고하세요.
+`llm.py` 파일을 수정하여 사용할 모델(`gpt` 또는 `claude`)을 선택할 수 있습니다.
+
+## 라이센스
+이 프로젝트는 Apache License 2.0을 따르며, 모든 코드와 콘텐츠의 저작권은 **ForusOne**(shins777@gmail.com)에 있습니다.
