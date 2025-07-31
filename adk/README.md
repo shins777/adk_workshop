@@ -56,11 +56,11 @@ uv 사용할때는 파이썬 가상환경을 사용하는게 효율적입니다.
 
 
 ### 1. adk 패키지 설치:  
-* ADK 패지는 아래 url 에서 확인할 수 있으면 현재 기준(2025년 6월) google-adk 1.4.2 버전을 기준으로 합니다.
+* ADK 패지는 아래 url 에서 확인할 수 있으면 현재 기준(2025년 7월) google-adk 1.8.0 버전을 기준으로 합니다.
 * https://pypi.org/project/google-adk/
 
 ```
-(adk) /adk_agent/adk/01-agent$ uv add google-adk[vertexai]==1.4.2
+(adk) /adk_agent/adk/01-agent$ uv add "google-adk[vertexai]==1.8.0"
 ```
 
 ### 2. .env 파일 생성:
@@ -82,17 +82,26 @@ drwxr-xr-x   7 forus  pgroup   224 Jun  2 08:26 search
 (adk) /adk_agent/adk/01-agent$
 ```
 
-아래는 .env 파일 예시입니다. 본인의 GCP 프로젝트 정보와 API 키로 변경하세요.  
-GCP 프로젝트에서 API 키를 가져오는 방법은 아래와 같습니다.
-* 참고: https://ai.google.dev/gemini-api/docs/api-key
+---
+
+`.env` 환경파일 내 들어갈 내용은 아래 URL을 참고하세요.   
+
+https://google.github.io/adk-docs/get-started/quickstart/#set-up-the-model 
+
+아래 환경설정은 기업에서 `Vertex AI`기반에서 ADK를 사용할때 적용되는 예제입니다.    
+
+```
+GOOGLE_GENAI_USE_VERTEXAI=TRUE                  # 기업용 Vertex AI 사용.
+GOOGLE_CLOUD_PROJECT="ai-hangsik"               # 각자 Project ID 를 참고해서 변경.
+GOOGLE_CLOUD_LOCATION="global"                  # Global Endpoint 사용.
+GOOGLE_GENAI_MODEL = "gemini-2.5-flash"         # 현재 Gemini 최신 버전.
+```
+
+참고로 `AI Studio`를 사용하는 일반 사용자 버전은 아래와 같이 GOOGLE_API_KEY 를 셋팅해야 합니다.  
 
 ```
 GOOGLE_GENAI_USE_VERTEXAI=FALSE
-GOOGLE_API_KEY=YOUR_GOOGLE_API_KEY
-PROJECT_ID=your-gcp-project-id
-PROJECT_NUMBER=your-gcp-project-number
-LOCATION=us-central1
-MODEL=gemini-2.0-flash
+GOOGLE_API_KEY=PASTE_YOUR_ACTUAL_API_KEY_HERE
 ```
 
 ### 3. 단위테스트 실행:
