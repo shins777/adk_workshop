@@ -22,7 +22,6 @@ litellm._turn_on_debug()
 
 load_dotenv()
 
-
 def build_agent(model_name: str) -> LlmAgent:
     """
     Ollama 모델과 Google Search 툴을 지원하는 LlmAgent 인스턴스를 생성하고 설정합니다.
@@ -40,20 +39,16 @@ def build_agent(model_name: str) -> LlmAgent:
 
     INSTRUCTION = """
         당신은 사용자의 질문에 답변하는 AI 에이전트입니다.
-        답변을 제공할 때는 아래와 같은 구조로 간결하고 명확하게 작성해 주세요:
-            - 질문 내용:
-            - 질문 의도:
-            - 답변 내용:
         일상적인 대화성 질문에는 별도의 형식 없이 자연스럽게 답변하세요.
         참고: 답변 시 반드시 사용자가 질문할 때 사용한 언어로 답변해야 합니다.
         """
 
     if model_name == "llama":
-        MODEL ="ollama_chat/llama3.2"
+        MODEL ="ollama/llama3.2"
     elif model_name == "gemma":
         MODEL="ollama/gemma3"
     else:
-        MODEL="ollama_chat/llama3.2"    
+        MODEL="ollama/llama3.2"    
 
     ollama_agent = LlmAgent(
         model=LiteLlm(model=MODEL),
@@ -68,4 +63,4 @@ def build_agent(model_name: str) -> LlmAgent:
     return ollama_agent
 
 
-root_agent = build_agent("gemma") # gemma 또는 llama
+root_agent = build_agent("llama") # gemma 또는 llama

@@ -31,6 +31,7 @@ dependencies = [
     { name = "python-dotenv" },
     { name = "scikit-learn" },
     { name = "tavily-python" },
+    { name = "toolbox-core" },
 ]
 
 [package.metadata]
@@ -54,6 +55,7 @@ requires-dist = [
     { name = "python-dotenv", specifier = ">=1.1.0" },
     { name = "scikit-learn", specifier = ">=1.6.1" },
     { name = "tavily-python", specifier = ">=0.7.2" },
+    { name = "toolbox-core", specifier = ">=0.4.0" },
 ]
 
 [[package]]
@@ -2994,6 +2996,22 @@ wheels = [
     { url = "https://files.pythonhosted.org/packages/5f/aa/8ae85f69a9f6012c6f8011c6f4aa1c96154c816e9eea2e1b758601157833/tokenizers-0.21.1-cp39-abi3-musllinux_1_2_x86_64.whl", hash = "sha256:e5a69c1a4496b81a5ee5d2c1f3f7fbdf95e90a0196101b0ee89ed9956b8a168f", size = 9384380 },
     { url = "https://files.pythonhosted.org/packages/e8/5b/a5d98c89f747455e8b7a9504910c865d5e51da55e825a7ae641fb5ff0a58/tokenizers-0.21.1-cp39-abi3-win32.whl", hash = "sha256:1039a3a5734944e09de1d48761ade94e00d0fa760c0e0551151d4dd851ba63e3", size = 2239506 },
     { url = "https://files.pythonhosted.org/packages/e6/b6/072a8e053ae600dcc2ac0da81a23548e3b523301a442a6ca900e92ac35be/tokenizers-0.21.1-cp39-abi3-win_amd64.whl", hash = "sha256:0f0dcbcc9f6e13e675a66d7a5f2f225a736745ce484c1a4e07476a89ccdad382", size = 2435481 },
+]
+
+[[package]]
+name = "toolbox-core"
+version = "0.4.0"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "aiohttp" },
+    { name = "deprecated" },
+    { name = "google-auth" },
+    { name = "pydantic" },
+    { name = "requests" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/2e/e3/43c238bff754f94115c762d84ec9a0a56d775b1148161389729e34268ba3/toolbox_core-0.4.0.tar.gz", hash = "sha256:db1d593ce0665f14c54c261386b790f437b185088ccb9151aa3f6e823a2aeaea", size = 53159 }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/79/9e/69a57959e591fb54311e85ca37378e8427913a5d0c5bd023947ddc1cc836/toolbox_core-0.4.0-py3-none-any.whl", hash = "sha256:a1d5d43b0d9f2d3b9362eb61f3a5395b7e69f9b7d02bf86cba51fb3c572e88a0", size = 29290 },
 ]
 
 [[package]]

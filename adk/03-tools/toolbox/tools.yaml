@@ -1,0 +1,18 @@
+sources:
+  bigquery-bbc:
+    kind: "bigquery"
+    project: "ai-hangsik"
+
+tools:
+  query_bbc:
+    kind: "bigquery-sql"
+    source: "bigquery-bbc"
+    statement:
+      SELECT category, count(*) 
+      FROM `ai-hangsik.bbc_news.fulltext` 
+      group by category
+    description: "BBC 뉴스 카테고리별 기사 수를 조회합니다."
+
+toolsets:
+ my_bq_toolset:
+   - query_bbc
