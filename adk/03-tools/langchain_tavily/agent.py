@@ -35,50 +35,30 @@ tavily_tool_instance = TavilySearchResults(
 # Wrap it with LangchainTool for ADK
 adk_tavily_tool = LangchainTool(tool=tavily_tool_instance)
 
-def build_agent():
-    """
-    LangChain Tavily 검색 및 환율 조회 도구가 포함된 Agent 인스턴스를 생성하고 구성합니다.
+INSTRUCTION = """
+    You are an AI agent that searches and answers questions about exchange rates and web search information.
+    1. Exchange Rate Search
+        When given a base currency and a target currency, provide the exchange rate information for the specified date.
+        Extract the base currency, target currency, and date from the question, and use the 'get_exchange_rate' tool to search.
+        Answer format:
+        - Base currency: USD
+        - Target currency: KRW
+        - Date: 2025-05-20
+        - Exchange rate: 1400
+    
+    2. If the question is not about exchange rates and requires web search, use the adk_tavily_tool below to search.
+    When providing an answer, you must strictly follow the format below:
 
-    이 함수는 에이전트의 안내 템플릿을 정의하고, 이름, 모델, 설명, 안내문,
-    웹 검색(Tavily 검색 도구) 및 환율 조회 도구를 포함하여 Agent를 초기화합니다.
-    이 에이전트는 적절한 도구를 호출하여 사용자 질의에 답변하고, 지정된 구조에 맞게 응답을 포맷합니다.
+        - Understanding of the question
+        - Overall summary of search results:
+        - Summary by search source:
 
-    반환값:
-        Agent: 웹 검색 및 환율 질의 처리가 가능한 구성된 Agent 인스턴스
-    """
+"""
 
-    INSTRUCTION = """
-
-        당신은 환율 정보와 웹 검색 정보를 검색하여 답변하는 AI 에이전트입니다.
-        
-        1. 환율 정보 검색
-            기준 환율과 대상 환율을 알려주면, 주어진 날짜를 기준으로 환율 정보를 안내합니다.
-            질문에서 기준 환율, 대상 환율, 날짜 정보를 추출하여 'get_exchange_rate' 도구에 전달해 검색하세요.
-            답변 형식은 다음과 같습니다.
-            - 기준 환율: USD
-            - 대상 환율: KRW
-            - 날짜: 2025-05-20
-            - 환율 정보: 1400
-        
-        2. 환율 질문이 아닌 웹 검색이 필요하다면 아래 adk_tavily_tool 도구를 사용해 검색하세요.
-        
-        답변을 제공할 때는 반드시 아래 형식을 정확히 따라야 합니다:
-
-        1. 질문: 
-        2. 참고 출처: 
-        3. 답변: 
-
-        참고: 답변 시 반드시 사용자가 질문에 사용한 언어와 동일한 언어로 답변해야 합니다.
-
-    """
-
-    agent = Agent(
-        name = "root_agent",
-        model = os.getenv("GOOGLE_GENAI_MODEL"),
-        description = "Agents that answer questions about user query",
-        instruction = INSTRUCTION,
-        tools=[adk_tavily_tool, function.get_exchange_rate]
-    )
-    return agent
-
-root_agent = build_agent()
+root_agent = Agent(
+    name = "root_agent",
+    model = os.getenv("GOOGLE_GENAI_MODEL"),
+    description = "Agents that answer questions about user query",
+    instruction = INSTRUCTION,
+    tools=[adk_tavily_tool, function.get_exchange_rate]
+)

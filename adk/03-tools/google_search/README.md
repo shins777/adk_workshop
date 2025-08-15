@@ -1,46 +1,46 @@
-# Google Search 도구 예제 (ADK)
 
-## 예제 개요
-이 폴더는 ADK 에이전트와 함께 내장 Google Search 도구를 활용하여 실시간 웹 검색 결과로 사용자 질의에 답변하는 방법을 보여줍니다.
+# Google Search Tool Example (ADK)
 
-## .env 설정.
+This folder demonstrates how to use the built-in Google Search tool with ADK agents to answer user queries with real-time web search results.
 
-`.env` 파일은 현재 폴더의 `상위 폴더(03-tools)` 에 위치해야 합니다.  환경파일 내 들어갈 내용은 아래 URL을 참고하세요.   
+## .env Setup
 
-https://google.github.io/adk-docs/get-started/quickstart/#set-up-the-model 
+The `.env` file should be located in the parent folder (`03-tools`). For details on what to include in the environment file, refer to the following URL:
 
-아래 환경설정은 기업에서 `Vertex AI`기반에서 ADK를 사용할때 적용되는 예제입니다.    
+https://google.github.io/adk-docs/get-started/quickstart/#set-up-the-model
+
+Below is an example configuration for using ADK with Vertex AI in an enterprise environment:
 
 ```
-GOOGLE_GENAI_USE_VERTEXAI=TRUE                  # 기업용 Vertex AI 사용.
-GOOGLE_CLOUD_PROJECT="ai-hangsik"               # 각자 Project ID 를 참고해서 변경.
-GOOGLE_CLOUD_LOCATION="global"                  # Global Endpoint 사용.
-GOOGLE_GENAI_MODEL = "gemini-2.5-flash"         # 현재 Gemini 최신 버전.
+GOOGLE_GENAI_USE_VERTEXAI=TRUE                  # Use Vertex AI for enterprise.
+GOOGLE_CLOUD_PROJECT="ai-hangsik"               # Change to your own Project ID.
+GOOGLE_CLOUD_LOCATION="global"                  # Use Global Endpoint.
+GOOGLE_GENAI_MODEL = "gemini-2.5-flash"         # Latest Gemini version.
 ```
 
-참고로 `AI Studio`를 사용하는 일반 사용자 버전은 아래와 같이 GOOGLE_API_KEY 를 셋팅해야 합니다.  
+For general users using AI Studio, set the GOOGLE_API_KEY as follows:
 
 ```
 GOOGLE_GENAI_USE_VERTEXAI=FALSE
 GOOGLE_API_KEY=PASTE_YOUR_ACTUAL_API_KEY_HERE
 ```
 
-## 소스 코드 실행 방법
-gcloud 명령어를 통해서 Google Cloud 실행 환경 로그인 설정합니다.
+## How to Run the Source Code
+Set up Google Cloud authentication using the following gcloud command:
 ```
 gcloud auth application-default login
 ```
 
-아래 명령어로 서브 에이전트 도구 예제를 실행할 수 있습니다:
+Run the sub-agent tool example with the following command:
 ```
 adk_workshop/adk/03-tools$ adk web
 ```
 
-UI 에서 function_call 선택 후 아래와 같이 명령어 실행합니다.
+In the UI, select function_call and run the following command:
 ```
-이번주 한국의 사회 이슈는 ?
+What are the social issues in Korea this week?
 ```
 
-## 라이센스
+## License
 
-이 프로젝트는 Apache License 2.0을 따르며, 모든 코드와 콘텐츠의 저작권은 **ForusOne**(shins777@gmail.com)에 있습니다.
+This project follows the Apache License 2.0. All code and content copyright **ForusOne** (shins777@gmail.com).

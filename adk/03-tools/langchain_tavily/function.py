@@ -17,21 +17,20 @@ def get_exchange_rate(
     currency_to: str = "KRW",
     currency_date: str = "latest", )->dict:
     """
-    지정한 날짜에 두 통화 간의 환율을 조회합니다.
+    Retrieves the exchange rate between two currencies for a specified date.
+    Uses the Frankfurter API (https://api.frankfurter.app/) to fetch exchange rate data.
 
-    Frankfurter API(https://api.frankfurter.app/)를 사용하여
-    환율 데이터를 가져옵니다.
+    Args:
+        currency_from: Base currency (3-letter currency code). Default is "USD" (US Dollar).
+        currency_to: Target currency (3-letter currency code). Default is "KRW" (Korean Won).
+        currency_date: Date to query the exchange rate for. Default is "latest" for the most recent rate.
+            For historical rates, specify in YYYY-MM-DD format.
 
-    인자:
-        currency_from: 기준 통화(3자리 통화 코드). 기본값은 "USD"(미국 달러).
-        currency_to: 대상 통화(3자리 통화 코드). 기본값은 "KRW"(원화).
-        currency_date: 환율을 조회할 날짜. 기본값은 "latest"로 최신 환율 데이터를 의미합니다.
-            과거 환율은 YYYY-MM-DD 형식으로 지정할 수 있습니다.
-
-    반환값:
-        dict: 환율 정보가 담긴 딕셔너리.
-            예시: {"amount": 1.0, "base": "USD", "date": "2023-11-24", "rates": {"EUR": 0.95534}}
+    Returns:
+        dict: Dictionary containing exchange rate information.
+            Example: {"amount": 1.0, "base": "USD", "date": "2023-11-24", "rates": {"EUR": 0.95534}}
     """
+
     import requests
     response = requests.get(
         f"https://api.frankfurter.app/{currency_date}",

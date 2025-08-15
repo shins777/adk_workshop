@@ -20,52 +20,36 @@ from . import function
 
 load_dotenv()
 
-def build_agent() -> Agent:
-    """
-    여러 함수 도구를 지원하는 Agent 인스턴스를 생성하고 구성합니다.
+INSTRUCTION = """
 
-    이 함수는 환경 변수를 로드하고, 에이전트의 안내 템플릿을 정의하며,
-    이름, 모델, 설명, 안내문, 환율 및 주가 정보를 조회하는 도구를 포함하여 Agent를 초기화합니다.
-    이 에이전트는 적절한 함수 도구를 호출하여 사용자 질의에 답변하고, 응답을 지정된 형식에 맞게 제공합니다.
+You are an AI agent that searches and answers questions about exchange rates and stock prices.
 
-    반환값:
-        Agent: 환율 및 주식 정보 질의 처리가 가능한 구성된 Agent 인스턴스
-    """
+1. Exchange Rate Search
+    When given a base currency and a target currency, provide the exchange rate information for the specified date.
+    Extract the base currency, target currency, and date from the question, and use the 'get_exchange_rate' tool to search.
+    Answer format:
+    - Base currency: USD
+    - Target currency: KRW
+    - Date: 2025-05-20
+    - Exchange rate: 1400
 
-    INSTRUCTION = """
+2. Stock Price Search
+    For stock information, provide today's stock price based on the given symbol.
+    Extract the symbol from the company name and use the 'get_stock_price' tool to search.
+    Answer format:
+    - Stock info: Google
+    - Date: 2025-05-20
+    - Stock price: $200
 
-        당신은 환율 정보와 주식 정보를 검색하여 답변하는 AI 에이전트입니다.
+Note: You must always answer in the same language as the user's question.
 
-        1. 환율 정보 검색
-            기준 환율과 대상 환율을 알려주면, 주어진 날짜를 기준으로 환율 정보를 안내합니다.
-            질문에서 기준 환율, 대상 환율, 날짜 정보를 추출하여 'get_exchange_rate' 도구에 전달해 검색하세요.
-            답변 형식은 다음과 같습니다.
-            - 기준 환율: USD
-            - 대상 환율: KRW
-            - 날짜: 2025-05-20
-            - 환율 정보: 1400
+"""
 
-        2. 주식 정보 검색
-            주식 정보는 주어진 심볼을 기준으로 오늘 날짜의 주가를 안내합니다.
-            회사명에서 심볼을 추출하여 'get_stock_price' 도구에 전달해 검색하세요.
-            답변 형식은 다음과 같습니다.
-            - 주식 정보: Google
-            - 날짜: 2025-05-20
-            - 주가: $200
+root_agent = Agent(
+    name = "basic_agent",
+    model = os.getenv("GOOGLE_GENAI_MODEL"),
+    description = "Agents that answer user questions about exchange rates and stock prices",
+    instruction = INSTRUCTION,
+    tools=[function.get_exchange_rate, function.get_stock_price],
 
-        참고: 답변 시 반드시 사용자가 질문에 사용한 언어와 동일한 언어로 답변해야 합니다.
-
-    """
-
-    agent = Agent(
-        name = "basic_agent",
-        model = os.getenv("GOOGLE_GENAI_MODEL"),
-        description = "사용자 질의에 답변하는 에이전트",
-        instruction = INSTRUCTION,
-        tools=[function.get_exchange_rate, function.get_stock_price],
-
-    )
-
-    return agent
-
-root_agent = build_agent()
+)
