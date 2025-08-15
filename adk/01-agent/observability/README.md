@@ -1,36 +1,35 @@
-# ADK 기본 에이전트 예제 - ADK의 기본 개념
+# ADK Basic Agent - ADK Observability Setup
 
-이 폴더는 ADK(Agent Development Kit) 프레임워크를 활용해 만들어진 AI Agent에 AgentOps 를 활용한 observability 를 설명하는 예제입니다.
-이 코드를 실행하기 위해서는 agentops 사이트에 가입해서 token을 발급 받아야 합니다.  
+This folder provides an example of how to use AgentOps for observability in AI Agents built with the ADK (Agent Development Kit) framework.
+To run this code, you must sign up at the AgentOps site and obtain a token:
 * https://app.agentops.ai/
 
-API_KEY를 받으면 아래와 .env 파일에 설정해주면 됩니다. 
+Once you receive your API_KEY, set it in the .env file as shown below.
 
+## .env Setup
 
-## .env 설정.
+The `.env` file should be located in the parent folder (`01-agent`). For details on what to include in the environment file, refer to the following URL:
+https://google.github.io/adk-docs/get-started/quickstart/#set-up-the-model
 
-`.env` 파일은 현재  폴더의 `상위 폴더(01-agent)` 에 위치해야 합니다.  환경파일내 들어갈 내용은 아래 URL을 참고하세요.    
-https://google.github.io/adk-docs/get-started/quickstart/#set-up-the-model 
-
-아래 환경설정은 기업에서 `Vertex AI`기반에서 ADK를 사용할때 적용되는 예제입니다.    
+Below is an example configuration for using ADK with Vertex AI in an enterprise environment:
 
 ```
-GOOGLE_GENAI_USE_VERTEXAI=TRUE                  # 기업용 Vertex AI 사용.
-GOOGLE_CLOUD_PROJECT="ai-hangsik"               # 각자 Project ID 를 참고해서 변경.
-GOOGLE_CLOUD_LOCATION="global"                  # Global Endpoint 사용.
-GOOGLE_GENAI_MODEL = "gemini-2.5-flash"         # 현재 Gemini 최신 버전.
+GOOGLE_GENAI_USE_VERTEXAI=TRUE                  # Use Vertex AI for enterprise.
+GOOGLE_CLOUD_PROJECT="ai-hangsik"               # Change to your own Project ID.
+GOOGLE_CLOUD_LOCATION="global"                  # Use Global Endpoint.
+GOOGLE_GENAI_MODEL = "gemini-2.5-flash"         # Latest Gemini version.
 
-AGENTOPS_API_KEY="0000000-0000-0000-0000-000000" # Agentops key
+AGENTOPS_API_KEY="0000000-0000-0000-0000-000000" # AgentOps key
 ```
 
-참고로 `AI Studio`를 사용하는 일반 사용자 버전은 아래와 같이 GOOGLE_API_KEY 를 셋팅해야 합니다.  
+For general users using AI Studio, set the GOOGLE_API_KEY as follows:
 
 ```
 GOOGLE_GENAI_USE_VERTEXAI=FALSE
 GOOGLE_API_KEY=PASTE_YOUR_ACTUAL_API_KEY_HERE
 ```
 
-## basic 에이전트 파일 구조
+## Basic Agent File Structure
 ```
 adk/01-agent/basic/
 ├── __init__.py
@@ -38,23 +37,22 @@ adk/01-agent/basic/
 └── README.md
 ```
 
-- `agent.py`  : 기본 에이전트의 빌드 및 설정 코드를 포함합니다.
-- `__init__.py`  : 폴더를 파이썬 패키지로 지정합니다.
+- `agent.py`: Contains build and setup code for the basic agent.
+- `__init__.py`: Marks the folder as a Python package.
 
+## Running the Example
 
-## 예제 실행
-
-gcloud 명령어를 통해서 Google Cloud 실행 환경 로그인 설정합니다.
+Set up Google Cloud authentication using the following gcloud command:
 
 ```
 gcloud auth application-default login
 ```
 
-`01-agent` 폴더에서 아래 명령어를 실행후 adk web 화면에서 테스트를 진행하시면 됩니다. 
+From the `01-agent` folder, run the command below and test in the adk web interface:
 
 ```
 adk_workshop/adk/01-agent$ adk web
 ```
 
-## 라이선스
-이 프로젝트는 Apache License 2.0을 따르며, 모든 코드와 콘텐츠의 저작권은 **ForusOne**(shins777@gmail.com)에 있습니다.
+## License
+This project follows the Apache License 2.0. All code and content copyright **ForusOne** (shins777@gmail.com).

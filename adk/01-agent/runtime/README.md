@@ -1,48 +1,50 @@
-# ADK 런타임 에이전트 예제 - ADK 런타임 이해하기
 
-이 폴더는 ADK(Agent Development Kit) 프레임워크를 활용해 서브 에이전트와 에이전트 툴을 사용한 고급 AI 에이전트를 구축하고 운영하는 방법을 보여줍니다.   
-이 예제는 Runner class 사용법에 대해서 설명합니다. 이 처리 방식은 adk web 형태로 실행하는 방식이 아닌 API를 통해서 실행하는 방식으로 실제 프로젝트에서 presentation layer 에서 호출하는 형태입니다. 결국 Production 환경에서 customized 된 UI에서 Runner를 사용해서 호출을 하게 됩니다. 
+# ADK Runtime Agent Example - Understanding ADK Runtime
 
-## 배경
+This folder demonstrates how to build and operate advanced AI agents using sub-agents and agent tools with the ADK (Agent Development Kit) framework.
+This example explains how to use the Runner class. This approach is not executed via the adk web interface, but rather through API calls, as would be done from the presentation layer in a real project. In production environments, you would use Runner from a customized UI to invoke the agent.
 
-### ADK 런타임의 이벤트 루프
-아래 이미지는 ADK 런타임에서 가장 중요한 개념인 이벤트 루프를 설명합니다. 이 이벤트 루프 메커니즘은 파이썬의 비동기 이벤트 루프와 유사합니다.
+## Background
+
+### Event Loop in ADK Runtime
+The image below explains the most important concept in ADK Runtime: the event loop. This event loop mechanism is similar to Python's asynchronous event loop.
 ![event loop](https://google.github.io/adk-docs/assets/event-loop.png)
-이미지 출처: https://google.github.io/adk-docs/runtime/#core-idea-the-event-loop
+Image source: https://google.github.io/adk-docs/runtime/#core-idea-the-event-loop
 
-### 호출 흐름
-![invocation flow](https://google.github.io/adk-docs/assets/invocation-flow.png)
-이미지 출처: https://google.github.io/adk-docs/runtime/#how-it-works-a-simplified-invocation
+### Invocation Flow
+You can see more detailed operation process by referencing the following url.   
+* https://google.github.io/adk-docs/runtime/#how-it-works-a-simplified-invocation
 
-## 개요
-`runtime` 에이전트 예제는 다음을 보여줍니다:
-- 긍정 및 부정 평가를 위한 서브 에이전트를 포함하는 루트 에이전트 정의
-- 선택적으로 에이전트 툴을 사용해 서브 에이전트 래핑
-- 환경 변수로 설정값 불러오기
-- Runner class 를 활용하여 실행.
+## Overview
+The `runtime` agent example demonstrates:
+- Defining a root agent that includes sub-agents for positive and negative critique
+- Optionally wrapping sub-agents with agent tools
+- Loading configuration values from environment variables
+- Executing using the Runner class
 
-## .env 설정.
 
-`.env` 파일은 현재 폴더의 `상위 폴더(01-agent)` 에 위치해야 합니다.  환경파일내 들어갈 내용은 아래 URL을 참고하세요.    
-https://google.github.io/adk-docs/get-started/quickstart/#set-up-the-model 
+## .env Setup
 
-아래 환경설정은 기업에서 `Vertex AI`기반에서 ADK를 사용할때 적용되는 예제입니다.    
+The `.env` file should be located in the parent folder (`01-agent`). For details on what to include in the environment file, refer to the following URL:
+https://google.github.io/adk-docs/get-started/quickstart/#set-up-the-model
+
+Below is an example configuration for using ADK with Vertex AI in an enterprise environment:
 
 ```
-GOOGLE_GENAI_USE_VERTEXAI=TRUE                  # 기업용 Vertex AI 사용.
-GOOGLE_CLOUD_PROJECT="ai-hangsik"               # 각자 Project ID 를 참고해서 변경.
-GOOGLE_CLOUD_LOCATION="global"                  # Global Endpoint 사용.
-GOOGLE_GENAI_MODEL = "gemini-2.5-flash"         # 현재 Gemini 최신 버전.
+GOOGLE_GENAI_USE_VERTEXAI=TRUE                  # Use Vertex AI for enterprise.
+GOOGLE_CLOUD_PROJECT="ai-hangsik"               # Change to your own Project ID.
+GOOGLE_CLOUD_LOCATION="global"                  # Use Global Endpoint.
+GOOGLE_GENAI_MODEL = "gemini-2.5-flash"         # Latest Gemini version.
 ```
 
-참고로 `AI Studio`를 사용하는 일반 사용자 버전은 아래와 같이 GOOGLE_API_KEY 를 셋팅해야 합니다.  
+For general users using AI Studio, set the GOOGLE_API_KEY as follows:
 
 ```
 GOOGLE_GENAI_USE_VERTEXAI=FALSE
 GOOGLE_API_KEY=PASTE_YOUR_ACTUAL_API_KEY_HERE
 ```
 
-## 파일 구조
+## File Structure
 ```
 adk/01-agent/runtime/
 ├── __init__.py
@@ -52,44 +54,47 @@ adk/01-agent/runtime/
 └── README.md
 ```
 
-- `agent.py` :서브 에이전트 및 에이전트 툴 연동을 포함한 루트 에이전트의 빌드 및 설정 코드를 포함합니다.
-- `runner.py` : 사용자 입력 및 에이전트 응답 처리를 위한 대화 루프 실행 스크립트를 제공합니다.
-- `sub_agent.py` : 긍정 및 부정 크리틱 서브 에이전트를 정의합니다.
-- `__init__.py` : 폴더를 파이썬 패키지로 지정합니다.
+- `agent.py`: Contains build and setup code for the root agent, including sub-agent and agent tool integration.
+- `runner.py`: Provides a script for running a conversation loop to handle user input and agent responses.
+- `sub_agent.py`: Defines positive and negative critic sub-agents.
+- `__init__.py`: Marks the folder as a Python package.
 
-## 작동 방식
 
-루트 에이전트는 ADK `Agent` 클래스를 사용해 정의되며, 해당 Agent는 아래와 같이 sub_agent를 포함합니다.
-아래 sub agent는 root_agent 에 의해서 사용자의 질문이 분석이 되고, 그 질문에 맞는 sub agent가 호출이 됩니다.
+## How It Works
+
+The root agent is defined using the ADK `Agent` class, and includes sub-agents as shown below.
+The sub-agents are invoked by the root agent based on the analysis of the user's question, calling the appropriate sub-agent for the query.
 
 ```
     agent = Agent(
         name = "root_agent",
         model = os.getenv("MODEL"),
-        description = "사용자 질의에 대한 질문에 답변하는 에이전트",
+        description = "Agent that answers user queries",
         instruction = INSTRUCTION,
         sub_agents = [positive_critic, negative_critic],
     ) 
 ```
 
-## 예제 실행
-### 1. google.adk.runners.Runner 클래스를 통해서 실행
+## Running the Example
+### 1. Run using google.adk.runners.Runner class
 
-gcloud 명령어를 통해서 Google Cloud 실행 환경 로그인 설정합니다.
+Set up Google Cloud authentication using the following gcloud command:
 
 ```
 gcloud auth application-default login
 ```
 
+You can run the runner class using `uv run` command as follows.
 ```
 adk_workshop/adk/01-agent$ uv run -m runtime.runner
 ```
 
-또는 web browser를 통해서 실행.
+Or run via web browser:
 ```
 ai_agent/adk/01-agent$ adk web
 ```
 
-## 라이선스
 
-이 프로젝트는 Apache License 2.0을 따르며, 모든 코드와 콘텐츠의 저작권은 **ForusOne**(shins777@gmail.com)에 있습니다.
+## License
+
+This project follows the Apache License 2.0. All code and content copyright **ForusOne** (shins777@gmail.com).

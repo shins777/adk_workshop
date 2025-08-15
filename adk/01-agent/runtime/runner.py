@@ -20,23 +20,22 @@ from runtime import agent
 
 async def run_agent():
     """
-    사용자 질의와 함께 AI 에이전트를 비동기적으로 실행합니다.
+    Run the AI agent asynchronously with user queries.
 
-    이 함수는 사용자 세션을 생성하고, 에이전트 러너를 초기화한 뒤,
-    사용자의 질의를 에이전트에 전달합니다. 에이전트의 응답을 스트리밍하며,
-    최종 응답을 콘솔에 출력합니다.
+    This function creates a user session, initializes the agent runner, and passes the user's query to the agent.
+    The agent's response is streamed, and the final response is printed to the console.
 
-    인자:
-        없음
-    반환값:
-        없음
+    Args:
+        None
+    Returns:
+        None
     """
 
     APP_NAME = "AI_assistant"
     USER_ID = "Forusone"
 
-    # 세션 서비스 초기화
-    # InMemorySessionService는 메모리 내에서 세션을 관리합니다.
+    # Initialize session service
+    # InMemorySessionService manages sessions in memory.
     session_service = InMemorySessionService()
     session = await session_service.create_session(app_name=APP_NAME,
                                                     user_id=USER_ID)
@@ -46,13 +45,13 @@ async def run_agent():
                     session_service=session_service)
     
     while True:
-        print("\n질문을 입력하세요 (종료하려면 'exit' 또는 'quit' 입력):")
-        
-        # 사용자로부터 질의를 입력받습니다.
+        print("\nEnter your question (type 'exit' or 'quit' to end):")
+
+        # Get query from user input
         query = input("\n 👤 User: ")
         if query.strip().lower() in ["exit", "quit"]:
             break
-        
+
         content = types.Content(role='user', parts=[types.Part(text=query)])
 
         events = runner.run_async(user_id=session.user_id,

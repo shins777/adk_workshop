@@ -15,40 +15,23 @@
 import os
 from dotenv import load_dotenv
 from google.adk.agents import Agent
-
 from .sub_agent import positive_critic, negative_critic
 
 load_dotenv()
 
-def build_agent() -> Agent:
-    """
-    비평 작업을 위한 서브 에이전트를 포함하는 루트 Agent 인스턴스를 생성하고 설정 함수
-    - 환경 변수를 불러오고, 에이전트의 지시문 템플릿을 정의.
-    - 긍정 및 부정 비평을 위한 서브 에이전트 설정.
-    - 사용자 요청에 따라 특정 비평 작업을 위임.
+INSTRUCTION = """
+You are an helpful agent that answers users' questions.
+You must provide answers using sub-agents, as follows:
 
-    반환값:
-        Agent: 사용자 질의를 처리할 준비가 된 서브 에이전트가 포함된 설정된 Agent 인스턴스 반환.
-    """
+1. If the user requests a positive review, use the positive_critic agent.
+2. If the user requests a negative review, use the negative_critic agent.
 
-    INSTRUCTION = """
-        당신은 사용자의 질문에 답변을 제공하는 에이전트입니다.
-        사용자의 질문에 따라 다음과 같이 서브 에이전트를 사용하여 답변을 제공해야 합니다.
+"""
 
-            1. 사용자가 긍정적인 비평을 요청하면, positive_critic 에이전트를 사용하여 긍정적인 비평을 작성하세요.
-            2. 사용자가 부정적인 비평을 요청하면, negative_critic 에이전트를 사용하여 부정적인 비평을 작성하세요.
-
-        참고: 답변 시 반드시 사용자가 질문한 언어와 동일한 언어로 답변해야 합니다.
-        
-    """
-
-    agent = Agent(
-        name = "root_agent",
-        model = os.getenv("GOOGLE_GENAI_MODEL"),
-        description = "사용자 질의에 대한 질문에 답변하는 에이전트",
-        instruction = INSTRUCTION,
-        sub_agents = [positive_critic, negative_critic],
-    )
-    return agent
-
-root_agent = build_agent()
+root_agent = Agent(
+    name = "root_agent",
+    model = os.getenv("GOOGLE_GENAI_MODEL"),
+    description = "Agents that answer user questions",
+    instruction = INSTRUCTION,
+    sub_agents = [positive_critic, negative_critic],
+)

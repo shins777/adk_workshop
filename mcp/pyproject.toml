@@ -1,0 +1,12 @@
+[project]
+name = "mcp_tool"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "google-genai>=1.29.0",
+    "httpx>=0.28.1",
+    "mcp[cli]>=1.12.2",
+    "uv>=0.8.4",
+]

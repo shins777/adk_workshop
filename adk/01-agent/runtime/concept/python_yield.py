@@ -13,24 +13,24 @@
 # limitations under the License.
 
 """
-아래 내용은 AI 에이전트 내에서 서브 에이전트(Sub Agent)가 작동하는 방식을 파이썬(Python)의 yield 구문에 비유하여 설명하고 있습니다.
-핵심은 위임과 재개의 흐름입니다.
+The following describes how a sub-agent operates within an AI agent, using Python's yield statement as an analogy.
+The key concept is delegation and resumption of flow.
 
-위임 및 일시 중단: 메인 에이전트는 특정 작업을 서브 에이전트에게 위임하고, 자신은 잠시 동작을 멈춥니다.
-작업 처리 및 결과 반환: 서브 에이전트는 위임받은 작업을 수행한 뒤 결과를 yield하게 됩니다.
-재개: 메인 에이전트는 서브 에이전트처리가 완료되면 다음 작업을 이어서 수행합니다.
-결론적으로, 이 방식은 특정 작업을 서브 에이전트에 맡겨 처리하게 함으로써 작업의 흐름을 효율적으로 구성하는 모델입니다.
+Delegation and suspension: The main agent delegates a specific task to a sub-agent and temporarily suspends its own operation.
+Task processing and result return: The sub-agent performs the delegated task and yields the result.
+Resumption: The main agent resumes its next task after the sub-agent has completed processing.
+In summary, this model efficiently structures the workflow by delegating specific tasks to sub-agents for processing.
 """
 import time
 def count_up_to(max_number):
     number = 0
     while number < max_number:
-        # 숫자를 반환하고 함수 실행을 일시 중단한 뒤, 처리가 끝나면 실행을 재개하여 반환합니다.
+        # Returns the number and suspends function execution; resumes after processing is done.
         yield number  
-        print("count_up_to에서 yield 이후:", number)
+        print("After yield in count_up_to:", number)
         number += 1
 
 for num in count_up_to(5):
-    print(num)  # 0, 1, 2, 3, 4 출력
-    time.sleep(1)  # 1초 대기
-    print("반복문에서 yield됨:", num)  # 반복문에서 yield됨: 0, 1, ...
+    print(num)  # Prints 0, 1, 2, 3, 4
+    time.sleep(1)  # Waits 1 second
+    print("Yielded in loop:", num)  # Yielded in loop: 0, 1, ...
