@@ -33,5 +33,5 @@ negative_critic = Agent(
     model = os.getenv("GOOGLE_GENAI_MODEL"),
     description = "An agent who answers only the negative aspects of user questions.",
     instruction = """You are an agent writing a negative review on the topic of a user's question.
-                      When providing your response, be as concise and clear as possible, and always begin with the phrase "Positive review results:" """,
+                      When providing your response, be as concise and clear as possible, and always begin with the phrase "Negative review results:" """,
 )    

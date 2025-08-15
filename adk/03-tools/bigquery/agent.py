@@ -54,30 +54,18 @@ def get_bigquery_toolset() -> BigQueryToolset:
     )
     return bigquery_toolset
 
-def build_agent() -> Agent:
-    """
-    Google Search 툴이 포함된 Agent 인스턴스를 생성하고 설정합니다.
+# Get the bigquery toolset, This will be used in the agent to interact with BigQuery
+bigquery_toolset = get_bigquery_toolset()
 
-    이 함수는 환경 변수를 불러오고, 에이전트의 지시문 템플릿을 설정하며,
-    이 에이전트는 자체 지식과 검색 기능을 활용해 사용자 질문에 답변하도록 설계되었습니다.
+INSTRUCTION = """
+        You are a data science agent that answers questions about BigQuery data and models and executes SQL queries. 
+        Retrieve information from the BigQuery database, write SQL queries, execute them, and provide answers to various user questions.
+        """
 
-    반환값:
-        Agent: 사용자 질의를 처리할 준비가 된 설정된 Agent 인스턴스
-    """
-
-    INSTRUCTION = """
-        BigQuery 데이터 및 모델에 대한 질문에 답변하고 SQL 쿼리를 실행하는 Data science agent 입니다.
-        사용자의 다양한 질문에 대해서 BigQuery 데이터베이스에서 정보를 검색하고, SQL 쿼리를 작성하여 실행후 답을 해주세요.
-    """
-    bigquery_toolset = get_bigquery_toolset()
-
-    agent = Agent(
-        name = "search_agent",
-        model = os.getenv("GOOGLE_GENAI_MODEL"),
-        description = "BigQuery 데이터 및 모델에 대한 질문에 답변하고 SQL 쿼리를 실행하는 Data science agent",
-        instruction = INSTRUCTION,
-        tools=[bigquery_toolset],
-    )
-    return agent
-
-root_agent = build_agent()
+root_agent = Agent(
+    name = "search_agent",
+    model = os.getenv("GOOGLE_GENAI_MODEL"),
+    description = "Data science agent that answers questions about BigQuery data and models and runs SQL queries.",
+    instruction = INSTRUCTION,
+    tools=[bigquery_toolset],
+)

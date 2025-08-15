@@ -1,53 +1,52 @@
-# Google BigQuery 도구 예제
+# Google BigQuery Tool Example
 
-## 예제 개요
-이 폴더는 ADK 에이전트 프레임워크에 내장된 BigQuery 도구를 활용하여 BigQuery내의 다양한 메타데이터 검색과 SQL을 실행하는 예제를 구성하고 있습니다. 
+This folder demonstrates how to use the built-in BigQuery tool in the ADK agent framework to search various metadata and execute SQL queries within BigQuery.
 
-## .env 설정.
+## .env Setup
 
-`.env` 파일은 현재 폴더의 `상위 폴더(03-tools)` 에 위치해야 합니다.  환경파일 내 들어갈 내용은 아래 URL을 참고하세요.   
+The `.env` file should be located in the parent folder (`03-tools`). For details on what to include in the environment file, refer to the following URL:
 
-https://google.github.io/adk-docs/get-started/quickstart/#set-up-the-model 
+https://google.github.io/adk-docs/get-started/quickstart/#set-up-the-model
 
-아래 환경설정은 기업에서 `Vertex AI`기반에서 ADK를 사용할때 적용되는 예제입니다.    
+Below is an example configuration for using ADK with Vertex AI in an enterprise environment:
 
 ```
-GOOGLE_GENAI_USE_VERTEXAI=TRUE                  # 기업용 Vertex AI 사용.
-GOOGLE_CLOUD_PROJECT="ai-hangsik"               # 각자 Project ID 를 참고해서 변경.
-GOOGLE_CLOUD_LOCATION="global"                  # Global Endpoint 사용.
-GOOGLE_GENAI_MODEL = "gemini-2.5-flash"         # 현재 Gemini 최신 버전.
+GOOGLE_GENAI_USE_VERTEXAI=TRUE                  # Use Vertex AI for enterprise.
+GOOGLE_CLOUD_PROJECT="ai-hangsik"               # Change to your own Project ID.
+GOOGLE_CLOUD_LOCATION="global"                  # Use Global Endpoint.
+GOOGLE_GENAI_MODEL = "gemini-2.5-flash"         # Latest Gemini version.
 ```
 
-참고로 `AI Studio`를 사용하는 일반 사용자 버전은 아래와 같이 GOOGLE_API_KEY 를 셋팅해야 합니다.  
+For general users using AI Studio, set the GOOGLE_API_KEY as follows:
 
 ```
 GOOGLE_GENAI_USE_VERTEXAI=FALSE
 GOOGLE_API_KEY=PASTE_YOUR_ACTUAL_API_KEY_HERE
 ```
 
-## 소스 코드 실행 방법
-gcloud 명령어를 통해서 Google Cloud 실행 환경 로그인 설정합니다.
+## How to Run the Source Code
+Set up Google Cloud authentication using the following gcloud command:
 ```
 gcloud auth application-default login
 ```
 
-아래 명령어로 서브 에이전트 도구 예제를 실행할 수 있습니다:
+Run the sub-agent tool example with the following command:
 ```
 adk_workshop/adk/03-tools$ adk web
 ```
 
-UI 에서 biguqery 선택 후 아래와 같이 명령어 실행합니다.
+In the UI, select bigquery and run the following commands:
 
-1. 메타데이터 검색
+1. Metadata Search
 ```
-현재 ai-hangsik 프로젝트내에 등록된 dataset에 대한 설명해주세요. 
-```
-
-2. 자연어 검색(NL2SQL) 
-```
-bbc_news.fulltext 에서 카테고리 그룹별로 개수를 알려주세요. 그리고 사용된 SQL 쿼리문도 보여주세요.
+Please describe the datasets registered in the ai-hangsik project.
 ```
 
-## 라이센스
+2. Natural Language Search (NL2SQL)
+```
+Tell me the count by category group in bbc_news.fulltext. Also, show me the SQL query used.
+```
 
-이 프로젝트는 Apache License 2.0을 따르며, 모든 코드와 콘텐츠의 저작권은 **ForusOne**(shins777@gmail.com)에 있습니다.
+## License
+
+This project follows the Apache License 2.0. All code and content copyright **ForusOne** (shins777@gmail.com).
