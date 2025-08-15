@@ -1,57 +1,45 @@
-# ADK 03-tools 전체 가이드
+# ADK 03-tools Complete Guide
 
-이 디렉토리는 ADK(Agent Development Kit)에서 다양한 에이전트 및 도구 기능을 제공하는 서브 모듈들을 포함합니다. 각 서브 폴더는 특정 기능 또는 외부 서비스와의 연동을 담당하며, 아래에 각 도구의 개요와 환경설정 방법을 안내합니다.
+This directory contains submodules that provide various agent and tool functionalities in ADK (Agent Development Kit). Each subfolder is responsible for a specific feature or integration with external services. Below is an overview of each tool and instructions for environment setup.
 
-## 폴더 및 기능 요약
+## Folder and Feature Summary
 
 ### agent_tool
-서브 에이전트(Sub Agent) 도구 예제. ADK에서 Agent를 도구로 등록하여 활용하는 방법을 제공합니다. Agent와 Sub Agent의 차이 및 활용법, .env 환경설정 예시가 포함되어 있습니다.
+Sub Agent tool example. Demonstrates how to register and use an Agent as a tool in ADK. Includes differences and usage of Agent vs Sub Agent, and .env setup examples.
 
 ### bigquery
-ADK 내장 빅쿼리 실행 에이전트. 빅쿼리 내의 다양한 메타데이터를 검색할수 있고, 특정 테이블내의 정보를 자연어를 통해서 검색할 수 있는 기능을 제공하는 예제가 포함되어 있습니다.
+Built-in BigQuery agent for ADK. Includes examples for searching various metadata in BigQuery and querying specific table information using natural language.
 
 ### code_execution
-ADK 내장 코드 실행 에이전트. Python 코드를 작성·실행하여 수식 표현식 풀이, 결과 반환 등 자동화된 코드 실행 기능을 제공합니다. .env 환경설정 예시가 포함되어 있습니다.
+Built-in code execution agent for ADK. Provides automated code execution features such as writing and running Python code, solving expressions, and returning results. Includes .env setup examples.
 
 ### function_call
-다중 함수형 툴 예제. 다양한 함수형 도구(예: 환율, 주가 등)를 연동하는 방법을 안내합니다. .env 환경설정 및 Stock API 키 예시가 포함되어 있습니다.
+Multi-function tool example. Guides how to integrate various function-based tools (e.g., exchange rates, stock prices). Includes .env setup and Stock API key examples.
 
 ### google_search
-Google Search 도구 예제. ADK 에이전트와 함께 내장 Google Search 도구를 활용하여 실시간 웹 검색 결과로 사용자 질의에 답변하는 방법을 안내합니다. .env 환경설정 예시가 포함되어 있습니다.
+Google Search tool example. Demonstrates how to use the built-in Google Search tool with an ADK agent to answer user queries with real-time web search results. Includes .env setup examples.
 
 ### langchain_tavily
-Tavily Search 툴 예제. LangChain 기반 Tavily Search 및 환율 조회 기능을 연동하여 웹 검색 및 환율 정보를 질의할 수 있는 예시를 제공합니다. .env 환경설정 및 Tavily API 키 예시가 포함되어 있습니다.
+Tavily Search tool example. Provides examples for integrating LangChain-based Tavily Search and exchange rate queries for web search and currency information. Includes .env setup and Tavily API key examples.
 
 ### mcp_client
-MCP 클라이언트 파일 브라우저 에이전트 예제. Model Context Protocol(MCP)을 활용하여 파일 시스템을 탐색·관리하는 기능을 제공합니다. .env 환경설정 및 AI Studio용 GOOGLE_API_KEY 안내가 포함되어 있습니다.
+MCP client file browser agent example. Uses Model Context Protocol (MCP) to explore and manage the file system. Includes .env setup and GOOGLE_API_KEY instructions for AI Studio.
 
 ### mcp_client_server
-MCP 서버 환율 정보 에이전트 예제. 커스텀 Python MCP 서버와 연동하여 실시간 환율 정보를 조회하는 기능을 제공합니다. .env 환경설정 예시가 포함되어 있습니다.
+MCP server exchange rate agent example. Integrates with a custom Python MCP server to provide real-time exchange rate information. Includes .env setup examples.
 
 ### rag_engine
-RAG 엔진 도구 예제. Vertex AI 기반 RAG(Retrieval-Augmented Generation) 엔진을 활용하여 코퍼스 검색을 수행하는 방법을 안내합니다. .env 환경설정 및 RAG_CORPUS 예시가 포함되어 있습니다.
+RAG engine tool example. Guides how to use Vertex AI-based RAG (Retrieval-Augmented Generation) engine for corpus search. Includes .env setup and RAG_CORPUS examples.
+
+### toolbox
+MCP toolbox for database example, This folder provides an example of a toolbox agent in the ADK (Agent Development Kit) environment, using ToolboxSyncClient for database integration to connect with external data sources such as BigQuery.
 
 ### vertexai_search
-Vertex AI Search 도구 예제. Vertex AI Search 데이터스토어 기반으로 사용자 질의에 답변하는 기능을 제공합니다. .env 환경설정 및 VAIS_PROJECT_NUMBER 예시가 포함되어 있습니다.
+Vertex AI Search tool example. Provides functionality to answer user queries based on Vertex AI Search datastore. Includes .env setup and VAIS_PROJECT_NUMBER examples.
 
-## 공통 환경설정 (.env)
-모든 도구는 상위 폴더(03-tools)에 `.env` 파일을 위치시키고, 아래 URL의 가이드를 참고하여 환경설정을 진행해야 합니다.
+## Ways to use the codes.
+Refer to each subfolder's README.md for detailed usage, example code, and environment setup instructions.
 
-https://google.github.io/adk-docs/get-started/quickstart/#set-up-the-model
+## License
 
-각 도구별 환경설정 예시는 각 서브 폴더의 README.md에 상세히 안내되어 있습니다. 주요 환경 변수 예시는 다음과 같습니다:
-
-```
-GOOGLE_GENAI_USE_VERTEXAI=TRUE                  # 기업용 Vertex AI 사용
-GOOGLE_CLOUD_PROJECT="ai-hangsik"               # 각자 Project ID 참고
-GOOGLE_CLOUD_LOCATION="global"                  # Global Endpoint 사용
-GOOGLE_GENAI_MODEL = "gemini-2.5-flash"         # 최신 Gemini 버전
-# 각 도구별 추가 환경 변수는 각 README.md 참고
-```
-
-## 참고
-각 서브 폴더의 README.md를 참고하여 상세 사용법, 예제 코드, 환경설정 방법을 확인하세요.
-
-## 라이센스
-
-이 프로젝트는 Apache License 2.0을 따르며, 모든 코드와 콘텐츠의 저작권은 **ForusOne**(shins777@gmail.com)에 있습니다.
+This project follows the Apache License 2.0. All code and content copyright **ForusOne** (shins777@gmail.com).

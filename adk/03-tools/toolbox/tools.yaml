@@ -11,7 +11,7 @@ tools:
       SELECT category, count(*) 
       FROM `ai-hangsik.bbc_news.fulltext` 
       group by category
-    description: "BBC 뉴스 카테고리별 기사 수를 조회합니다."
+    description: "Retrieve BBC news categories and their counts"
 
 toolsets:
  my_bq_toolset:

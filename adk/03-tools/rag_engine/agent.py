@@ -25,7 +25,7 @@ def buid_rag_tool():
     rag_engine_tool = VertexAiRagRetrieval(
         name='retrieve_rag_documentation',
         description=(
-            '이 도구를 사용하여 RAG Engine 코퍼스에서 질문에 대한 문서 및 참고 자료를 검색합니다.'
+            'Use this tool to search for documents and references related to questions in the RAG Engine corpus.'
         ),
         rag_resources=[
             rag.RagResource(
@@ -37,40 +37,24 @@ def buid_rag_tool():
     )
     return rag_engine_tool
 
+INSTRUCTION = """
+    You are an agent that provides answers to user questions.
+    When a user asks a question, you must use the rag_engine_tool to provide an answer based on the results.
+    When providing an answer, you must strictly follow the format below:
 
-def build_agent() -> Agent:
-    """
-    Google Search 툴이 포함된 Agent 인스턴스를 생성하고 설정합니다.
+    1. Identify the user's question intent:
+    2. Reference documents:
+    3. Answer summary:
 
-    이 함수는 환경 변수를 불러오고, 에이전트의 지시문 템플릿을 설정하며,
-    이름, 모델, 설명, 지시문, Google Search 툴을 포함해 Agent를 초기화합니다.
-    이 에이전트는 자체 지식과 검색 기능을 활용해 사용자 질문에 답변하도록 설계되었습니다.
+    Note: Always respond in the same language as the user's question.
+"""
 
-    반환값:
-        Agent: 사용자 질의를 처리할 준비가 된 설정된 Agent 인스턴스
-    """
+rag_engine_tool = buid_rag_tool()
 
-    INSTRUCTION = """
-        당신은 사용자의 질문에 답변을 제공하는 에이전트입니다.
-        사용자가 질문을 입력하면, 해당 질문에 대해 rag_engine_tool을 사용하여 결과를 바탕으로 답변을 제공해야 합니다.
-        답변을 제공할 때는 반드시 아래 형식을 정확히 따라야 합니다:
-
-        1. 사용자 질문 의도 파악: 
-        2. 참조 문서: 
-        3. 답변 요약: 
-
-        참고: 답변 시 반드시 사용자가 질문에 사용한 언어와 동일한 언어로 답변해야 합니다.
-    """
-    rag_engine_tool = buid_rag_tool()
-
-    agent = Agent(
-        name = "search_agent",
-        model = os.getenv("GOOGLE_GENAI_MODEL"),
-        description = "사용자 질의에 답변하는 에이전트",
-        instruction = INSTRUCTION,
-        tools=[rag_engine_tool],
-
-    )
-    return agent
-
-root_agent = build_agent()
+root_agent = Agent(
+    name = "search_agent",
+    model = os.getenv("GOOGLE_GENAI_MODEL"),
+    description = "Agent that answers user queries",
+    instruction = INSTRUCTION,
+    tools=[rag_engine_tool],
+)

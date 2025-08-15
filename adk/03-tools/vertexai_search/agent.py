@@ -22,17 +22,17 @@ load_dotenv()
 
 def get_vertex_search_tool():
     """
-    Vertex AI Search 툴 인스턴스를 생성하고 설정합니다.
+    Creates and configures a Vertex AI Search tool instance.
 
-    이 함수는 프로젝트, 위치, 프로젝트 번호, 데이터스토어 ID에 필요한 환경 변수를 불러오고,
-    Vertex AI 환경을 초기화한 뒤, 데이터스토어 리소스 경로를 구성해 해당 데이터스토어와 연동되는 VertexAiSearchTool 인스턴스를 반환합니다.
+    This function loads the required environment variables for project, location, project number, and datastore ID,
+    initializes the Vertex AI environment, constructs the datastore resource path, and returns a VertexAiSearchTool instance linked to the specified datastore.
 
-    반환값:
-        VertexAiSearchTool: 지정한 Vertex AI Search 데이터스토어와 연동되는 인스턴스
+    Returns:
+        VertexAiSearchTool: An instance connected to the specified Vertex AI Search datastore.
     """
 
-    # Vertex AI Search는 글로벌 위치에서 사용 가능하므로, VERTEXAI_LOCATION을 "global"로 설정합니다.
-    # 그리고 data_store_id를 구성할 때, 프로젝트 번호와 데이터스토어 ID를 사용하여 전체 경로를 만듭니다.
+    # Vertex AI Search is available in the global location, so set VERTEXAI_LOCATION to "global".
+    # When constructing data_store_id, use the project number and datastore ID to build the full path.
     VAIS_PROJECT_NUMBER = os.getenv('VAIS_PROJECT_NUMBER')
     VAIS_LOCATION = os.getenv('VAIS_LOCATION')  # Vertex AI Search는 글로벌 위치에서 사용 가능
     VAIS_DATASTORE_ID = os.getenv('VAIS_DATASTORE_ID')
@@ -46,35 +46,18 @@ def get_vertex_search_tool():
     return vertex_search_tool
 
 
-def build_agent() -> Agent:
-    """
-    Vertex AI Search 툴이 포함된 Agent 인스턴스를 생성하고 설정합니다.
+INSTRUCTION = """
+    You are an agent that provides answers to user questions.
+    When a user asks a question, you must use the 'vertex_search_tool' to perform a search and provide an answer based on the results.
+"""
 
-    이 함수는 환경 변수를 불러오고, 에이전트의 지시문 템플릿을 정의하며,
-    이름, 모델, 설명, 지시문, Vertex AI Search 툴을 포함해 Agent를 초기화합니다.
-    이 에이전트는 Vertex AI Search를 활용해 검색을 수행하고, 질문, 출처 정보, 답변을 구조화된 형식으로 제공합니다.
+vertex_search_tool = get_vertex_search_tool()
+print("Vertex AI Search : vertex_search_tool : \n", vertex_search_tool)
 
-    반환값:
-        Agent: Vertex AI Search 기반 질의 처리가 가능한 설정된 Agent 인스턴스
-    """
-
-    INSTRUCTION = """
-        당신은 사용자의 질문에 답변을 제공하는 에이전트입니다.
-        사용자가 질문을 입력하면, 해당 질문에 대해 'vertex_search_tool'을 사용해 검색을 수행하고 결과를 바탕으로 답변을 제공해야 합니다.
-
-        참고: 답변 시 반드시 사용자가 질문에 사용한 언어와 동일한 언어로 답변해야 합니다.
-    """
-    
-    vertex_search_tool = get_vertex_search_tool()
-    print("Vertex AI Search : vertex_search_tool : \n", vertex_search_tool)
-
-    vertexai_search = Agent(
-        name = "vertexai_search",
-        model = os.getenv("GOOGLE_GENAI_MODEL"),
-        description = "사용자 질의에 답변하는 에이전트",
-        instruction = INSTRUCTION,
-        tools=[vertex_search_tool],
-    )
-    return vertexai_search
-
-root_agent = build_agent()
+root_agent = Agent(
+    name = "vertexai_search",
+    model = os.getenv("GOOGLE_GENAI_MODEL"),
+    description = "Agent that answers user queries",
+    instruction = INSTRUCTION,
+    tools=[vertex_search_tool],
+)

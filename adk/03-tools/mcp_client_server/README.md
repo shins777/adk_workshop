@@ -1,49 +1,45 @@
-# MCP 서버 환율 정보 에이전트 예제 (ADK)
+# MCP Server Exchange Rate Agent Example (ADK)
 
-이 폴더는 ADK(Agent Development Kit)에서 Model Context Protocol(MCP)을 활용하여 커스텀 Python MCP 서버와 연동, 실시간 환율 정보를 조회하는 에이전트 예제를 제공합니다.
+This folder provides an agent example in ADK (Agent Development Kit) that uses Model Context Protocol (MCP) to connect with a custom Python MCP server and retrieve real-time exchange rate information.
 
+## .env Configuration
 
-## .env 설정.
+The `.env` file should be located in the parent folder (`03-tools`). For details on what to include in the environment file, refer to the following URL:
+https://google.github.io/adk-docs/get-started/quickstart/#set-up-the-model
 
-`.env` 파일은 현재 폴더의 `상위 폴더(03-tools)` 에 위치해야 합니다.  환경파일 내 들어갈 내용은 아래 URL을 참고하세요.   
-https://google.github.io/adk-docs/get-started/quickstart/#set-up-the-model 
-
-아래 환경설정은 기업에서 `Vertex AI`기반에서 ADK를 사용할때 적용되는 예제입니다.    
-
+The following environment settings are examples for using ADK with Vertex AI in an enterprise environment:
 ```
-GOOGLE_GENAI_USE_VERTEXAI=TRUE                  # 기업용 Vertex AI 사용.
-GOOGLE_CLOUD_PROJECT="ai-hangsik"               # 각자 Project ID 를 참고해서 변경.
-GOOGLE_CLOUD_LOCATION="global"                  # Global Endpoint 사용.
-GOOGLE_GENAI_MODEL = "gemini-2.5-flash"         # 현재 Gemini 최신 버전.
-
+GOOGLE_GENAI_USE_VERTEXAI=TRUE                  # Use Vertex AI for enterprise.
+GOOGLE_CLOUD_PROJECT="ai-hangsik"               # Change to your own Project ID.
+GOOGLE_CLOUD_LOCATION="global"                  # Use the global endpoint.
+GOOGLE_GENAI_MODEL = "gemini-2.5-flash"         # Latest Gemini model.
 ```
 
-참고로 `AI Studio`를 사용하는 일반 사용자 버전은 아래와 같이 GOOGLE_API_KEY 를 셋팅해야 합니다.  
-
+For regular users using `AI Studio`, set the GOOGLE_API_KEY as follows:
 ```
 GOOGLE_GENAI_USE_VERTEXAI=FALSE
 GOOGLE_API_KEY=PASTE_YOUR_ACTUAL_API_KEY_HERE
 ```
-## 소스 코드 실행 방법
-gcloud 명령어를 통해서 Google Cloud 실행 환경 로그인 설정합니다.
+## How to Run the Source Code
+Set up Google Cloud authentication using the following gcloud command:
 ```
 gcloud auth application-default login
 ```
 
-아래 명령어로 서브 에이전트 도구 예제를 실행할 수 있습니다:
+Run the sub-agent tool example with the following command:
 ```
 adk_workshop/adk/03-tools$ adk web
 ```
 
-테스트 할때는 질문은 아래와 같이 해주세요. 
+For testing, use a question like:
 ```
-원달러 환율을 알려주세요. 
+Please tell me the USD-KRW exchange rate.
 ```
 
-## 예제 기능
-- 사용자의 환율 질의에 대해 MCP 서버와 연동하여 실시간 환율 정보를 제공합니다.
-- Frankfurter API를 활용해 다양한 통화 간 환율을 조회할 수 있습니다.
+## Example Features
+- Provides real-time exchange rate information by connecting to the MCP server in response to user queries.
+- Uses the Frankfurter API to retrieve exchange rates between various currencies.
 
-## 라이센스
+## License
 
-이 프로젝트는 Apache License 2.0을 따르며, 모든 코드와 콘텐츠의 저작권은 **ForusOne**(shins777@gmail.com)에 있습니다.
+This project follows the Apache License 2.0. All code and content copyright **ForusOne** (shins777@gmail.com).

@@ -21,17 +21,15 @@ load_dotenv()
 
 def get_toolbox():
     """
-    ToolboxSyncClient 인스턴스를 생성하고 설정합니다.
+    Creates and configures a ToolboxSyncClient instance.
+    This function loads environment variables and initializes the ToolboxSyncClient.
+    The client is used to manage synchronization with the toolbox.
 
-    이 함수는 환경 변수를 불러오고, ToolboxSyncClient를 초기화합니다.
-    이 클라이언트는 툴박스와의 동기화를 관리하는 데 사용됩니다.
-
-    반환값:
-        ToolboxSyncClient: 툴박스와의 동기화를 관리할 준비가 된 클라이언트 인스턴스
+    Returns:
+        ToolboxSyncClient: A client instance ready to manage synchronization with the toolbox.
     """
     toolbox = ToolboxSyncClient(    
         os.getenv("TOOLBOX_SYNC_CLIENT"),
-        
     )
 
     tool_set = toolbox.load_toolset('my_bq_toolset')
@@ -42,38 +40,18 @@ def get_toolbox():
     
     return tools
 
+tools = get_toolbox()
 
-def build_agent() -> Agent:
-    """
-    Agent 인스턴스를 생성하고 설정합니다.
+INSTRUCTION = """
+    You are an agent that provides answers to user questions.
+    When a user asks a question, you must use the relevant tool to generate an answer.
 
-    반환값:
-        Agent: 사용자 질의를 처리할 준비가 된 설정된 Agent 인스턴스
-    """
+"""
 
-
-    tools = get_toolbox()
-
-    INSTRUCTION = """
-        당신은 사용자의 질문에 답변을 제공하는 에이전트입니다.
-        사용자가 질문을 입력하면, 관련된 tool을 사용하여 답변을 생성해야 합니다.
-        전체적으로 답변은 간결하고 명확해야 하며, 사용자가 질문한 언어로 작성되어야 합니다.
-
-        답변을 제공할 때는 반드시 아래 형식을 정확히 따라야 합니다. 
-
-        1. 질문에 대한 이해
-        2. 검색 결과 전체 요약: 
-        3. 검색 소스 별 요약:
-
-    """
-
-    agent = Agent(
-        name = "search_agent",
-        model = os.getenv("GOOGLE_GENAI_MODEL"),
-        description = "사용자 질의에 답변하는 에이전트",
-        instruction = INSTRUCTION,
-        tools=tools,
-    )
-    return agent
-
-root_agent = build_agent()
+root_agent = Agent(
+    name = "search_agent",
+    model = os.getenv("GOOGLE_GENAI_MODEL"),
+    description = "Agent that answers user queries",
+    instruction = INSTRUCTION,
+    tools=tools,
+)
