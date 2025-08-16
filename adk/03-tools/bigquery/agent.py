@@ -30,18 +30,18 @@ load_dotenv()
 
 def get_bigquery_toolset() -> BigQueryToolset:
     """
-    BigQuery 툴셋을 설정하고 반환합니다.
+    Configure and return a BigQuery toolset.
 
-    이 함수는 BigQuery 인증 정보를 로드하고, BigQuery 툴셋을 초기화하여
-    BigQueryToolConfig를 사용해 설정합니다. 이 툴셋은 BigQuery 데이터베이스와 상호작용하는 데 사용됩니다.
+    This function loads BigQuery authentication information, initializes the BigQuery toolset,
+    and configures it using BigQueryToolConfig. This toolset is used to interact with the BigQuery database.
 
-    반환값:
-        BigQueryToolset: 설정된 BigQuery 툴셋 인스턴스
+    Returns:
+        BigQueryToolset: Configured BigQuery toolset instance
     """
-    # 모든 쓰기 작업을 차단하기 위한 도구 구성을 정의합니다.
+    # Define tool configuration to block all write operations.
     tool_config = BigQueryToolConfig(write_mode=WriteMode.BLOCKED)
 
-    # 자격 증명 구성을 정의합니다. 이 예에서는 애플리케이션 기본 자격 증명을 사용합니다.
+    # Define credentials configuration. This example uses application default credentials.
     # https://cloud.google.com/docs/authentication/provide-credentials-adc
     application_default_credentials, _ = google.auth.default()
     credentials_config = BigQueryCredentialsConfig(
