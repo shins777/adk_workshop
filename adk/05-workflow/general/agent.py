@@ -22,7 +22,6 @@ load_dotenv()
 
 SYSTEM_INSTRUCTION = """
     You are an agent that faithfully answers the user's various questions. 
-    Explain in the simplest terms possible. Keep explanations within 100 characters.
 """
 
 INSTRUCTION = """

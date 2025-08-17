@@ -16,9 +16,9 @@ import os
 from dotenv import load_dotenv
 from google.adk.agents import Agent
 
-from .sub_agent import positive_critic_agent
-from .sub_agent import negative_critic_agent
-from .sub_agent import review_critic_agent
+from .sub_agent import positive_critic
+from .sub_agent import negative_critic
+from .sub_agent import review_critic
 
 from .critic import CriticAgent
 
@@ -35,9 +35,9 @@ load_dotenv()
 
 root_agent = CriticAgent(
     name = "critic_agent",
-    positive_critic_agent = positive_critic_agent,
-    negative_critic_agent = negative_critic_agent,
-    review_critic_agent = review_critic_agent,        
+    positive_critic_agent = positive_critic,
+    negative_critic_agent = negative_critic,
+    review_critic_agent = review_critic,        
 )
 
 # The `root_agent` can be used directly by the ADK runtime or wired into

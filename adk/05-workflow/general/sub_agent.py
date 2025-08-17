@@ -25,6 +25,7 @@ positive_critic = Agent(
     description = "An agent that answers only the positive aspects of a user's questions.",
     instruction = """You are an agent who writes positive reviews on the topic of a user's inquiry. 
                       When providing your response, be as concise and clear as possible, and always begin with the phrase "Positive review results:" """,
+    output_key="positive_critic_output",
 )    
 
 #--------------------------------[negative_critic]----------------------------------
@@ -34,4 +35,5 @@ negative_critic = Agent(
     description = "An agent who answers only the negative aspects of user questions.",
     instruction = """You are an agent writing a negative review on the topic of a user's question.
                       When providing your response, be as concise and clear as possible, and always begin with the phrase "Negative review results:" """,
+    output_key="negative_critic_output",                      
 )    
