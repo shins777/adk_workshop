@@ -19,32 +19,19 @@ from google.adk.agents import Agent
 load_dotenv()
 
 #--------------------------------[positive_critic]----------------------------------
-
 positive_critic = Agent(
     name = "positive_critic",
     model = os.getenv("GOOGLE_GENAI_MODEL"),
-    description = "사용자의 질문에 긍정적인 방식으로 답변하는 에이전트입니다.",
-
-    instruction = """
-                    당신은 주어진 주제에 대해 긍정적인 리뷰를 작성하는 에이전트입니다.
-                    사용자가 주제를 입력하면, 해당 주제의 긍정적인 측면을 찾아 긍정적인 리뷰를 작성해야 합니다. 
-                    답변을 제공할 때는 최대한 간결하고 명확하게 작성하며, 반드시 \"긍정적 리뷰:\"라는 말로 시작해야 합니다.
-                    답변 시에는 반드시 사용자가 질문에 사용한 언어를 그대로 사용해야 합니다.
-                                      
-                    """,
-    )    
+    description = "An agent that answers only the positive aspects of a user's questions.",
+    instruction = """You are an agent who writes positive reviews on the topic of a user's inquiry. 
+                      When providing your response, be as concise and clear as possible, and always begin with the phrase "Positive review results:" """,
+)    
 
 #--------------------------------[negative_critic]----------------------------------
-
 negative_critic = Agent(
     name = "negative_critic",
     model = os.getenv("GOOGLE_GENAI_MODEL"),
-    description = "사용자의 질문에 대해 부정적인 측면을 답변하는 에이전트입니다.",
-
-    instruction = """
-                    당신은 주어진 주제에 대해 부정적인 리뷰를 작성하는 에이전트입니다.
-                    사용자가 주제를 입력하면, 해당 주제의 부정적인 측면을 찾아 부정적인 리뷰를 작성해야 합니다. 
-                    답변을 제공할 때는 최대한 간결하고 명확하게 작성하며, 반드시 \"부정적 리뷰:\"라는 말로 시작해야 합니다.
-                    답변 시에는 반드시 사용자가 질문에 사용한 언어를 그대로 사용해야 합니다.                  
-                    """
-    )
+    description = "An agent who answers only the negative aspects of user questions.",
+    instruction = """You are an agent writing a negative review on the topic of a user's question.
+                      When providing your response, be as concise and clear as possible, and always begin with the phrase "Negative review results:" """,
+)    

@@ -19,23 +19,14 @@ from .sub_agent import positive_critic, negative_critic, review_critic
 
 load_dotenv()
 
-def build_agent():
-    """
-    다단계 워크플로우를 위한 SequentialAgent를 생성하고 설정합니다.
-
-    이 함수는 'pipeline_agent'라는 이름의 SequentialAgent를 초기화하며,
-    positive_critic, negative_critic, review_critic 서브 에이전트를 순차적으로 실행합니다.
-    에이전트는 각 서브 에이전트를 순서대로 실행하여 비평 및 리뷰가 구조적으로 이루어지도록 설계되어 있습니다.
-
-    반환값:
-        SequentialAgent: 순차 워크플로우를 통해 사용자 질의를 처리할 수 있는 설정된 에이전트
-    """
-
-    pipeline_agent = SequentialAgent(
-        name="pipeline_agent",
-        sub_agents=[positive_critic, negative_critic, review_critic],
-        description="positive_critic, negative_critic, review_critic을 순차적으로 실행하는 에이전트입니다.",
-    )
-    return pipeline_agent
-
-root_agent = build_agent()
+# `root_agent` defines a simple pipeline where each sub-agent runs in order.
+# Use SequentialAgent when later steps depend on outputs produced by earlier steps.
+# In this pipeline:
+#  - `positive_critic` runs first to provide a positive critique,
+#  - `negative_critic` runs next to provide a negative critique,
+#  - `review_critic` runs last to review combined outputs and produce a final evaluation.
+root_agent = SequentialAgent(
+    name="pipeline_agent",
+    sub_agents=[positive_critic, negative_critic, review_critic],
+    description="positive_critic, negative_critic, review_critic을 순차적으로 실행하는 에이전트입니다.",
+)

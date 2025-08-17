@@ -1,47 +1,49 @@
-# 커스텀 워크플로우 CriticAgent 예제 (ADK)
+# Custom Workflow CriticAgent Example (ADK)
 
-이 폴더는 Agent Development Kit(ADK)를 활용하여 커스텀 다단계 비평 에이전트를 구축하고 운영하는 방법을 보여줍니다. 에이전트는 긍정, 부정, 종합 리뷰 비평을 각각의 서브 에이전트에 위임하고, 그 결과를 조율하여 워크플로우를 완성합니다.
+This folder demonstrates how to build and operate a custom multi-stage critique agent using the Agent Development Kit (ADK). The example shows how to delegate positive, negative, and aggregated review steps to separate sub-agents and coordinate their outputs to complete a full critique workflow.
 
-- `agent.py`: 긍정/부정/리뷰 비평을 위한 서브 에이전트들을 활용해 전체 워크플로우를 조율하는 루트 `CriticAgent`를 정의합니다.
-- `critic.py`: 각 단계별 서브 에이전트의 이벤트를 순차적으로 실행 및 yield하는 커스텀 `CriticAgent` 클래스를 구현합니다.
-- `sub_agent.py`: 다음과 같은 서브 에이전트들을 정의합니다:
-    - `positive_critic_agent`: 긍정적 리뷰 생성
-    - `negative_critic_agent`: 부정적 리뷰 생성
-    - `review_critic_agent`: 비평 결과를 종합 및 요약
+Contents
+- `agent.py`: Defines the root `CriticAgent` that orchestrates the positive, negative, and review sub-agents.
+- `critic.py`: Implements the custom `CriticAgent` class that runs each sub-agent sequentially and yields events for each stage.
+- `sub_agent.py`: Defines the sub-agents used by the workflow:
+  - `positive_critic_agent`: Produces positive feedback.
+  - `negative_critic_agent`: Produces constructive negative feedback.
+  - `review_critic_agent`: Aggregates critiques and produces a final review.
 
-## .env 환경 설정.
+## .env Configuration
 
-상위 폴더(`adk/04-workflow/`)에 아래와 같이 `.env` 파일을 생성하세요. 
+Create a `.env` file in the parent folder (`adk/05-workflow/`) with the environment variables required by the ADK examples.
 
-환경파일내 들어갈 내용은 아래 URL을 참고하세요.    
-https://google.github.io/adk-docs/get-started/quickstart/#set-up-the-model 
+Refer to the ADK quickstart for the recommended variables and authentication steps:
+https://google.github.io/adk-docs/get-started/quickstart/#set-up-the-model
 
-아래 환경설정은 기업에서 `Vertex AI`기반에서 ADK를 사용할때 적용되는 예제입니다.    
-
+Example environment variables for Vertex AI (enterprise):
 ```
-GOOGLE_GENAI_USE_VERTEXAI=TRUE                  # 기업용 Vertex AI 사용.
-GOOGLE_CLOUD_PROJECT="ai-hangsik"               # 각자 Project ID 를 참고해서 변경.
-GOOGLE_CLOUD_LOCATION="global"                  # Global Endpoint 사용.
-GOOGLE_GENAI_MODEL = "gemini-2.5-flash"         # 현재 Gemini 최신 버전.
+GOOGLE_GENAI_USE_VERTEXAI=TRUE                  # Use Vertex AI for enterprise.
+GOOGLE_CLOUD_PROJECT="ai-hangsik"               # Replace with your Project ID.
+GOOGLE_CLOUD_LOCATION="global"                  # Use the global endpoint.
+GOOGLE_GENAI_MODEL = "gemini-2.5-flash"         # Example Gemini model.
 ```
 
-참고로 `AI Studio`를 사용하는 일반 사용자 버전은 아래와 같이 GOOGLE_API_KEY 를 셋팅해야 합니다.  
-
+For individual users using AI Studio, set the API key as follows:
 ```
 GOOGLE_GENAI_USE_VERTEXAI=FALSE
 GOOGLE_API_KEY=PASTE_YOUR_ACTUAL_API_KEY_HERE
 ```
 
-## 소스 코드 실행 방법
-gcloud 명령어를 통해서 Google Cloud 실행 환경 로그인 설정합니다.
+## How to run the example
+Authenticate to Google Cloud using the following command (if applicable):
 ```
 gcloud auth application-default login
 ```
 
-아래 명령어로 서브 에이전트 도구 예제를 실행할 수 있습니다:
+Run the critic-agent example using the ADK CLI from the repository root:
 ```
-adk_workshop/adk/04-workflow$ adk web
+cd adk_workshop/adk/05-workflow
+adk web
 ```
 
-## 라이센스
-이 프로젝트는 Apache License 2.0을 따르며, 모든 코드와 콘텐츠의 저작권은 **ForusOne**(shins777@gmail.com)에 있습니다.
+Check the module-level README files and source code to explore how each sub-agent works and to adapt the workflow for your use case.
+
+## License
+This project is licensed under the Apache License 2.0. All code and content copyright **ForusOne** (shins777@gmail.com).

@@ -21,136 +21,141 @@ from google.adk.tools import google_search
 
 load_dotenv()
 
-COMPLETION_PHRASE = "전체적으로 답변이 괜찮습니다."
+COMPLETION_PHRASE = "Overall, the answer is fine."
 
 #--------------------------------[exit_loop]----------------------------------
 
 def exit_loop(tool_context: ToolContext):
     """
-    루프 에이전트에게 현재 루프 반복을 종료하도록 신호를 보냅니다.
+    Signal the loop agent to exit the current iteration.
 
-    이 함수는 루프 내 에이전트가 툴로서 호출되도록 의도되었습니다.
-    툴 컨텍스트의 'escalate' 액션을 True로 설정하여,
-    루프 에이전트가 루프를 벗어나 워크플로우의 다음 단계로 진행하도록 지시합니다.
+    This function is intended to be called as a tool from within a loop agent.
+    It signals the loop controller to advance to the next step of the workflow by
+    setting the `escalate` action flag on the provided ToolContext.
 
-    인자:
-        tool_context (ToolContext): 에이전트 및 액션 정보를 담은 컨텍스트 객체
+    Args:
+        tool_context (ToolContext): Context object containing agent and action information.
 
-    반환값:
-        dict: 추가 출력이 필요 없으므로 빈 딕셔너리 반환
+    Returns:
+        dict: An empty dictionary since no additional output is required.
     """
   
     print(f"[Tool Call] exit_loop triggered by {tool_context.agent_name}")
     
-    # 루프 에이전트에게 현재 루프 반복을 종료하도록 신호를 보냅니다.
-    # 툴 컨텍스트의 'escalate' 액션을 True로 설정하여,
-    # 루프 에이전트가 루프를 벗어나 워크플로우의 다음 단계로 진행하도록 지시합니다.
+    # Signal the loop agent to exit the current iteration.
+    # Set the 'escalate' action flag on the tool context so the loop controller
+    # can break out of the loop and continue with the next workflow stage.
     tool_context.actions.escalate = True
 
     return {}
 
 #--------------------------------[research_agent]----------------------------------
 
+# research_agent: gathers or generates initial content for the topic.
 research_agent = Agent(
     name = "research_agent",
     model = os.getenv("GOOGLE_GENAI_MODEL"),
-    description = "주어진 주제에 대해 긍정적이고 부정적인 측면을 작성하는 에이전트입니다.",
+    description = "Agent that drafts positive and negative aspects for a given topic.",
     instruction = """
-            당신은 주어진 주제에 대해 긍정적인 면과 부정적인 측면을 작성하는 에이전트입니다.
-            답변을 제공할 때는 가능한 간결하고 명확하게 작성해야 하며, "### 리서치 결과 : " 라고 시작해야 합니다.
-            참고: 답변 시 반드시 사용자가 질문한 언어와 동일한 언어로 답변해야 합니다.
+            You are an agent that writes the positive and negative aspects for a given topic.
+            When providing an answer, be as concise and clear as possible, and begin with "### Research Results: "
+            Note: Always respond in the same language as the user's question.
 
             """,
     tools=[google_search],
 
-    output_key="research_outcome",                
-)    
+    output_key="research_outcome",
+)
 
 #--------------------------------[critic_agent]----------------------------------
 
+# critic_agent: produces a concise, constructive critique of the research output.
 critic_agent = Agent(
     name = "critic_agent",
     model = os.getenv("GOOGLE_GENAI_MODEL"),
-    description = "주어진 주제에 대한 답변을 검토하는 건설적인 비평 AI 에이전트입니다.",
+    description = "A constructive critic AI agent that reviews an answer for a given topic.",
     instruction = f"""
-                    당신은 주어진 주제에 대한 답변을 검토하는 건설적인 비평 AI 에이전트입니다.
-                    답변에 "### 답변 검토"라는 제목을 추가하세요.
+                    You are a constructive critic AI agent that reviews the provided answer for a given topic.
+                    Add the heading "### Answer Review" to your response.
 
-                    **주어진 주제에 대한 답변:**
+                    **Provided answer for the topic:**
                         ```
                         {{research_outcome}}
                         ```
 
-                    **작업:**
-                        다음 기준에 따라 응답을 명확하게 검토하세요:
+                    **Task:**
+                        Review the answer clearly according to the following criteria:
 
-                        응답을 개선할 수 있는 1-2가지 *명확하고 실행 가능한* 방법을 제시하세요.
-                        우리 사회와 조직에 대한 시사점을 포함해야 합니다.
-                        구체적인 제안을 간결하게 제시하세요. 예를 들어: 비평 텍스트*만* 출력하세요. 문서
+                        - Suggest 1-2 *clear and actionable* ways to improve the response.
+                        - Include implications for society and organizations where relevant.
+                        - Provide concise, specific suggestions. For example: output *only* the critique text.
 
-                    ** 답변이 괜찮다면:
-                    *정확히* "{COMPLETION_PHRASE}" 문구로 응답해야 하며, 다른 문구를 출력하거나 설명을 추가하지 마세요.
+                    **If the answer is acceptable:**
+                        Respond *exactly* with the phrase "{COMPLETION_PHRASE}" and do not output any other text or explanations.
 
-                    참고: 답변 시 반드시 사용자가 질문한 언어와 동일한 언어로 답변해야 합니다.
+                    Note: Always respond in the same language as the user's question.
 
                 """,
-    output_key="criticism",                
-)   
+    output_key="criticism",
+)
 
 #--------------------------------[refine_agent]----------------------------------
 
+# refine_agent: applies critique suggestions or calls `exit_loop` when the
+# critique indicates the output is satisfactory.
 refine_agent = Agent(
     name = "refine_agent",
     model = os.getenv("GOOGLE_GENAI_MODEL"),
-    description = "사용자의 질문에 대한 답변을 검토하는 건설적인 비평 AI 에이전트입니다.",
+    description = "A constructive refinement agent that evaluates and applies critiques to improve the answer.",
     instruction = f"""
-                    당신은 사용자의 질문에 대한 답변을 검토하는 건설적인 비평 AI 에이전트입니다.
-                    응답에 "## 답변 검증"이라는 제목을 추가하세요.
+                    You are a constructive refinement agent that reviews the user's answer.
+                    Add the heading "## Answer Validation" to your response.
 
-                    **주어진 주제에 대한 답변:**
+                    **Provided answer for the topic:**
                         ```
                         {{research_outcome}}
                         ```
-                    **비평/제안:**
+                    **Critique / Suggestions:**
                         ```
                         {{criticism}}
                         ```
-                    **작업:**
-                        '비평/제안'을 분석하세요.
+                    **Task:**
+                        Analyze the 'critique / suggestions'.
 
-                        비평이 *정확히* "{COMPLETION_PHRASE}"인 경우:
-                            'exit_loop' 함수를 호출해야 합니다. 텍스트를 출력하지 마세요.
-                        그렇지 않은 경우 (비평에 실행 가능한 피드백이 포함된 경우):
-                            제안을 신중하게 적용하여 '현재 문서'를 개선하세요. 개선된 문서 텍스트*만* 출력하세요.
-                            설명을 추가하지 마세요. 개선된 문서를 출력하거나 exit_loop 함수를 호출하세요.
+                        If the critique is *exactly* "{COMPLETION_PHRASE}":
+                            Call the 'exit_loop' function. Do not output any text.
+                        Otherwise (if the critique includes actionable feedback):
+                            Carefully apply the suggestions to improve the 'current document'. Output *only* the improved document text.
+                            Do not add explanations. Either output the improved document or call the exit_loop function.
 
-                    참고: 답변 시 반드시 사용자가 질문한 언어와 동일한 언어로 답변해야 합니다.
+                    Note: Always respond in the same language as the user's question.
 
                 """,
     
     tools=[exit_loop],
 
-)   
+)
 
 #--------------------------------[conclusion_agent]----------------------------------
 
+# conclusion_agent: summarizes positive and negative aspects and produces the final summary.
 conclusion_agent = Agent(
     name = "conclusion_agent",
     model = os.getenv("GOOGLE_GENAI_MODEL"),
-    description = "사용자 질문의 긍정적 및 부정적 측면을 요약하는 에이전트",
+    description = "Agent that summarizes the positive and negative aspects of a user's query and provides a final summary.",
     instruction = f"""
-                    당신은 주어진 주제에 대한 긍정적 및 부정적 비평을 바탕으로 최종 요약 및 결론을 설명하는 에이전트입니다.
-                    답변 시 아래 현재 문서와 비평/제안 섹션을 참고하여 "### 최종 요약"이라고 말하고 답변하세요.
+                    You are an agent that explains the final summary and conclusion based on positive and negative critiques for the given topic.
+                    When responding, refer to the current document and the Critique/Suggestions section below and begin your answer with "### Final Summary".
                     
-                    **주어진 주제에 대한 답변:**
+                    **Provided answer for the topic:**
                     ```
                     {{research_outcome}}
                     ```
-                    **비평/제안:**
+                    **Critique / Suggestions:**
                     ```
                     {{criticism}}
                     ```
-                    참고: 답변 시 반드시 사용자가 질문한 언어와 동일한 언어로 답변해야 합니다.
+                    Note: Always respond in the same language as the user's question.
 
                 """,
 )

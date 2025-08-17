@@ -16,54 +16,48 @@ import os
 from dotenv import load_dotenv
 
 from google.adk.agents import Agent
+from google.adk.tools import google_search
 
 load_dotenv()
 
-#--------------------------------[positive_critic]----------------------------------
 
-positive_critic_agent = Agent(
+#--------------------------------[positive_critic]----------------------------------
+positive_critic = Agent(
     name = "positive_critic",
     model = os.getenv("GOOGLE_GENAI_MODEL"),
-    description = "사용자의 질문에 긍정적인 방식으로 답변하는 에이전트입니다.",
-    instruction = """
-                    당신은 주어진 주제에 대해 긍정적인 리뷰를 작성하는 에이전트입니다. 
-                    사용자가 주제를 입력하면, 해당 주제의 긍정적인 측면을 찾아 긍정적인 리뷰를 작성해야 합니다. 
-                    답변을 제공할 때는 최대한 간결하고 명확하게 작성하며, 반드시 \"긍정적 리뷰:\"라는 말로 시작해야 합니다.
-                    답변 시에는 반드시 사용자가 질문에 사용한 언어를 그대로 사용해야 합니다.
-                    참고: 답변 시 반드시 사용자가 질문할 때 사용한 언어로 답변해야 합니다.
-                  """,
-    output_key="positive_critic_output",
+    description = "An agent that answers only the positive aspects of a user's questions.",
+    instruction = """You are an agent who writes positive reviews on the topic of a user's inquiry. 
+                      When providing your response, be as concise and clear as possible, and always begin with the phrase "Positive review results:" """,
+    tools=[google_search],
+    output_key="positive_critic_output",                      
+)    
 
-    )
-    
 #--------------------------------[negative_critic]----------------------------------
-
-negative_critic_agent = Agent(
+negative_critic = Agent(
     name = "negative_critic",
     model = os.getenv("GOOGLE_GENAI_MODEL"),
-    description = "사용자의 질문에 대해 부정적인 측면을 답변하는 에이전트입니다.",
-    instruction = """
-                    당신은 주어진 주제에 대해 부정적인 리뷰를 작성하는 에이전트입니다. 
-                    사용자가 주제를 입력하면, 해당 주제의 부정적인 측면을 찾아 부정적인 리뷰를 작성해야 합니다.  
-                    답변을 제공할 때는 최대한 간결하고 명확하게 작성하며, 반드시 \"부정적 리뷰:\"라는 말로 시작해야 합니다. 
-                    답변 시에는 반드시 사용자가 질문에 사용한 언어를 그대로 사용해야 합니다. 
-                    참고: 답변 시 반드시 사용자가 질문할 때 사용한 언어로 답변해야 합니다. 
-                  """,
-    output_key="negative_critic_output",
-
-    )
+    description = "An agent who answers only the negative aspects of user questions.",
+    instruction = """You are an agent writing a negative review on the topic of a user's question.
+                      When providing your response, be as concise and clear as possible, and always begin with the phrase "Negative review results:" """,
+    tools=[google_search],
+    output_key="negative_critic_output",                       
+)    
 
 #--------------------------------[review_critic]----------------------------------
-
-review_critic_agent = Agent(
+review_critic = Agent(
     name = "review_critic",
     model = os.getenv("GOOGLE_GENAI_MODEL"),
-    description = "사용자의 질문에 대한 긍정적/부정적 측면을 종합하여 요약하는 에이전트입니다.",
-    instruction = """
-                당신은 주어진 주제에 대한 긍정적/부정적 비평을 바탕으로 최종 요약과 결론을 설명하는 에이전트입니다. 
-                답변 시 반드시 \"최종 요약:\"이라는 말로 시작하여 답변해 주세요.         
-                참고: 답변 시 반드시 사용자가 질문할 때 사용한 언어로 답변해야 합니다. 
-                """,
+    description = "An agent that reviews the positive and negative aspects of a user's question and summarizes it overall.",
+    instruction = f"""
+            You are an agent who provides a final summary and conclusion based on positive and negative criticism of a given topic.
+            Your response must be based on the following two pieces of information:
+
+            * Positive aspects: ```{{positive_critic_output}}```
+            * Negative aspects: ```{{negative_critic_output}}```
+
+            When responding, always state \"### Final Summary:\".
+   
+        """,
     output_key="review_output",
 
-)
+)  

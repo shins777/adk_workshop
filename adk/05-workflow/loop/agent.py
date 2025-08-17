@@ -12,6 +12,11 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+"""
+This module provides an example workflow composition using agents.
+The workflow includes research, critique, refinement, and conclusion steps.
+"""
+
 from dotenv import load_dotenv
 from google.adk.agents import SequentialAgent
 from google.adk.agents import LoopAgent
@@ -23,35 +28,27 @@ from .sub_agent import conclusion_agent
 
 load_dotenv()
 
-def build_agent():
-    """
-    LoopAgent와 SequentialAgent를 활용하여 워크플로우 에이전트를 생성하고 설정합니다.
+# Loop workflow example: `critics_loop` performs iterative critique and refinement.
+# The loop alternates between a critic step and a refine step to improve outputs.
+critics_loop = LoopAgent(
+    name="critics_loop",
+    sub_agents=[
+        critic_agent,
+        refine_agent,
+    ],
+    max_iterations=3  # Maximum number of iterations for the critique/refinement loop
+)
 
-    이 함수는 반복적인 비평/개선 루프를 위한 loop agent와, 연구-비평/개선-결론의 순차적 흐름을 담당하는 sequential agent를 정의합니다.
-    최종적으로 연구 → 비평/개선 루프 → 결론의 다단계 워크플로우를 실행하는 에이전트를 반환합니다.
-
-    반환값:
-        SequentialAgent: 다단계 워크플로우를 통해 사용자 질의를 처리할 수 있는 설정된 에이전트
-    """
-
-    critics_loop = LoopAgent(
-        name="critics_loop",
-        sub_agents=[
-            critic_agent,
-            refine_agent,
-        ],
-        max_iterations=3  # 비평/개선 루프 최대 반복 횟수
-    )
-
-    confirmation_agent = SequentialAgent(
-        name="confirmation_agent",
-        sub_agents=[
-            research_agent, 
-            critics_loop,
-            conclusion_agent
-        ],
-        description="research_agent와 critics_loop를 순차적으로 실행하는 에이전트입니다.",
-    )
-    return confirmation_agent
-
-root_agent = build_agent()
+# Root agent composes the workflow as a sequence of steps:
+# 1) research_agent: gathers or generates initial content
+# 2) critics_loop: iteratively critiques and refines the content
+# 3) conclusion_agent: produces the final output based on refined results
+root_agent = SequentialAgent(
+    name="confirmation_agent",
+    sub_agents=[
+        research_agent, 
+        critics_loop,
+        conclusion_agent
+    ],
+    description="Agent that runs the research agent, then an iterative critics/refinement loop, and finally a conclusion agent.",
+)

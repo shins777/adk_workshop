@@ -20,29 +20,21 @@ from .sub_agent import positive_critic, negative_critic, review_critic
 
 load_dotenv()
 
-def build_agent():
-    """
-    ParallelAgent와 SequentialAgent를 활용하여 워크플로우 에이전트를 생성하고 설정합니다.
+# `parallel_research_agent` runs multiple research-style sub-agents concurrently
+# (positive_critic and negative_critic) to collect diverse perspectives or data
+# in parallel. Use ParallelAgent when independent subtasks can be executed
+# simultaneously to speed up information gathering.
+parallel_research_agent = ParallelAgent(
+    name="parallel_research_agent",
+    sub_agents=[positive_critic, negative_critic],
+    description="An agent that collects information by running multiple research agents in parallel."
+)
 
-    이 함수는 긍정/부정 비평을 병렬로 실행하는 parallel agent와,
-    병렬 연구 에이전트 실행 후 리뷰 비평을 순차적으로 실행하는 sequential agent를 정의합니다.
-    최종적으로 여러 연구 에이전트를 병렬로 실행한 뒤, 리뷰 단계를 거치는 워크플로우를 수행합니다.
-
-    반환값:
-        SequentialAgent: 병렬 및 순차 워크플로우를 통해 사용자 질의를 처리할 수 있는 설정된 에이전트
-    """
-
-    parallel_research_agent = ParallelAgent(
-        name="parallel_research_agent",
-        sub_agents=[positive_critic, negative_critic],
-        description="여러 연구 에이전트를 병렬로 실행하여 정보를 수집하는 에이전트입니다."
-    )
-
-    pipeline_agent = SequentialAgent(
-        name="pipeline_agent",
-        sub_agents=[parallel_research_agent, review_critic],
-        description="parallel_research_agent와 review_critic을 순차적으로 실행하는 에이전트입니다.",
-    )
-    return pipeline_agent
-
-root_agent = build_agent()
+# `root_agent` composes a simple pipeline: first run the parallel research step,
+# then run a review/critic agent. SequentialAgent enforces ordered execution of
+# its sub_agents so later steps can depend on outputs from earlier ones.
+root_agent = SequentialAgent(
+    name="pipeline_agent",
+    sub_agents=[parallel_research_agent, review_critic],
+    description="This is an agent that sequentially executes parallel_research_agent and review_critic.",
+)

@@ -1,41 +1,40 @@
-# ADK 병렬 워크플로우 에이전트 예제
+# ADK Parallel Workflow Agent Example
 
-## 1. 예제 개요
-이 폴더는 Agent Development Kit(ADK)를 활용한 병렬 워크플로우 에이전트 예제를 제공합니다. 이 에이전트는 여러 작업 또는 서브 에이전트를 병렬로 처리하여, 독립적인 단계의 빠른 완료나 멀티 에이전트 협업이 가능합니다. 작업을 동시에 실행해 효율을 높이고자 할 때 적합한 예제입니다.
+## 1. Example Overview
+This folder contains a parallel workflow agent example built with the Agent Development Kit (ADK). The agent executes multiple tasks or sub-agents in parallel, enabling faster completion of independent steps and supporting multi-agent collaboration. This example is useful when you want to run work concurrently to improve efficiency.
 
-## .env 환경 설정.
+## .env Configuration
 
-상위 폴더(`adk/04-workflow/`)에 아래와 같이 `.env` 파일을 생성하세요. 
+Create a `.env` file in the parent directory (`adk/05-workflow/`) containing the environment variables required by ADK.
 
-환경파일내 들어갈 내용은 아래 URL을 참고하세요.    
-https://google.github.io/adk-docs/get-started/quickstart/#set-up-the-model 
+Refer to the ADK quickstart for details on variables and authentication:
+https://google.github.io/adk-docs/get-started/quickstart/#set-up-the-model
 
-아래 환경설정은 기업에서 `Vertex AI`기반에서 ADK를 사용할때 적용되는 예제입니다.    
-
+The following example variables show settings typically used when running ADK with Vertex AI in an enterprise environment:
 ```
-GOOGLE_GENAI_USE_VERTEXAI=TRUE                  # 기업용 Vertex AI 사용.
-GOOGLE_CLOUD_PROJECT="ai-hangsik"               # 각자 Project ID 를 참고해서 변경.
-GOOGLE_CLOUD_LOCATION="global"                  # Global Endpoint 사용.
-GOOGLE_GENAI_MODEL = "gemini-2.5-flash"         # 현재 Gemini 최신 버전.
+GOOGLE_GENAI_USE_VERTEXAI=TRUE                  # Use Vertex AI for enterprise.
+GOOGLE_CLOUD_PROJECT="ai-hangsik"               # Replace with your Project ID.
+GOOGLE_CLOUD_LOCATION="global"                  # Use the global endpoint.
+GOOGLE_GENAI_MODEL = "gemini-2.5-flash"         # Example Gemini model.
 ```
 
-참고로 `AI Studio`를 사용하는 일반 사용자 버전은 아래와 같이 GOOGLE_API_KEY 를 셋팅해야 합니다.  
-
+For individual users using AI Studio, set the API key as follows:
 ```
 GOOGLE_GENAI_USE_VERTEXAI=FALSE
 GOOGLE_API_KEY=PASTE_YOUR_ACTUAL_API_KEY_HERE
 ```
 
-## 소스 코드 실행 방법
-gcloud 명령어를 통해서 Google Cloud 실행 환경 로그인 설정합니다.
+## How to run the source code
+Authenticate to Google Cloud using the following command:
 ```
 gcloud auth application-default login
 ```
 
-아래 명령어로 서브 에이전트 도구 예제를 실행할 수 있습니다:
+Run the parallel sub-agent example using the ADK CLI (from the repository root):
 ```
-adk_workshop/adk/04-workflow$ adk web
+cd adk_workshop/adk/05-workflow
+adk web
 ```
 
-## 라이센스
-이 프로젝트는 Apache License 2.0을 따르며, 모든 코드와 콘텐츠의 저작권은 **ForusOne**(shins777@gmail.com)에 있습니다.
+## License
+This project is licensed under the Apache License 2.0. All code and content copyright **ForusOne** (shins777@gmail.com).
