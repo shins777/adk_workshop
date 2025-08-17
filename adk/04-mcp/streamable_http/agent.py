@@ -15,43 +15,41 @@
 import os
 from dotenv import load_dotenv
 from google.adk.agents import LlmAgent
-from google.adk.tools.mcp_tool.mcp_toolset import MCPToolset, StdioServerParameters
+from google.adk.tools.mcp_tool.mcp_toolset import MCPToolset, StreamableHTTPConnectionParams
 
 load_dotenv()
 
-def mcp_toolset():
+def mcp_streamable_http_tool():
     """
-    Creates and configures an MCPToolset for exchange rate operations using Model Context Protocol (MCP).
-    This function sets up an MCPToolset instance that connects to a custom exchange rate server using the specified command and arguments. This allows the agent to query exchange rate information.
+    Create and configure an MCPToolset that connects to a remote MCP Streamable HTTP server.
+
+    This helper constructs an MCPToolset using StreamableHTTPConnectionParams with the
+    provided service URL. The returned toolset can be used by an LLM agent to call
+    remote MCP tools exposed by the Streamable HTTP server.
 
     Returns:
-        MCPToolset: A configured MCPToolset instance for exchange rate operations.
+        MCPToolset: a configured MCPToolset instance using Streamable HTTP connection parameters.
     """
 
     mcp_toolset = MCPToolset(
-            connection_params=StdioServerParameters(
-                command='python3', 
-                args=[
-                      "-m"
-                      "server_exchange_rate.exchange_rate_server"
-                      ],
-            )
-    )    
-            
+        connection_params=StreamableHTTPConnectionParams(
+            url="https://mcp-streamable-http-721521243942.us-central1.run.app/mcp/",
+        ),
+    )
             
     return mcp_toolset
 
 INSTRUCTION = """
     You are an agent that provides answers to user questions.
-    When a user asks a question, you must use the 'exchange_rate_tool' to provide an answer based on the results.
+    When a user asks a question related to exchange rate, you must use the 'get_exchange_rate' to provide an answer based on the results.
 """
 
-exchange_rate_tool = mcp_toolset()
+get_exchange_rate = mcp_streamable_http_tool()
 
 root_agent = LlmAgent(
-    name = "search_agent",
+    name = "get_exchange_rate_agent",
     model = os.getenv("GOOGLE_GENAI_MODEL"),
     description = "Agents that answer questions about user query",
     instruction = INSTRUCTION,
-    tools=[exchange_rate_tool],
+    tools=[get_exchange_rate],
 )

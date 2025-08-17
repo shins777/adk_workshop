@@ -18,7 +18,7 @@ Before running the example, you need to understand and install MCP Toolbox for D
 
 ## .env Configuration
 
-The `.env` file should be located in the parent folder (`03-tools`). For details on what to include in the environment file, refer to the following URL:
+The `.env` file should be located in the parent folder (`04-mcp`). For details on what to include in the environment file, refer to the following URL:
 https://google.github.io/adk-docs/get-started/quickstart/#set-up-the-model
 
 The following environment settings are examples for using ADK with Vertex AI in an enterprise environment:
@@ -89,7 +89,7 @@ gcloud auth application-default login
 ```
 Run the Toolbox agent example with the following command:
 ```
-adk_workshop/adk/03-tools$ adk web
+adk_workshop/adk/04-mcp $ adk web
 ```
 After selecting the toolbox agent, try asking "Show me the BBC table."
 
