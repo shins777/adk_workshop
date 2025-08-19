@@ -1,123 +1,120 @@
-# ADK(Agent Development Kit) 기반 AI 에이전트 개발 환경 구성
+# ADK (Agent Development Kit) Local Development Setup
 
-ADK는 로컬환경에서 편리하게 개발 할 수 있는 환경을 제공하기 때문에, 개발환경을 로컬 환경에서 진행하는것을 추천 드립니다.
-예를들어 "adk web" 명령어를 사용하면 복잡한 데이터 흐름을 쉽게 이해하고 분석 및 디버그를 할 수 있습니다.
-혹시 python notebook 환경에서 빠른 기술 검증이 필요하다면, notebooks에 있는 코드를 참고하기 바랍니다. 단, 해당 폴더에는 모든 기능에 대한 코드 예제가 들어있지 않습니다. 
+ADK provides a convenient local development environment for building and testing agents. Developing locally is recommended because commands like `adk web` make it easy to inspect, debug, and understand complex data flows. If you prefer rapid prototyping in notebooks, refer to the examples under the `notebooks/` directory (note: not all features are covered there).
 
-소스 코드는 VS Code에서 개발되었으나, 특정 IDE에 종속적이지 않습니다. 개발자의 환경에 맞게 git clone 해서 사용하시면 됩니다.  
-참고로 VS Code 사용 시 다음 URL에서 설치할 수 있습니다: https://code.visualstudio.com/
+The source code was developed with Visual Studio Code but is not tied to any specific IDE. Clone the repository and use the tools that fit your development environment. If you want to install VS Code, see https://code.visualstudio.com/.
 
-## git 클론
-먼저 github의 소스를 활용하기 위해서는 아래와 같이 git clone 명령어를 통해서 로컬 환경에 소스를 가져옵니다.  
+## Git clone
+To get the repository locally, run:
+
 ```
 git clone https://github.com/shins777/adk_workshop.git
 ```
 
-## uv 패키지 매니저 설치
+## Install the `uv` package manager
 
-이 프로젝트는 Python 패키지 매니저로 uv를 사용합니다.  
-uv는 Rust로 작성된 매우 빠르고 편리한 Python 패키지 및 프로젝트 매니저입니다. 좀더 자세한 내용은 아래 링크를 참고하세요.
-* 참고: https://github.com/astral-sh/uv
+This project uses `uv` as the Python package and project manager. `uv` is a fast, ergonomic manager written in Rust. See the project for more details: https://github.com/astral-sh/uv
 
-uv 설치는 아래와 같이 두가지 방법중 하나로 설치를 해주시면 됩니다. 
+You can install `uv` using one of the following methods:
+
 ```
 curl -LsSf https://astral.sh/uv/install.sh | sh
 ```
-또는
+
+or
+
 ```
 pip install uv
 ```
 
-## 2. uv 초기화 및 가상환경 설정
+## 2. Initialize a virtual environment with `uv`
 
-uv 사용할때는 파이썬 가상환경을 사용하는게 효율적입니다. uv는 아래와 같은 방법으로 쉽게 python 가상환경을 만들수 있습니다. 
-만일 위에서 언급한 git clone 이 정상적으로 처리가 되었다면, **/adk_agent/adk** 디렉토리에 **pyproject.toml** 파일이 존재해야 합니다. 이 pyproject.toml 파일은 /adk_agent/adk 안에 가상환경을 구성하여, 하위 폴더에 있는 코드 실행시 모두 해당 패키지 기반에서 실행된다고 생각하시면 됩니다. (참고, adk 와 동일 폴더 위치에 있는 a2a 폴더의 경우 실행 시에는 따로 해당 실행환경에 맞는 가상환경을 만듭니다.)
+It is recommended to use a Python virtual environment when working with `uv`.
+If you cloned the repository, a `pyproject.toml` file should exist under `adk_workshop/adk`. That file defines the project dependencies and allows `uv` to create an isolated environment to run the example code.
 
-가급적 python 버전은 3.12 환경에서 개발하도록 권고합니다. 
+We recommend using Python 3.12 for development.
 
-```
-/adk_agent/adk$ uv venv --python 3.12
-```
-
-가상환경 활성화:
-```
-/adk_agent/adk$ source .venv/bin/activate
-(adk) adk_agent/adk$
-```
-
-테스트가 끝난 후에는 가상환경을 비활성화할 수 있습니다.
-```
-/adk_agent/adk$ deactivate
-```
-
-## 3. 간단한 ADK 에이전트 유닛 테스트
-
-런타임 가상환경이 제대로 설정되었는지 확인하려면, 간단한 ADK 에이전트를 실행해보세요.
-
-
-### 1. adk 패키지 설치:  
-* ADK 패지는 아래 url 에서 확인할 수 있으면 현재 기준(2025년 7월) google-adk 1.8.0 버전을 기준으로 합니다.
-* https://pypi.org/project/google-adk/
+Create the virtual environment:
 
 ```
-(adk) /adk_agent/adk/01-agent$ uv add "google-adk[vertexai]==1.8.0"
+cd adk_workshop/adk
+uv venv --python 3.12
 ```
 
-### 2. .env 파일 생성:
-
-.env 파일은 ADK를 실행할때 필요한 환경정보가 들어 있습니다. 이곳에는 api key를 비롯해서 실행환경에서 실시간으로 참조할 수 있는 constant 값을 포함하고 있습니다. 
-
-간단한 단위테스트를 위해서 아래와 같이 **adk_agent/adk/01-agent/** 디렉토리에 .env 파일을 생성하세요.
+Activate the virtual environment:
 
 ```
-(adk) /adk_agent/adk/01-agent$ ls -al
+source .venv/bin/activate
+(adk) adk_workshop/adk$
+```
+
+When finished testing, deactivate the environment:
+
+```
+deactivate
+```
+
+## 3. Quick ADK agent smoke test
+
+Verify the runtime environment by running a simple ADK agent example.
+
+1) Install the ADK package into your environment. As of July 2025 this example targets `google-adk` 1.8.0:
+
+```
+(adk) adk_workshop/adk/01-agent$ uv add "google-adk[vertexai]==1.8.0"
+```
+
+2) Create a `.env` file containing runtime configuration used by the examples. For quick testing, create the `.env` file inside `adk_workshop/adk/01-agent/`.
+
+Example directory listing after creating `.env`:
+
+```
+(adk) adk_workshop/adk/01-agent$ ls -al
 total 16
-drwxr-xr-x   7 forus  pgroup   224 Jun  2 08:26 .
-drwxr-xr-x  18 forus  pgroup   576 Jun  2 08:21 ..
--rw-r--r--   1 forus  pgroup   198 Jun  2 08:26 .env
--rw-r--r--   1 forus  pgroup  3178 Jun  2 08:20 README.md
-drwxr-xr-x   6 forus  pgroup   192 Jun  2 08:25 basic
-drwxr-xr-x   8 forus  pgroup   256 Jun  2 08:20 runtime
-drwxr-xr-x   7 forus  pgroup   224 Jun  2 08:26 search
-(adk) /adk_agent/adk/01-agent$
+-rw-r--r--   1 user  staff   198 Jun  2 08:26 .env
+-rw-r--r--   1 user  staff  3178 Jun  2 08:20 README.md
+drwxr-xr-x   6 user  staff   192 Jun  2 08:25 basic
+drwxr-xr-x   8 user  staff   256 Jun  2 08:20 runtime
+drwxr-xr-x   7 user  staff   224 Jun  2 08:26 search
 ```
 
----
+Refer to the ADK quickstart for variables required in `.env`:
+https://google.github.io/adk-docs/get-started/quickstart/#set-up-the-model
 
-`.env` 환경파일 내 들어갈 내용은 아래 URL을 참고하세요.   
-
-https://google.github.io/adk-docs/get-started/quickstart/#set-up-the-model 
-
-아래 환경설정은 기업에서 `Vertex AI`기반에서 ADK를 사용할때 적용되는 예제입니다.    
+Example enterprise (Vertex AI) `.env` variables:
 
 ```
-GOOGLE_GENAI_USE_VERTEXAI=TRUE                  # 기업용 Vertex AI 사용.
-GOOGLE_CLOUD_PROJECT="ai-hangsik"               # 각자 Project ID 를 참고해서 변경.
-GOOGLE_CLOUD_LOCATION="global"                  # Global Endpoint 사용.
-GOOGLE_GENAI_MODEL = "gemini-2.5-flash"         # 현재 Gemini 최신 버전.
+GOOGLE_GENAI_USE_VERTEXAI=TRUE
+GOOGLE_CLOUD_PROJECT="ai-hangsik"
+GOOGLE_CLOUD_LOCATION="global"
+GOOGLE_GENAI_MODEL="gemini-2.5-flash"
 ```
 
-참고로 `AI Studio`를 사용하는 일반 사용자 버전은 아래와 같이 GOOGLE_API_KEY 를 셋팅해야 합니다.  
+For AI Studio / API key usage:
 
 ```
 GOOGLE_GENAI_USE_VERTEXAI=FALSE
 GOOGLE_API_KEY=PASTE_YOUR_ACTUAL_API_KEY_HERE
 ```
 
-### 3. 단위테스트 실행:
-
-gcloud 명령어를 통해서 Google Cloud 실행 환경 로그인 설정합니다.
+3) Run the ADK example via the ADK CLI. Authenticate to Google Cloud if needed:
 
 ```
 gcloud auth application-default login
 ```
 
-실행은 아래와 같이 adk web 을 사용해서 처리합니다. 
+Start the example UI / runtime:
+
 ```
-(adk) /adk_agent/adk/01-agent$ adk web
+(adk) adk_workshop/adk/01-agent$ adk web
 ```
 
-채팅창에 "What is Generative AI ?"를 입력해보세요.
+Enter a test prompt such as "What is Generative AI?" into the chat interface. If the test runs correctly, you should see the ADK web interface similar to the screenshot in the repository.
 
-테스트가 정상적으로 동작하면 아래와 같은 화면을 볼 수 있습니다.  
-![adk_web](https://github.com/ForusOne/adk_agent/blob/main/images/adk_web.png?raw=true)
+## Additional notes
+- The examples assume a working Python environment with the required dependencies installed. If you encounter import errors, verify the virtual environment and installed packages.
+- The repository includes notebook examples for quick experimentation; they may not cover every feature.
+- Protect API keys and other secrets; do not commit `.env` files containing real credentials to version control.
+
+## License
+This project is licensed under the Apache License 2.0. All code and content copyright **ForusOne** (shins777@gmail.com).

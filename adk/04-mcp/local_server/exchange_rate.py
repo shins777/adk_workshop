@@ -154,6 +154,16 @@ async def run_server():
     # Use the MCP library's stdio_server context manager
     async with mcp.server.stdio.stdio_server() as (read_stream, write_stream):
         print("MCP Server starting handshake...")
+        # Start the MCP server run loop.
+        # This call performs the protocol handshake using the provided read/write streams,
+        # registers the server via the supplied InitializationOptions (name, version, capabilities),
+        # and then enters the main asynchronous message-processing loop.
+        # While running, the MCP server will receive incoming MCP messages (e.g., list_tools, call_tool),
+        # dispatch them to the registered handlers defined above, and write responses back over the
+        # write stream. The call completes when the client disconnects or the streams are closed.
+        #
+        # Note: `read_stream` and `write_stream` are connected to the subprocess stdio (from
+        # `mcp.server.stdio.stdio_server()`), so this is suitable for subprocess-based MCP transports.
         await mcp_svr_app.run(
             read_stream,
             write_stream,
