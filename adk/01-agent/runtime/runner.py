@@ -56,12 +56,13 @@ async def run_agent():
 
         events = runner.run_async(user_id=session.user_id,
                                 session_id=session.id,
-                                new_message=content,)
+                                new_message=content,
+                                )
 
         async for event in events:
             if event.is_final_response():
                 final_response = event.content.parts[0].text            
-                print(f"\n 🤖 AI Assistant: {final_response}\n")
+                print(f"\n 🤖 AI Assistant : {final_response}\n")
 
 if __name__ == "__main__":
     import asyncio

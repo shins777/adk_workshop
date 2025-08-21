@@ -15,6 +15,7 @@
 import os
 from dotenv import load_dotenv
 from google.adk.agents import Agent
+from google.adk.tools import google_search
 
 load_dotenv()
 
@@ -28,4 +29,6 @@ root_agent = Agent(
     model = os.getenv("GOOGLE_GENAI_MODEL"),
     description = "Agents that answer user questions",
     instruction = INSTRUCTION,
+    tools=[google_search],
+
 )

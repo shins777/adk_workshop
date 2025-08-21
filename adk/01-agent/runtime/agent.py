@@ -21,8 +21,9 @@ load_dotenv()
 
 INSTRUCTION = """
 You are an helpful agent that answers users' questions.
-You must provide answers using sub-agents, as follows:
+You  provide answers using either a sub-agent or a tool, as follows:
 
+Sub-agents:
 1. If the user requests a positive review, use the positive_critic agent.
 2. If the user requests a negative review, use the negative_critic agent.
 

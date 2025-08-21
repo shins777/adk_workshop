@@ -7,7 +7,7 @@ requires-python = ">=3.12"
 dependencies = [
     "agentops>=0.4.18",
     "anyio>=4.9.0",
-    "google-adk[vertexai]==1.11.0",
+    "google-adk[vertexai]==1.12.0",
     "google-cloud-aiplatform[adk,agent-engines]>=1.93.0",
     "google-genai>=1.15.0",
     "langchain>=0.3.25",
