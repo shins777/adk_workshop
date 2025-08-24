@@ -10,10 +10,10 @@ https://google.github.io/adk-docs/get-started/quickstart/#set-up-the-model
 Below is an example configuration for using ADK with Vertex AI in an enterprise environment:
 
 ```
-GOOGLE_GENAI_USE_VERTEXAI=TRUE                  # Use Vertex AI for enterprise.
-GOOGLE_CLOUD_PROJECT="ai-hangsik"               # Change to your own Project ID.
-GOOGLE_CLOUD_LOCATION="global"                  # Use Global Endpoint.
-GOOGLE_GENAI_MODEL = "gemini-2.5-flash"         # Latest Gemini version.
+GOOGLE_GENAI_USE_VERTEXAI = TRUE
+GOOGLE_CLOUD_PROJECT = "YOUR_PROJECT_ID"
+GOOGLE_CLOUD_LOCATION = "YOUR_PROJECT_LOCATION"
+GOOGLE_GENAI_MODEL = "gemini-2.5-flash"
 ```
 
 For general users using AI Studio, set the GOOGLE_API_KEY as follows:

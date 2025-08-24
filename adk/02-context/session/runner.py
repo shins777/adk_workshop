@@ -19,8 +19,6 @@ from google.adk.sessions import InMemorySessionService
 from google.adk.sessions import DatabaseSessionService
 from google.adk.sessions import VertexAiSessionService
 
-# from session import runner
-
 import asyncio
 from google.genai import types
 from google.adk.sessions import BaseSessionService
@@ -34,51 +32,60 @@ async def run_agent(
     session_service: BaseSessionService,
     app_name: str,
     user_id: str,
-    agent_engine_app_name: str = None
+    session_id: str = None,
 ):
     """
-    세션 인식 대화 루프에서 에이전트를 실행합니다.
-    이 함수는 사용자와 애플리케이션에 대한 기존 세션이 있는지 확인합니다. 세션이 있으면
-    가장 최근의 세션을 이어가고, 없으면 새 세션을 생성합니다. 이후 루프에 진입하여
-    사용자 입력을 받고, 입력을 에이전트에 전달하며, 에이전트의 응답을 출력합니다.
-    각 상호작용 후 세션 상태와 이벤트를 출력합니다.
+    Run the agent in a session-aware interactive loop.
 
-    인자:
-        session_service (BaseSessionService): 사용자 세션을 관리하는 세션 서비스
-        app_name (str): 애플리케이션 이름
-        user_id (str): 사용자 식별자
-        agent_engine_app_name (str, optional): 에이전트 엔진의 앱 이름(해당되는 경우)
+    This function checks whether an existing session for the user and application exists.
+    If a session exists, it continues the most recent session; otherwise it creates a new one.
+    Then it enters a loop that reads user input, forwards the input to the agent, and prints agent responses.
+    After each interaction it prints the session state and events.
 
-    반환값:
-        없음
+    Args:
+        session_service (BaseSessionService): The session service that manages user sessions.
+        app_name (str): The application name.
+        user_id (str): The identifier for the user.
+        session_id (str): The identifier for the session.
+
+    Returns:
+        None
     """
 
-    # 만약 agent_engine_app_name이 제공되면 해당 앱 이름을 사용합니다.
-    if agent_engine_app_name != None:
-        app_name = agent_engine_app_name
-
-    # 세션 서비스가 제공하는 앱 이름과 사용자 ID를 사용하여 기존 세션을 조회합니다.
+    # Query existing sessions from the session service for the given app_name and user_id.
     existing_sessions = await session_service.list_sessions(
         app_name=app_name,
         user_id=user_id,
     )
-
-    if existing_sessions and len(existing_sessions.sessions) > 0:
-        # 기존 세션이 있다면 가장 최근의 세션을 사용합니다.
-        session_id = existing_sessions.sessions[0].id
-        print(f"Using existing session: {session_id}")
+    
+    # Check if a session with the given session_id exists. If session_id is None, this will be None.
+    session_id = next((session_id for session in existing_sessions.sessions if session.id == session_id), None)
+    
+    if session_id is None:
+        # No existing session found, create a new session.
         
-    else:
-        # 만약 세션이 없다면 새 세션을 생성합니다.
-        new_session = await session_service.create_session(
-            app_name=app_name,
-            user_id=user_id,
-            state=None,
-        )
+        if isinstance(session_service, VertexAiSessionService): 
+            # If using VertexAiSessionService, do not pass session_id to create_session. ( google-adk==1.12.0 As of August 2025 )        
+            new_session = await session_service.create_session(
+                app_name=app_name,
+                user_id=user_id,
+                state=None)        
+            
+        else:
+            # For other session services, you can pass session_id to create_session to set a specific session id.
+            new_session = await session_service.create_session(
+                app_name=app_name,
+                user_id=user_id,
+                state=None,
+                session_id=session_id, )
+        
         session_id = new_session.id
         print(f"Created new session: {session_id}")
-    
-    # 에이전트 러너를 초기화합니다.
+
+    else:
+        print(f"Using existing session: {session_id}")
+
+    # Initialize the agent runner.
     runner = Runner(agent=agent.root_agent,
                     app_name=app_name,
                     session_service=session_service)
@@ -91,13 +98,12 @@ async def run_agent(
 
         content = types.Content(role='user', parts=[types.Part(text=query)])
 
-        # 에이전트 러너를 사용하여 비동기적으로 이벤트를 실행합니다.
-        # 이때 사용자 ID와 세션 ID를 전달하여 세션을 유지합니다. 한번의 대화에서는 기존의 세션 1개만 사용합니다.
-        # 만약 새로운 세션을 생성하고 싶다면, session_id를 None으로 설정
+        # Execute agent events asynchronously using the agent runner.
+        # Provide the user_id and session_id to maintain the session. Only one session is used per conversation.
+        # To force creation of a new session, pass session_id=None.
         events = runner.run_async(user_id=user_id,
                                 session_id=session_id,
-                                new_message=content,
-                                )
+                                new_message=content, )
 
         async for event in events:
             await asyncio.create_task(print_session(app_name = app_name,
@@ -115,27 +121,26 @@ async def print_session(app_name: str,
                         session_id: str,
                         session_service: BaseSessionService):
     """
-    세션의 속성을 조회하고 출력합니다.
+    Retrieve and print session properties.
 
-    이 함수는 주어진 애플리케이션 이름, 사용자 ID, 세션 ID를 사용하여
-    세션 서비스에서 세션 객체를 가져옵니다. 이후 세션의 주요 속성(세션 ID, 앱 이름, 사용자 ID, 상태, 이벤트, 마지막 업데이트 시간)을 출력합니다.
+    This function gets the session object from the session service using the provided
+    application name, user id, and session id. It then prints key session attributes
+    (id, app_name, user_id, state, events, last update time).
 
-    인자:
-        app_name (str): 애플리케이션 이름
-        user_id (str): 사용자 ID
-        session_id (str): 세션 ID
-        session_service (BaseSessionService): 세션 서비스 인스턴스
+    Args:
+        app_name (str): The application name.
+        user_id (str): The user id.
+        session_id (str): The session id.
+        session_service (BaseSessionService): The session service instance.
 
-    반환값:
-        없음
+    Returns:
+        None
     """
 
-    # 세션 서비스에서 세션을 조회합니다.
-    # 이때 app_name, user_id, session_id를 사용하여 특정 세션을 가져옵니다.
+    # Fetch the session from the session service using app_name, user_id, and session_id.
     session  = await session_service.get_session(app_name=app_name,
                                 user_id=user_id,
                                 session_id=session_id,)
-    
 
     print(f"--- Examining Session Properties ---")
     print(f"ID (`id`):                {session.id}")
@@ -148,37 +153,40 @@ async def print_session(app_name: str,
 
 #--------------------------------[Main entry point function ]----------------------------------
 
-
 if __name__ == "__main__":
     import asyncio
     import argparse
 
-    """이 스크립트는 ADK 에이전트를 실행하는 메인 엔트리 포인트입니다.
-    사용자가 제공한 세션 유형에 따라 적절한 세션 서비스를 선택하고, 에이전트를 실행합니다.
+    """This script is the main entry point to run an ADK agent.
+    It selects the appropriate session service based on the provided session type
+    and launches the interactive agent loop.
 
     Args:
-        --type (str): 세션 유형을 지정합니다. 'in_memory', 'database', 'agent_engine' 중 하나를 선택할 수 있습니다.
-        --app_name (str): 에이전트의 애플리케이션 이름입니다.
-        --user_id (str): 에이전트와 상호작용하는 사용자의 ID입니다.
+        --type (str): Session type. Choose 'in_memory', 'database', or 'agent_engine'.
+        --app_name (str): The application name used by the agent.
+        --user_id (str): The user identifier interacting with the agent.
+        --session_id (str): The session identifier interacting with the agent.
 
     Raises:
-        ValueError: _description_
+        ValueError: If an invalid session type is provided.
     """
 
     load_dotenv()
 
     print("Running the agent...")
-    print("Usage : uv run -m session.main --type [in_memory|database|agent_engine] --app_name <app_name> --user_id <user_id>")
+    print("Usage : uv run -m session.runner --type [in_memory|database|agent_engine] --app_name <app_name> --user_id <user_id> --session_id <session_id>")
 
     parser = argparse.ArgumentParser(description="Run the ADK agent with a user query.")
     parser.add_argument("--type",type=str,help="The type of session",)
     parser.add_argument("--app_name",type=str,help="The application name of this agent.",)
     parser.add_argument("--user_id",type=str,help="The user name interacting with this agent",)
+    parser.add_argument("--session_id",type=str,help="The session id interacting with this agent",)
+
     args = parser.parse_args()
 
     session_service = None
-    agent_engine_app_name = None
-    
+    agent_engine_resource_name = None
+
     if args.type == "in_memory":
         session_service = InMemorySessionService()
     
@@ -188,17 +196,16 @@ if __name__ == "__main__":
     
     elif args.type == "agent_engine":
         PROJECT_ID = os.environ['GOOGLE_CLOUD_PROJECT']
-        AGENT_LOCATION = os.environ['AGENT_ENGINE_LOCATION']
+        AGENT_LOCATION = os.environ['GOOGLE_CLOUD_LOCATION']
         AGENT_ENGINE_ID = os.environ['AGENT_ENGINE_ID']
-        
-        agent_engine_app_name = f"projects/{PROJECT_ID}/locations/{AGENT_LOCATION}/reasoningEngines/{AGENT_ENGINE_ID}"
-        session_service = VertexAiSessionService(project=PROJECT_ID, location=AGENT_LOCATION)    
-    
+
+        session_service = VertexAiSessionService(project=PROJECT_ID, 
+                                                 location=AGENT_LOCATION,
+                                                 agent_engine_id = AGENT_ENGINE_ID)
     else:
         raise ValueError("Invalid session type. Choose 'in_memory' or 'database' or 'agent_engine'.")
 
     asyncio.run(run_agent(session_service = session_service, 
                                  app_name = args.app_name, 
                                  user_id = args.user_id, 
-                                 agent_engine_app_name = agent_engine_app_name))
-    
+                                 session_id = args.session_id ) )
