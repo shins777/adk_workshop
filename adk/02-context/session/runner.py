@@ -157,7 +157,7 @@ if __name__ == "__main__":
     사용자가 제공한 세션 유형에 따라 적절한 세션 서비스를 선택하고, 에이전트를 실행합니다.
 
     Args:
-        --type (str): 세션 유형을 지정합니다. 'in_memory', 'database', 'vertexai' 중 하나를 선택할 수 있습니다.
+        --type (str): 세션 유형을 지정합니다. 'in_memory', 'database', 'agent_engine' 중 하나를 선택할 수 있습니다.
         --app_name (str): 에이전트의 애플리케이션 이름입니다.
         --user_id (str): 에이전트와 상호작용하는 사용자의 ID입니다.
 
@@ -168,7 +168,7 @@ if __name__ == "__main__":
     load_dotenv()
 
     print("Running the agent...")
-    print("Usage : uv run -m session.main --type [in_memory|database|vertexai] --app_name <app_name> --user_id <user_id>")
+    print("Usage : uv run -m session.main --type [in_memory|database|agent_engine] --app_name <app_name> --user_id <user_id>")
 
     parser = argparse.ArgumentParser(description="Run the ADK agent with a user query.")
     parser.add_argument("--type",type=str,help="The type of session",)
@@ -186,7 +186,7 @@ if __name__ == "__main__":
         db_url = "sqlite:///./adk_session.db"
         session_service = DatabaseSessionService(db_url=db_url)
     
-    elif args.type == "vertexai":
+    elif args.type == "agent_engine":
         PROJECT_ID = os.environ['GOOGLE_CLOUD_PROJECT']
         AGENT_LOCATION = os.environ['AGENT_ENGINE_LOCATION']
         AGENT_ENGINE_ID = os.environ['AGENT_ENGINE_ID']
@@ -195,7 +195,7 @@ if __name__ == "__main__":
         session_service = VertexAiSessionService(project=PROJECT_ID, location=AGENT_LOCATION)    
     
     else:
-        raise ValueError("Invalid session type. Choose 'in_memory' or 'database' or 'vertexai'.")
+        raise ValueError("Invalid session type. Choose 'in_memory' or 'database' or 'agent_engine'.")
 
     asyncio.run(run_agent(session_service = session_service, 
                                  app_name = args.app_name, 
