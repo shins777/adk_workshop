@@ -11,6 +11,7 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
+
 import os
 import asyncio
 import argparse
@@ -33,12 +34,10 @@ from memory_bank import agent
 
 #--------------------------------[run_search_agent]----------------------------------
 
-async def run_search_agent(
-                            session_service: BaseSessionService,
+async def run_search_agent( session_service: BaseSessionService,
                             memory_service: BaseMemoryService,
                             app_name: str,
-                            user_id: str,
-):
+                            user_id: str,):
 
     search_runner = Runner(
         agent=agent.search_agent,
@@ -47,40 +46,36 @@ async def run_search_agent(
         memory_service=memory_service,
     )
 
-
-    session_id = "search_session_id"
-
-    search_session = await search_runner.session_service.create_session(
+    session = await search_runner.session_service.create_session(
         app_name=app_name,
-        user_id=user_id,
-        session_id=session_id,
-    )
+        user_id=user_id,)
 
     while True:
 
-        query = input("\n 👤 User: ")
+        user_input = input("\n 👤 User: ")
         
-        if query.lower() == "exit": break
+        if user_input.lower().strip() in ["exit", "quit", "bye"]:
+                    break
         
-        content_search = types.Content(role='user', parts=[types.Part(text=query)])
+        content = types.Content(role='user', parts=[types.Part(text=user_input)])
 
-        async for event in search_runner.run_async(user_id=user_id, 
-                                session_id=session_id, 
-                                new_message=content_search):
+        async for event in search_runner.run_async(user_id = session.user_id, 
+                                session_id = session.id, 
+                                new_message = content):
             
             if event.is_final_response():
                 final_response_text = event.content.parts[0].text
-                print(f"Agent 1 Final Response: {final_response_text}")
+                print(f"\n 🤖 AI Assistant: {final_response_text}")
 
 
     completed_session = await search_runner.session_service.get_session(app_name=app_name, 
-                                                    user_id=user_id, 
-                                                    session_id=session_id)
+                                                    user_id=session.user_id, 
+                                                    session_id=session.id)
 
-    print("\n--- Adding search session to Memory ---")
+    print("\n-- Adding search session to Memory ---")
     await memory_service.add_session_to_memory(completed_session)
     
-    print("Session added to memory.")
+    print("\t Session added to memory.")
 
 
 #--------------------------------[__name__]----------------------------------
@@ -89,29 +84,23 @@ if __name__ == "__main__":
 
     load_dotenv()
 
-    print("에이전트를 실행합니다...")
-    print("사용법 : uv run -m memory_bank.runner")
+    print("Running the agent...")
+    print("Usage: uv run -m memory_bank.runner_store --app_name <app_name> --user_id <user_id>")
 
-    parser = argparse.ArgumentParser(description="사용자 질의와 함께 ADK 에이전트를 실행합니다.")
+    parser = argparse.ArgumentParser(description="Run the ADK agent with a user query.")
+    parser.add_argument("--app_name",type=str,help="The application name for this agent.",)
+    parser.add_argument("--user_id",type=str,help="The user interacting with this agent.",)    
     args = parser.parse_args()
     
     session_service = InMemorySessionService()
 
-    PROJECT_ID = os.environ['GOOGLE_CLOUD_PROJECT']
-    LOCATION = os.environ['GOOGLE_CLOUD_LOCATION']
-    MEMORY_BANK_ID = os.environ['MEMORY_BANK_ID']
-
     memory_service = VertexAiMemoryBankService(
-        project  =PROJECT_ID,
-        location = LOCATION,
-        agent_engine_id = MEMORY_BANK_ID
+        project  = os.environ['GOOGLE_CLOUD_PROJECT'],
+        location = os.environ['GOOGLE_CLOUD_LOCATION'],
+        agent_engine_id = os.environ['MEMORY_BANK_ID']
     )
-
-    app_name = "AI_assistant"
-    user_id = "Forusone"
 
     asyncio.run(run_search_agent(session_service = session_service, 
                                  memory_service = memory_service,
-                                 app_name = app_name, 
-                                 user_id = user_id, 
-                                 ))
+                                 app_name = args.app_name, 
+                                 user_id = args.user_id, ))

@@ -1,4 +1,4 @@
-# ADK Session Conversation Agent - Session, Event, State
+# ADK Conversation Agent - Session
 
 This folder demonstrates how to build and operate a session-aware conversational AI agent using the Agent Development Kit (ADK). The example shows how to maintain session state across multiple user interactions while answering questions using Google Search.
 
@@ -36,13 +36,13 @@ GOOGLE_API_KEY = PASTE_YOUR_ACTUAL_API_KEY_HERE
 Authenticate your environment with Google Cloud:
 
 ```
-gcloud auth application-default login
+adk_workshop/adk/02-context$gcloud auth application-default login
 ```
 
 Run the session agent with one of the supported session backends:
 
 ```
-uv run -m session.runner --type <session_type> --app_name <app_name> --user_id <user_id> --session_id <session_id>
+adk_workshop/adk/02-context$ uv run -m session.runner --type <session_type> --app_name <app_name> --user_id <user_id> --session_id <session_id>
 ```
 
 Available session types: `in_memory`, `database`, `agent_engine`
@@ -56,7 +56,7 @@ This mode stores sessions only in memory. All session data is lost when the proc
 Example:
 
 ```
-uv run -m session.runner --type in_memory --app_name ai_assist --user_id forus --session_id forus_sess_001
+adk_workshop/adk/02-context$ uv run -m session.runner --type in_memory --app_name ai_assist --user_id forus --session_id forus_sess_001
 ```
 
 ### 2) database session type
@@ -66,7 +66,7 @@ This mode persists sessions to a relational database (example uses SQLite). Sess
 Example:
 
 ```
-uv run -m session.runner --type database --app_name ai_assist --user_id forus --session_id forus_sess_001
+adk_workshop/adk/02-context$ uv run -m session.runner --type database --app_name ai_assist --user_id forus --session_id forus_sess_001
 ```
 
 If using SQLite, a file (e.g., `adk_database.db`) will be created. You can inspect it with a SQLite viewer or VS Code extension.
@@ -82,7 +82,7 @@ AGENT_ENGINE_ID = "1769934533233804800"
 Example run command:
 
 ```
-uv run -m session.runner --type agent_engine --app_name ai_assist --user_id forus --session_id forus_sess_001
+adk_workshop/adk/02-context$ uv run -m session.runner --type agent_engine --app_name ai_assist --user_id forus --session_id forus_sess_001
 ```
 
 Notes when using VertexAiSessionService (as of Aug 2025, google-adk==1.12.0):

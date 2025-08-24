@@ -26,77 +26,61 @@ from google.adk.runners import Runner
 
 from memory_bank import agent
 
-
 #--------------------------------[run_recall_agent]----------------------------------
-
-async def run_recall_agent(
-                            session_service: BaseSessionService,
+async def run_recall_agent( session_service: BaseSessionService,
                             memory_service: BaseMemoryService,
                             app_name: str,
-                            user_id: str,
-
-):
+                            user_id: str,):
 
     recall_runner = Runner(
         agent=agent.recall_agent,
         app_name=app_name,
         session_service=session_service,
-        memory_service=memory_service,
-    )
+        memory_service=memory_service,)
 
-
-    session_id = "recall_session_id"
-
-    recall_session = await recall_runner.session_service.create_session(app_name=app_name, 
-                                                    user_id=user_id, 
-                                                    session_id=session_id)
+    session = await recall_runner.session_service.create_session(
+                app_name=app_name, 
+                user_id=user_id,)
 
     while True:
 
-        recall_instruction = input("\n 👤 User: ")
-        if recall_instruction.strip().lower() in ["exit", "quit"]:
+        user_input = input("\n 👤 User: ")
+        if user_input.strip().lower() in ["exit", "quit"]:
             break
         
-        content_recall = types.Content(role='user', parts=[types.Part(text=recall_instruction)])
+        content = types.Content(role='user', parts=[types.Part(text=user_input)])
 
-        async for event in recall_runner.run_async(user_id=user_id, 
-                                    session_id=session_id, 
-                                    new_message=content_recall):
+        async for event in recall_runner.run_async(user_id=session.user_id, 
+                                    session_id=session.id, 
+                                    new_message=content):
 
             if event.is_final_response():
-                final_response_text_2 = event.content.parts[0].text
-                print(f"\n 🤖 AI Assistant: {final_response_text_2}")
-                break
-
+                final_response_text = event.content.parts[0].text
+                print(f"\n 🤖 AI Assistant: {final_response_text}")
+                
 #--------------------------------[__name__]----------------------------------
 
 if __name__ == "__main__":
 
     load_dotenv()
 
-    print("에이전트를 실행합니다...")
-    print("사용법 : uv run -m memory_bank.runner")
+    print("Running the agent...")
+    print("Usage: uv run -m memory_bank.runner_recall --app_name <app_name> --user_id <user_id>")
 
-    parser = argparse.ArgumentParser(description="사용자 질의와 함께 ADK 에이전트를 실행합니다.")
+    parser = argparse.ArgumentParser(description="Run the ADK agent with a user query.")
+    parser.add_argument("--app_name",type=str,help="The application name for this agent.",)
+    parser.add_argument("--user_id",type=str,help="The user interacting with this agent.",)    
     args = parser.parse_args()
     
     session_service = InMemorySessionService()
-
-    PROJECT_ID = os.environ['GOOGLE_CLOUD_PROJECT']
-    LOCATION = os.environ['GOOGLE_CLOUD_LOCATION']
-    MEMORY_BANK_ID = os.environ['MEMORY_BANK_ID']
-
-    memory_service = VertexAiMemoryBankService(
-        project  =PROJECT_ID,
-        location = LOCATION,
-        agent_engine_id = MEMORY_BANK_ID
-    )
     
-    app_name = "AI_assistant"
-    user_id = "Forusone"
+    memory_service = VertexAiMemoryBankService(
+        project  = os.environ['GOOGLE_CLOUD_PROJECT'],
+        location = os.environ['GOOGLE_CLOUD_LOCATION'],
+        agent_engine_id = os.environ['MEMORY_BANK_ID']
+    )
 
     asyncio.run(run_recall_agent(session_service = session_service, 
                                  memory_service = memory_service,
-                                 app_name = app_name, 
-                                 user_id = user_id, 
-                                 ))
+                                 app_name = args.app_name, 
+                                 user_id = args.user_id, ))
