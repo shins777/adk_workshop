@@ -19,4 +19,10 @@ This directory consolidates examples related to conversational features of the A
 ### state (state-based examples)  
   - Description: Examples implementing state transitions and state-based control logic within a session (managing complex conversation flows).
 
+## How to run
+
+Check the README and source files inside each workflow subfolder for details about that example and how to run the specific agent or server.
+
+## License
+This project is licensed under the Apache License 2.0. All code and content copyright **ForusOne** (shins777@gmail.com).
 

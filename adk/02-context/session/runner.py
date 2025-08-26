@@ -147,7 +147,7 @@ async def print_session(app_name: str,
     print(f"Application Name (`app_name`): {session.app_name}")
     print(f"User ID (`user_id`):         {session.user_id}")
     print(f"State (`state`):           {session.state}") # Note: Only shows initial state here
-    print(f"Events (`events`):         {session.events}") # Initially empty
+    # print(f"Events (`events`):         {session.events}") # Initially empty
     print(f"Last Update (`last_update_time`): {session.last_update_time:.2f}")
     print(f"---------------------------------")
 
