@@ -59,9 +59,9 @@ async def run_agent(
     )
     
     # Check if a session with the given session_id exists. If session_id is None, this will be None.
-    session_id = next((session_id for session in existing_sessions.sessions if session.id == session_id), None)
+    existing_session_id = next((session_id for session in existing_sessions.sessions if session.id == session_id), None)
     
-    if session_id is None:
+    if existing_session_id is None:
         # No existing session found, create a new session.
         
         if isinstance(session_service, VertexAiSessionService): 
@@ -79,11 +79,13 @@ async def run_agent(
                 state=None,
                 session_id=session_id, )
         
-        session_id = new_session.id
-        print(f"Created new session: {session_id}")
+        new_session_id = new_session.id
+        print(f"Created new session: {new_session_id}")
 
     else:
-        print(f"Using existing session: {session_id}")
+        print(f"Using existing session: {existing_session_id}")
+
+    session_id = existing_session_id or new_session_id
 
     # Initialize the agent runner.
     runner = Runner(agent=agent.root_agent,
