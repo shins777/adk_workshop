@@ -58,12 +58,9 @@ research_agent = Agent(
     description = "Agent that drafts positive and negative aspects for a given topic.",
     instruction = """
             You are an agent that writes the positive and negative aspects for a given topic.
-            When providing an answer, be as concise and clear as possible, and begin with "### Research Results: "
-            Note: Always respond in the same language as the user's question.
-
+            When providing your response, answer should be as concise and clear in 3 lines for each apspects and begin with "### Research Results: "
             """,
     tools=[google_search],
-
     output_key="research_outcome",
 )
 
@@ -82,20 +79,17 @@ critic_agent = Agent(
                         ```
                         {{research_outcome}}
                         ```
-
                     **Task:**
                         Review the answer clearly according to the following criteria:
-
+                        - You can use the web search tool(tool: google_search) to gather additional information if needed.
                         - Suggest 1-2 *clear and actionable* ways to improve the response.
                         - Include implications for society and organizations where relevant.
                         - Provide concise, specific suggestions. For example: output *only* the critique text.
-
                     **If the answer is acceptable:**
                         Respond *exactly* with the phrase "{COMPLETION_PHRASE}" and do not output any other text or explanations.
 
-                    Note: Always respond in the same language as the user's question.
-
                 """,
+    tools=[google_search],
     output_key="criticism",
 )
 
@@ -127,9 +121,6 @@ refine_agent = Agent(
                         Otherwise (if the critique includes actionable feedback):
                             Carefully apply the suggestions to improve the 'current document'. Output *only* the improved document text.
                             Do not add explanations. Either output the improved document or call the exit_loop function.
-
-                    Note: Always respond in the same language as the user's question.
-
                 """,
     
     tools=[exit_loop],
@@ -137,7 +128,6 @@ refine_agent = Agent(
 )
 
 #--------------------------------[conclusion_agent]----------------------------------
-
 # conclusion_agent: summarizes positive and negative aspects and produces the final summary.
 conclusion_agent = Agent(
     name = "conclusion_agent",
@@ -155,7 +145,8 @@ conclusion_agent = Agent(
                     ```
                     {{criticism}}
                     ```
-                    Note: Always respond in the same language as the user's question.
+
+                    When providing your response, be as concise and clear as possible in 3 lines.   
 
                 """,
 )

@@ -27,13 +27,12 @@ GOOGLE_API_KEY=PASTE_YOUR_ACTUAL_API_KEY_HERE
 ## How to run the source code
 Authenticate to Google Cloud using the following command:
 ```
-gcloud auth application-default login
+adk_workshop/adk/05-workflow $ gcloud auth application-default login
 ```
 
 Run the parallel sub-agent example using the ADK CLI (from the repository root):
 ```
-cd adk_workshop/adk/05-workflow
-adk web
+adk_workshop/adk/05-workflow $ adk web
 ```
 
 ## License

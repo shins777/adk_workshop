@@ -28,5 +28,5 @@ load_dotenv()
 root_agent = SequentialAgent(
     name="pipeline_agent",
     sub_agents=[positive_critic, negative_critic, review_critic],
-    description="positive_critic, negative_critic, review_critic을 순차적으로 실행하는 에이전트입니다.",
+    description="This is an agent that sequentially executes agents(positive_critic, negative_critic, review_critic)",
 )

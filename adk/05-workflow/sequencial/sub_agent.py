@@ -26,7 +26,8 @@ positive_critic = Agent(
     model = os.getenv("GOOGLE_GENAI_MODEL"),
     description = "An agent that answers only the positive aspects of a user's questions.",
     instruction = """You are an agent who writes positive reviews on the topic of a user's inquiry. 
-                      When providing your response, be as concise and clear as possible, and always begin with the phrase "Positive review results:" """,
+                     When providing your response, be as concise and clear as possible in 3 lines.
+                      and always begin with the phrase "Positive review results:" """,
     tools=[google_search],
     output_key="positive_critic_output",                      
 )    
@@ -37,7 +38,8 @@ negative_critic = Agent(
     model = os.getenv("GOOGLE_GENAI_MODEL"),
     description = "An agent who answers only the negative aspects of user questions.",
     instruction = """You are an agent writing a negative review on the topic of a user's question.
-                      When providing your response, be as concise and clear as possible, and always begin with the phrase "Negative review results:" """,
+                     When providing your response, be as concise and clear as possible in 3 lines.
+                      and always begin with the phrase "Negative review results:" """,
     tools=[google_search],
     output_key="negative_critic_output",                       
 )    
@@ -54,7 +56,8 @@ review_critic = Agent(
             * Positive aspects: ```{{positive_critic_output}}```
             * Negative aspects: ```{{negative_critic_output}}```
 
-            When responding, always state \"### Final Summary:\".
+            When responding, always state ### Final Summary:.
+            When providing your response, be as concise and clear as possible in 3 lines.
    
         """,
 )  

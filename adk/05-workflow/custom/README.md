@@ -31,16 +31,15 @@ GOOGLE_GENAI_USE_VERTEXAI=FALSE
 GOOGLE_API_KEY=PASTE_YOUR_ACTUAL_API_KEY_HERE
 ```
 
-## How to run the example
-Authenticate to Google Cloud using the following command (if applicable):
+## How to run the source code
+Authenticate to Google Cloud using the following command:
 ```
-gcloud auth application-default login
+adk_workshop/adk/05-workflow $ gcloud auth application-default login
 ```
 
-Run the critic-agent example using the ADK CLI from the repository root:
+Run the parallel sub-agent example using the ADK CLI (from the repository root):
 ```
-cd adk_workshop/adk/05-workflow
-adk web
+adk_workshop/adk/05-workflow $ adk web
 ```
 
 Check the module-level README files and source code to explore how each sub-agent works and to adapt the workflow for your use case.
