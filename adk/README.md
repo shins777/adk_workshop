@@ -39,6 +39,8 @@ Create the virtual environment:
 ```
 cd adk_workshop/adk
 uv venv --python 3.12
+
+uv init
 ```
 
 Activate the virtual environment:
