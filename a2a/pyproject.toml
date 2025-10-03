@@ -5,12 +5,12 @@ description = "Add your description here"
 readme = "README.md"
 requires-python = ">=3.13"
 dependencies = [
-    "a2a-sdk>=0.2.5",
+    "a2a-sdk==0.3.7",
     "click>=8.2.1",
     "dotenv>=0.9.9",
-    "google-adk[vertexai]==1.4.2",
+    "google-adk[a2a,vertexai]==1.15.1",
     "google-cloud-aiplatform[adk,agent-engines]>=1.95.1",
     "google-genai>=1.18.0",
     "httpx>=0.28.1",
-    "python-a2a>=0.5.6",
+    "python-a2a==0.5.10",
 ]

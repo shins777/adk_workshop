@@ -1,0 +1,17 @@
+{
+  "capabilities": {},
+  "defaultInputModes": ["text/plain"],
+  "defaultOutputModes": ["application/json"],
+  "description": "An agent specialized in checking stock prices via an external API. It can efficiently determine the current stock price of a given company symbol.",
+  "name": "agent_stock_price",
+  "skills": [
+    {
+      "id": "stock_price_checking",
+      "name": "Stock price Checking",
+      "description": "Check stock prices via an external API. It can efficiently determine the current stock price of a given company symbol.",
+      "tags": ["Stock price", "company symbol"]
+    }
+  ],
+  "url": "http://localhost:8002/a2a/agent_stock_price",
+  "version": "1.0.0"
+}

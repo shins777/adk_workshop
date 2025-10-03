@@ -1,0 +1,17 @@
+{
+  "capabilities": {},
+  "defaultInputModes": ["text/plain"],
+  "defaultOutputModes": ["application/json"],
+  "description": "An agent specialized in checking exchange rate via an external API. It can efficiently determine the exchange rate between two currencies.",
+  "name": "agent_exchange_rate",
+  "skills": [
+    {
+      "id": "exchange_rate_checking",
+      "name": "Exchange Rate Checking",
+      "description": "Check exchange rate via an external API. It can efficiently determine the exchange rate between two currencies.",
+      "tags": ["exchange rate", "convert"]
+    }
+  ],
+  "url": "http://localhost:8001/a2a/agent_exchange_rate",
+  "version": "1.0.0"
+}
