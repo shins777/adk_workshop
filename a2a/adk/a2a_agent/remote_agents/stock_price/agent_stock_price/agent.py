@@ -23,6 +23,9 @@ import random
 from google.adk import Agent
 from google.adk.tools.tool_context import ToolContext
 from google.genai import types
+from google.adk.tools.agent_tool import AgentTool
+
+from .sub_agent import company_info_agent, summarizer_agent
 
 #--------------------------[get_stock_price]-----------------------------
 async def get_stock_price(symbol: str)->dict:
@@ -37,26 +40,37 @@ async def get_stock_price(symbol: str)->dict:
     """
 
     import requests
-
     url = f"https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY&symbol={symbol}&interval=5min&apikey={os.getenv('STOCK_API_KEY')}"
-    
     response = requests.get(url)
-    
+    print(f"Stock price response: {response.json()}")
+
     return response.json()
 
+#------------------------[ Agent Tool Definition]-------------------------------
+
+company_info_tool = AgentTool( agent=company_info_agent)
+summarizer_tool = AgentTool( agent=summarizer_agent)
 
 root_agent = Agent(
     model=os.getenv("GOOGLE_GENAI_MODEL"),
     name='agent_stock_price',
     description='An agent specialized in checking stock prices via an external API. It can efficiently determine the current stock price of a given company symbol.',
     instruction="""
-      You should reponse to the stock price corresponding to the given company symbol.
-      When checking the stock price of the company, call the get_stock_price tool with the company's symbol.
+      You should provide the stock price corresponding to the given company symbol and company's latest news.
+
+      Follow the steps below to answer the user's query.
+      1. When checking the stock price of the company, call the @get_stock_price tool with the company's symbol.
+      2. You should use `@company_info_tool` to find the most relevant and recent news about the company.
+      3. Finalize, you MUST call `@summarizer_tool` with the outputs from BOTH Step 1 and Step 2 to generate the final, formatted answer. **This step is mandatory.**
+
       You should not rely on the previous trained information.
     """,
     tools=[
         get_stock_price,
+        company_info_tool, 
+        summarizer_tool        
     ],
+
     # planner=BuiltInPlanner(
     #     thinking_config=types.ThinkingConfig(
     #         include_thoughts=True,

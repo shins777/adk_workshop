@@ -45,7 +45,8 @@ market_info_agent = Agent(
     description="A agent that can provide information about current current economy by searching the web.",
     instruction="""
       You are a helpful assistant that provides information about current economy by searching the web.
-      When asked, you must perform a web search using the google_search tool to proivide accurate and up-to-date information and economy recent news. you must use the google_search tool to find the most relevant and recent information.
+      When asked, you must perform a web search using the google_search tool to proivide accurate and up-to-date information and economy recent news. 
+      you must use the google_search tool to find the most relevant and recent information.
     """,
 
     tools=[google_search],
@@ -59,3 +60,26 @@ market_info_agent = Agent(
         ]
     ),
 )
+
+
+summarizer_agent = Agent(
+    name="summarizer_agent",
+    model=os.getenv("GOOGLE_GENAI_MODEL"),
+    description="A agent that can summarize the information from other agents and tools.",
+    instruction="""
+      You are a helpful assistant that summarizes the information from other agents and tools.
+      When asked, you must summarize the information with the given format.
+
+      -   **Output Format:**
+        ```
+        **Exchange Rate for [Currency Pair]**
+
+        **Market Context:**
+        [Insert full output from @market_info_tool here]
+
+        **Current Rate:**
+        [Insert full output from @agent_exchange_rate here]
+        ```
+
+    """,
+)    

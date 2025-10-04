@@ -15,7 +15,6 @@
 
 from google.adk import Agent
 from google.genai import types
-import requests
 import os
 
 #--------------------------[get_exchange_rate]-----------------------------
@@ -37,11 +36,15 @@ async def get_exchange_rate(
         dict: Dictionary containing exchange rate information.
             Example: {"amount": 1.0, "base": "USD", "date": "2023-11-24", "rates": {"EUR": 0.95534}}
     """
+    
+    import requests
 
     response = requests.get(
         f"https://api.frankfurter.app/{currency_date}",
         params={"from": currency_from, "to": currency_to},
     )
+    print(f"Exchange rate response: {response.json()}")
+    
     return response.json()
 
 
@@ -50,7 +53,7 @@ root_agent = Agent(
     name='agent_exchange_rate',
     description='An agent specialized in checking exchange rate via an external API. It can efficiently determine the exchange rate between two currencies.',
     instruction="""
-      You should reponse to the exchange rate between two currencies.
+      You MUST return the value of exchange rate between two currencies to the root agent and return the control as well, do not answer directly.
       When checking the exchange rate, call the get_exchange_rate tool with two currencies.
       You should not rely on the previous trained information.
     """,

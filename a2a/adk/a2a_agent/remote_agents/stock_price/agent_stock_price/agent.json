@@ -12,6 +12,6 @@
       "tags": ["Stock price", "company symbol"]
     }
   ],
-  "url": "http://localhost:8002/a2a/agent_stock_price",
+  "url": "http://localhost:8001/a2a/agent_stock_price",
   "version": "1.0.0"
 }
