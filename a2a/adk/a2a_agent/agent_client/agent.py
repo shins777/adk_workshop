@@ -16,6 +16,7 @@ from google.adk.agents.llm_agent import Agent
 from google.adk.agents.remote_a2a_agent import AGENT_CARD_WELL_KNOWN_PATH
 from google.adk.agents.remote_a2a_agent import RemoteA2aAgent
 from google.genai import types
+from google.adk.planners import BuiltInPlanner
 
 import os
 
@@ -69,6 +70,11 @@ root_agent = Agent(
 
     sub_agents=[agent_stock_price],
 
+    planner=BuiltInPlanner(
+        thinking_config=types.ThinkingConfig(
+            include_thoughts=True,
+        ),
+    ),
     generate_content_config=types.GenerateContentConfig(
         safety_settings=[
             types.SafetySetting(  

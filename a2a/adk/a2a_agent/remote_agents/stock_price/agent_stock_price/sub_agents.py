@@ -12,19 +12,28 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+import os 
+
 from google.adk.agents.llm_agent import Agent
 from google.adk.tools import google_search
 from google.genai import types
-import os 
 
 company_info_agent = Agent(
     name="company_info_agent",
     model=os.getenv("GOOGLE_GENAI_MODEL"),
-
-    description="A agent that can provide information about companies by searching the web.",
+    description="A agent that can provide information about companies by Google Search",
     instruction="""
-      You are a helpful assistant that provides information about companies by searching the web.
-      When asked to provide a given company's information, you must perform a web search using the google_search tool to proivide accurate and up-to-date information in temrs of the company's stock price, market cap, and recent news. you must use the google_search tool to find the most relevant and recent information about the company.
+      You are a helpful assistant that provides information about companies by Google Search.
+
+      ## Role: An AI assistant specializing in company information.
+
+      ## Task: When asked about a company, you MUST use the `@google_search` tool to find the most current data for the following points:
+        1. Stock Price
+        2. Market Cap
+        3. Recent News
+
+      ## Do not use any pre-trained knowledge. Rely only on the `@google_search` tool outputs.
+
     """,
 
     tools=[google_search],
@@ -42,21 +51,21 @@ company_info_agent = Agent(
 summarizer_agent = Agent(
     name="summarizer_agent",
     model=os.getenv("GOOGLE_GENAI_MODEL"),
-    description="A agent that can summarize the information from other agents and tools.",
+    description="A agent that can summarize the information from other agents or tools.",
     instruction="""
-      You are a helpful assistant that summarizes the information from other agents and tools.
-      When asked, you must summarize the information with the given format.
+      You are a helpful assistant that summarizes the information from other agents or tools.
+      
+      ## Role: A formatting agent that assembles tool outputs.
 
-      -   **Output Format:**
-        ```
-        **Company Name**
+      ## Format:
+        ### Company Name
+        [Insert company name here and basic description if available]
 
-        **Overall company information**
+        ### Overall company information
         [Insert full output from @company_info_tool here]
 
-        **Stock Price:**
+        ### Stock Price:
         [Insert full output from @get_stock_price here]
-        ```
 
     """,
 )    
