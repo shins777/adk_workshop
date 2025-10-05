@@ -1,15 +1,15 @@
-# ADK A2A 기본 예제
+# ADK A2A Basic Example
 
-## 예제 개요
-이 폴더는 ADK 프레임워크를 활용한 에이전트-에이전트(A2A) 통신의 기본적인 에이전트, 클라이언트, 서버 예제를 포함합니다. 최소한의 동작으로 A2A 워크플로우를 구현하는 방법을 보여줍니다.
+## Example Overview
+This folder contains basic agent, client, and server examples for agent-to-agent (A2A) communication using the ADK framework. It demonstrates how to implement a minimal A2A workflow.
 
-- `agent.py`: 기본 에이전트 구현 예제
-- `client.py`: 기본 클라이언트 구현 예제
-- `server.py`: 기본 서버 구현 예제
-- `executor.py`: 에이전트 동작을 위한 유틸리티 모듈
+- `agent.py`: Basic agent implementation example
+- `client.py`: Basic client implementation example
+- `server.py`: Basic server implementation example
+- `executor.py`: Utility module for agent operation
 
-## 환경 설정
-에이전트 또는 클라이언트 코드에서 필요하다면, `.env` 파일에 다음과 같이 키를 설정하세요:
+## Environment Setup
+If needed in your agent or client code, set the following keys in a `.env` file:
 
 ```
 GOOGLE_GENAI_USE_VERTEXAI=FALSE
@@ -20,21 +20,21 @@ LOCATION=your_location
 MODEL=your_model_name
 ```
 
-## 실행 방법
-아래와 같이 에이전트, 클라이언트, 서버 예제를 실행할 수 있습니다:
+## How to Run
 
-### 1. A2A 서버 기동.
+You can run the agent, client, and server examples as follows:
+
+### 1. Start the A2A server
 
 ```
 ai_agent/a2a/concept$ uv run -m basic.server
 ```
 
-### 2. client 실행
+### 2. Run the client
 
 ```
 ai_agent/a2a/concept$ uv run -m basic.client
-
 ```
 
-## 라이선스
-이 프로젝트는 Apache License 2.0을 따르며, 모든 코드와 콘텐츠의 저작권은 **ForusOne**(shins777@gmail.com)에 있습니다.
+## License
+This project is licensed under the Apache License 2.0. All code and content copyright **ForusOne** (shins777@gmail.com).
