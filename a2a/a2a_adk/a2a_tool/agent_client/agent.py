@@ -87,11 +87,11 @@ root_agent = Agent(
              summarizer_tool,
              ],
 
-    planner=BuiltInPlanner(
-        thinking_config=types.ThinkingConfig(
-            include_thoughts=True,
-        ),
-    ),
+    # planner=BuiltInPlanner(
+    #     thinking_config=types.ThinkingConfig(
+    #         include_thoughts=True,
+    #     ),
+    # ),
 
     generate_content_config=types.GenerateContentConfig(
         safety_settings=[
