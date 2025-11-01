@@ -75,6 +75,7 @@ root_agent = Agent(
     #         include_thoughts=True,
     #     ),
     # ),
+    
     generate_content_config=types.GenerateContentConfig(
         safety_settings=[
             types.SafetySetting(  
